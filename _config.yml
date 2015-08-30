@@ -13,6 +13,6 @@ github_username:  cavaliercoder
 markdown: kramdown
 
 categories: blog
-permalink: none
+permalink: /blog/:title.html
 
 disqus_shortname: ryanarmstrongnetau
