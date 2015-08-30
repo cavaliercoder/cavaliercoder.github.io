@@ -11,8 +11,13 @@ github_username:  cavaliercoder
 
 # Build settings
 markdown: kramdown
-
-categories: blog
-permalink: /blog/:title.html
-
+permalink: /:categories/:title.html
 disqus_shortname: ryanarmstrongnetau
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      type: "posts"
+    values:
+      category: blog

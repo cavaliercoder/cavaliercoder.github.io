@@ -236,3 +236,14 @@
         }
     }
 }
+
+.thumb {
+    display: inline-block;
+    
+    img {
+        max-height: 200px;
+        max-width: 200px;
+        display: block;
+        margin: $spacing-unit / 2;
+    }
+}
