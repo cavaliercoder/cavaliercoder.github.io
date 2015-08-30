@@ -247,3 +247,7 @@
         margin: $spacing-unit / 2;
     }
 }
+
+img.osx-window {
+    margin: (- $spacing-unit / 2) auto (- $spacing-unit) auto;
+}
