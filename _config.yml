@@ -1,0 +1,18 @@
+# Site settings
+title: Ryan Armstrong's Blog
+email: ryan@cavaliercoder.com
+description: >
+    Interneting all the thoughts with varying levels of validity and accuracy.
+
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://www.cavaliercoder.com" # the base hostname & protocol for your site
+twitter_username: cavaliercoder
+github_username:  cavaliercoder
+
+# Build settings
+markdown: kramdown
+
+categories: blog
+permalink: none
+
+disqus_shortname: ryanarmstrongnetau
