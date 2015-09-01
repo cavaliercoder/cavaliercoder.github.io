@@ -21,11 +21,12 @@ You're going to need the following prerequisites:
 
 * This tute targets GCC/Linux but could be adapted for other OS's and build tools
 
-It's also worthwhile to familiarize yourself with some background knowledge:
+It's also worthwhile to familiarize yourself with some background concepts:
 
 * Interfacing between C and Go with [cgo](https://golang.org/cmd/cgo/)
 
 * Writing Zabbix [loadable modules](https://www.zabbix.com/documentation/2.2/manual/config/items/loadablemodules)
+  in C
 
 * Writing [Go shared libraries](https://github.com/jbuberel/buildmodeshared)
 
@@ -53,9 +54,9 @@ func main() {
 
 The `C` package (a.k.a `cgo`) exposes C APIs to Go and allows us to use functions and constants
 defined in the Zabbix C header files. It also allows us to expose Go functions to C (i.e. the Zabbix
-agent) using the `//export` (no spaces) directive.
+agent) using the `//export` directive (__note__ no spaces after `//`).
 
-To automate the build of your module, the following `Makefile` will save you some time:
+As a shortcut to build your module, the following `Makefile` will save you some time:
 
 {% highlight makefile %}
 PACKAGE = dummy
@@ -89,16 +90,16 @@ Let's start by satisfying the minimum interace for Zabbix to be able to load the
 implementing `zbx_module_api_version()` and `zbx_module_init()`. Note the `//export` directive
 above each function to expose them to C. 
 
-We're also going to use some defined in the Zabbix sources in `include/module.h` from the Zabbix
-sources. To call C code (in this case to import `module.h` and its prerequisites) we need to create
-a cgo preamble which is simply C code encapsulated in Go comments (`/* */`), immediately preceeding
-`import "C"`, with no additional whitespace or line breaks.
+We're also going to use some constants defined in the Zabbix sources in `include/module.h`. To call
+C code (in this case to import `module.h` and its prerequisites) we need to create a cgo preamble
+which is simply C code encapsulated in Go comments (`/* */`), immediately preceeding `import "C"`,
+with no additional whitespace or line breaks.
 
 Use `zbx_module_init()` to execute actions when the Zabbix agent loads your module. Actions might
 include starting a timer or tailing a log file.
 
 Only one version of the module API is currently supported so `zbx_module_api_version()` should
-always return `C.ZBX_MODULE_API_VERSION_ONE` from `module.h`.
+always return `C.ZBX_MODULE_API_VERSION_ONE`.
 
 Note below we've included `zbx_module_item_list()`. Despite what the Zabbix documentation says, the
 agent won't load unless this function is also defined. We'll come back to implementing this function
@@ -169,6 +170,113 @@ func zbx_module_item_timeout(timeout C.int) {
 
 {% endhighlight %}
 
+## Defining items
+
+Each item in your module is defined in a `C.ZBX_METRIC` structure with an item 'key', test
+parameters, configuration flags and a C function to call when the agent queries the item. All of
+your items must be registered to the Zabbix agent when it call the `zbx_module_item_list()` function
+in your module. This function must return a `NULL` terminated array of metric structs.
+
+To pass a pointer to your handler function to Zabbix, we need to tell Go how to cast it to C. Add
+the following typedef in your C preample:
+
+{% highlight c %}
+typedef int (*agent_item_handler)(AGENT_REQUEST*, AGENT_RESULT*);
+
+{% endhighlight %}
+
+Each item you define must have a matching, exported function with the following Go signature:
+
+{% highlight go %}
+//export my_key
+func my_key(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int
+
+{% endhighlight %}
+
+The function must also be declared in the C preamble as:
+
+{% highlight c %}
+int my_key(AGENT_REQUEST *request, AGENT_RESULT *result);
+
+{% endhighlight %}
+
+Add each item to the array returned by `zbx_module_item_list()`. The `metrics` array length should
+be the number of items exported, plus one (the `NULL` terminator).
+
+{% highlight go %}
+//export zbx_module_item_list
+func zbx_module_item_list() *C.ZBX_METRIC {
+	metrics := make([]C.ZBX_METRIC, 2)
+
+	metrics[0] = C.ZBX_METRIC{
+		key:        C.CString("my.key"),
+		flags:      C.CF_HAVEPARAMS,
+		function:   C.agent_item_handler(unsafe.Pointer(C.my_key)),
+		test_param: C.CString("test,params"),
+	}
+
+	return &metrics[0]
+}
+
+{% endhighlight %}
+
+Use the exported name of your item callback function in the `function` field.
+
+If your item accepts parameters, set `flags` to `C.CF_HAVEPARAMS`; otherwise `nil`.
+
+To pass parameters to your item when `zabbix_agentd -p` is called, specify a comma separated list of
+parameters in `test_param` or `nil`.
+
+> You may observe that `C.CString` allocates memory on the heap which is not cleaned up. This
+  function is only called once and the return value persists for the life of the agent PID so I don't
+  consider this a problem. Please feel free to convince me otherwise.
+
+Because Go slices include an additional header compared with C arrays, we return the address of the
+first element in the slice, rather than the slice iteself.
+
+## Parsing parameters
+
+The macro `get_rparam` (defined in `module.h`) is used in Zabbix C code to retrieve a key parameter
+from an agent request. While Go does support pre-compiler macros, the implementation for
+`get_rparam` doesn't unpack in Go.
+
+To solve this, we could implement `get_rparam` directly in Go but we could run into upgrade problems
+if Zabbix ever change their implementation. It's also not very pleasant trying to index a `**char`
+in Go.
+
+Instead we'll just create a C wrapper function in the preamble.
+
+{% highlight c %}
+static char *cgo_get_rparam(AGENT_REQUEST *request, int i) {
+	return get_rparam(request, i);
+}
+
+{% endhighlight %}
+
+Now you can use the following to retrieve a zero-indexed request parameter in your item functions:
+
+{% highlight go %}
+param := C.cgo_get_rparam(request, 0)
+
+{% endhighlight %}
+
+To validate the number of parameters passed to an item, just compare `request.nparam`.
+
+## Returning a value
+
+Under construction
+
+## Unsupported items
+
+Under construction
+
+## Calling Zabbix functions
+
+Under construction
+
+## Logging
+
+Under construction
 
 ## Complete example
 
