@@ -445,26 +445,46 @@ func zabbix_log(level int, format string, a ...interface{}) {
 package main
 
 /*
-
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-
-// headers from Zabbix sources
-#include "log.h"
-#include "module.h"
-
 // some symbols (within the Zabbix agent) won't resolve at link-time
 // we can ignore these and resolve at runtime
 #cgo LDFLAGS: -Wl,--unresolved-symbols=ignore-in-object-files -Wl,-allow-shlib-undefined
 
-// ignore missing symbols if the module is not loaded via Zabbix (i.e. `go test`)
-#pragma weak __zbx_zabbix_log
+// headers and prereqs from Zabbix sources
+#include <stdlib.h>
+#include <stdint.h>
+#include <string.h>
+
+#include "log.h"
+#include "module.h"
 
 // go binding for a pointer to an agent item callback
 typedef int (*agent_item_handler)(AGENT_REQUEST*, AGENT_RESULT*);
 
-// non-variadic wrapper for C.zabbix_log
+// wrapper for get_rparam macro in module.h
+static char *cgo_get_rparam(AGENT_REQUEST *request, int i) {
+	return get_rparam(request, i);
+}
+
+// wrapper for SET_UI64_RESULT macro in module.h
+static void cgo_set_ui64_result(AGENT_RESULT *result, zbx_uint64_t val)
+{
+	SET_UI64_RESULT(result, val);
+}
+
+// wrapper for SET_STR_RESULT macro in module.h
+static void cgo_set_str_result(AGENT_RESULT *result, char *val)
+{
+	SET_STR_RESULT(result, val);
+}
+
+// wrapper for SET_MSG_RESULT macro in module.h
+static void cgo_set_msg_result(AGENT_RESULT *result, char *val)
+{
+	SET_MSG_RESULT(result, val);
+}
+
+// non-variadic wrapper for zabbix_log in log.h
+#pragma weak __zbx_zabbix_log
 static void cgo_zabbix_log(int level, const char *format)
 {
 	void (*fptr)(int, const char*, ...);
@@ -474,14 +494,10 @@ static void cgo_zabbix_log(int level, const char *format)
         (*fptr)(level, format);
 }
 
-// wrapper for get_rparam macro to ease the burden of indexing a **char in go
-static char *cgo_get_rparam(AGENT_REQUEST *request, int i) {
-	return get_rparam(request, i);
-}
-
-int zbx_module_dummy_ping(AGENT_REQUEST *request, AGENT_RESULT *result);
-int zbx_module_dummy_echo(AGENT_REQUEST *request, AGENT_RESULT *result);
-int zbx_module_dummy_random(AGENT_REQUEST *request, AGENT_RESULT *result);
+// declare item functions
+int go_ping(AGENT_REQUEST *request, AGENT_RESULT *result);
+int go_echo(AGENT_REQUEST *request, AGENT_RESULT *result);
+int go_random(AGENT_REQUEST *request, AGENT_RESULT *result);
 
 */
 import "C"
@@ -489,6 +505,7 @@ import "C"
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 	"time"
 	"unsafe"
 )
@@ -518,7 +535,7 @@ func zbx_module_api_version() C.int {
 func zbx_module_init() C.int {
 	zabbix_log(C.LOG_LEVEL_INFORMATION, "Initializing Go module")
 
-	// initialization for dummy.random
+	// initialize random seed for go.random
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	return C.ZBX_MODULE_OK
@@ -544,79 +561,86 @@ func zbx_module_item_list() *C.ZBX_METRIC {
 	metrics[0] = C.ZBX_METRIC{
 		key:        C.CString("go.ping"),
 		flags:      0,
-		function:   C.agent_item_handler(unsafe.Pointer(C.zbx_module_dummy_ping)),
+		function:   C.agent_item_handler(unsafe.Pointer(C.go_ping)),
 		test_param: nil,
 	}
 
 	metrics[1] = C.ZBX_METRIC{
 		key:        C.CString("go.echo"),
 		flags:      C.CF_HAVEPARAMS,
-		function:   C.agent_item_handler(unsafe.Pointer(C.zbx_module_dummy_echo)),
+		function:   C.agent_item_handler(unsafe.Pointer(C.go_echo)),
 		test_param: C.CString("a message"),
 	}
 
 	metrics[2] = C.ZBX_METRIC{
 		key:        C.CString("go.random"),
 		flags:      C.CF_HAVEPARAMS,
-		function:   C.agent_item_handler(unsafe.Pointer(C.zbx_module_dummy_random)),
+		function:   C.agent_item_handler(unsafe.Pointer(C.go_random)),
 		test_param: C.CString("1,1000"),
 	}
 
 	return &metrics[0]
 }
 
-//export zbx_module_dummy_ping
-func zbx_module_dummy_ping(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
-	result._type |= C.AR_UINT64
-	result.ui64 = 1
+//export go_ping
+func go_ping(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
+	C.cgo_set_ui64_result(result, 1)
 
 	return C.SYSINFO_RET_OK
 }
 
-//export zbx_module_dummy_echo
-func zbx_module_dummy_echo(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
+//export go_echo
+func go_echo(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
+	// validate parameter count
 	if request.nparam != 1 {
 		// set optional error message
-		result._type = C.AR_MESSAGE
-		result.msg = C.CString("Invalid number of parameters") // zabbix will free this later
-
+		C.cgo_set_msg_result(result, C.CString("Invalid number of parameters")) // zabbix will free the C.CString later
 		return C.SYSINFO_RET_FAIL
 	}
 
+	// get message param
 	param := C.cgo_get_rparam(request, 0)
 
-	result._type = C.AR_STRING
-	result.str = C.strdup(param) // zabbix will free this later
+	// set result
+	C.cgo_set_str_result(result, C.strdup(param)) // zabbix will free the strdup result later
 
 	return C.SYSINFO_RET_OK
 }
 
-//export zbx_module_dummy_random
-func zbx_module_dummy_random(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
+//export go_random
+func go_random(request *C.AGENT_REQUEST, result *C.AGENT_RESULT) C.int {
+	// validate parameter count
 	if request.nparam != 2 {
 		// set optional error message
-		result._type = C.AR_MESSAGE
-		result.msg = C.CString("Invalid number of parameters.")
-
+		C.cgo_set_msg_result(result, C.CString("Invalid number of parameters.")) // zabbix will free the C.CString later
 		return C.SYSINFO_RET_FAIL
 	}
 
-	/* there is no strict validation of parameters for simplicity sake */
-	from := uint64(C.atoi(C.cgo_get_rparam(request, 0)))
-	to := uint64(C.atoi(C.cgo_get_rparam(request, 1)))
+	// parse from param[0]
+	from, err := strconv.ParseUint(C.GoString(C.cgo_get_rparam(request, 0)), 10, 64)
+	if err != nil {
+		C.cgo_set_msg_result(result, C.CString(err.Error())) // zabbix will free the C.CString later
+		return C.SYSINFO_RET_FAIL
+	}
 
+	// parse to param[1]
+	to, err := strconv.ParseUint(C.GoString(C.cgo_get_rparam(request, 1)), 10, 64)
+	if err != nil {
+		C.cgo_set_msg_result(result, C.CString(err.Error())) // zabbix will free the C.CString later
+		return C.SYSINFO_RET_FAIL
+	}
+
+	// validate random range
 	if from > to {
-		result._type = C.AR_MESSAGE
-		result.msg = C.CString("Invalid range specified.")
-
+		C.cgo_set_msg_result(result, C.CString("Invalid range specified.")) // zabbix will free the C.CString later
 		return C.SYSINFO_RET_FAIL
 	}
 
+	// generate random unsigned integer in range
 	r := from + uint64(float64(to-from)*random.Float64())
-
-	result._type = C.AR_UINT64
-	result.ui64 = C.zbx_uint64_t(r)
+	C.cgo_set_ui64_result(result, C.zbx_uint64_t(r))
 
 	return C.SYSINFO_RET_OK
 }
+
 {% endhighlight %}
