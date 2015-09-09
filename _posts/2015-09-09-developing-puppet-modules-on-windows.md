@@ -94,7 +94,13 @@ it will be accessible to administrators remotely as
 
 ## Test your code
 
-Sweet! Here's the easy part. Execute your Puppet code on the development Windows server with:
+If your new code interferes with configuration currently deployed from your Puppet Master, you may
+wish to disable your Puppet agent on the development server to prevent it applying conflicting
+changes while you are developing. Disable the Puppet agent with:
+
+	> puppet agent --disable
+
+Now you can execute your Puppet code on the development Windows server with:
 
 	> puppet apply -e "include my::class::path"
 
@@ -103,3 +109,7 @@ argument.
 
 When you're ready to deploy your code to other servers, you may commit locally and push through your
 typical deployment pipeline.
+
+Once you've finished developing, make sure to reenable the agent with:
+
+	> puppet agent --enable
