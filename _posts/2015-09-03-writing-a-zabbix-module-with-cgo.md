@@ -13,6 +13,9 @@ If you prefer the road less traveled, this article will describe how to write a 
 extends Zabbix by exposing the required C functions. The complete example which re-implements the
 dummy C module published by Zabbix is [attached below](#complete-example).
 
+> Looking to write Zabbix modules in __Rust__? Check out
+  [Marin Atanasov Nikolov's blog](https://dnaeon.github.io/extending-zabbix-with-rust/)
+
 This article assumes you are competent with C, Go and familiar with writing Zabbix modules in C. My
 intention is to save you the hassle of solving some of the problems I encountered trying to write a
 module (and the g2z adapter) in Go.
