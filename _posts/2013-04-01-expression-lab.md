@@ -9,7 +9,9 @@ Expression Lab is a lightweight Windows application based on the .Net Framework 
 to test regular expression (.Net flavour) patterns with real time results displayed on your target
 data.
 
-Download ExpressionLab-0.1.0.zip
+* Download from [SourceForge](https://sourceforge.net/projects/expression-lab/files/latest/download)
+
+* Clone from [GitHub](https://github.com/cavaliercoder/expression-lab)
 
 Regular Expressions, or 'Regex/Regexp' are patterns used to match text data as desired. Expression
 Lab allows you to enter your targeted data (Eg. a CSV or XML file, a product list or programming
