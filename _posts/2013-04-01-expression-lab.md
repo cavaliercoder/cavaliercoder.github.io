@@ -10,7 +10,6 @@ to test regular expression (.Net flavour) patterns with real time results displa
 data.
 
 * Download from [SourceForge](https://sourceforge.net/projects/expression-lab/files/latest/download)
-
 * Clone from [GitHub](https://github.com/cavaliercoder/expression-lab)
 
 Regular Expressions, or 'Regex/Regexp' are patterns used to match text data as desired. Expression
@@ -21,9 +20,9 @@ collection of match results to help you find the same results in your .Net code.
 
 For more information about Regex see the following links:
 
-* Regular Expressions (MSDN) http://msdn.microsoft.com/en-au/library/az24scfc.aspx
-* Regular Expressions on Wikipedia http://en.wikipedia.org/wiki/Regular_expression
-* RegularExpressions.info http://www.regular-expressions.info/
+* [Regular Expressions (MSDN)](http://msdn.microsoft.com/en-au/library/az24scfc.aspx)
+* [Regular Expressions on Wikipedia](http://en.wikipedia.org/wiki/Regular_expression)
+* [RegularExpressions.info](http://www.regular-expressions.info/)
 
 ## Screen Shots
 
