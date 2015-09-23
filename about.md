@@ -12,7 +12,7 @@ I get excited like a little girl around data centre automation and performance t
 spend most of my days working on a big deployment of Zabbix enterprise monitoring (4000+ servers)
 and a fledgling deployment of Puppet Enterprise.
 
-You'll here me bang on about DevOps, Agile and Free and Open Source Software from time to time.
+You'll hear me bang on about DevOps, Agile and Free and Open Source Software from time to time.
 
 I believe in learning and building on the efforts of others and contributing back in a meaningful
 way.
