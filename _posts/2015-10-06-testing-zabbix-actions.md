@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Quickly testing Zabbix actions"
+title:  "Testing Zabbix actions"
 ---
 
 When developing custom alert scripts or even just meaningful notifications in
@@ -8,42 +8,107 @@ Zabbix, it's important to test your changes frequently. This can be difficult
 given that Zabbix does not currently offer any means to immediately fire a test
 notification.
 
-The purpose of this article is to describe how to quickly configure Zabbix so
-that you can toggle a trigger on demand from the command line, which will in
-turn create an event, call an action and most importantly, send an alert (A.K.A
-notification or message).
+The purpose of this article is to describe how to configure Zabbix in 5 to 10
+minutes so that you can toggle a trigger on demand from the command line, which
+will in turn create an event, call an action and then most importantly, send an
+alert (A.K.A notification or message) to enable testing with faster feedback.
+
+To achieve this, the following steps detail how to create a dummy text item and
+a trigger which will fire every time the value of the dummy items changes.
+Instruction is also provided for creating the required media types and actions,
+and finally, triggering a notification on demand using `zabbix_sender`.
+
 
 ## Create an item
 
-* Name: _Test timestamp_
+First create a dummy item. Navigate to the desired host or template (a
+pre-canned template is included [below](#template)) and select _Items_ > _Create
+Item_.
 
-* Type: _Zabbix trapper_
+The _Zabbix trapper_ item type enables an agent (or in our case `zabbix_sender`)
+to submit an item value to the Zabbix server at any time; without waiting for
+polling intervals or active check batch sends. We'll use a simple Text value
+type for storing an arbitrary timestamp as follows:
 
-* Key: _test.timestamp_
+* _Name_: Test timestamp
+* _Type_: Zabbix trapper
+* _Key_: test.timestamp
+* _Type of information_: Text
+* _Enabled_: checked
+* Click _Add_ to save
 
-* Type of information: _Text_
-
-* Enabled: checked
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-item.png" | prepend: site.baseurl }}" alt="Add an item">
 
 
 ## Create a trigger
 
-* Name: _Timestamp changed_
+Next create a trigger which will fire each time the value of the timestamp item
+changes. On your host or template, navigate to _Triggers_ > _Create trigger_.
 
-* Expression: `{Dummy triggers:test.timestamp.diff()}>0`
+Use the `diff()` trigger function to identify a change in value. Also, ensure
+_Multiple PROBLEM events generation_ is checked to ensure an event (and
+subsequent notification) is created every time the item value changes; not just
+the first time.
 
-* Enable the _Multiple PROBLEM events generation_ checkbox
+* _Name_: Timestamp changed
+* _Expression_: `{[host/template]:test.timestamp.diff()}>0` (replace
+  host/template)
+* _Multiple PROBLEM events generation_: checked
+* _Severity_: Any (except _Not classified_)
+* Click _Add_ to save
 
-* Severity: _Disaster_
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-trigger.png" | prepend: site.baseurl }}" alt="Add an item">
 
 
 ## Create a media type
 
+If you intend to call a custom alert script when your trigger changes state,
+first define a new media type (under _Administration_ > _Media types_ > _Create
+media type_) with the name of your script as follows:
+
+* _Type_: Script
+* _Script name_: [Filename of your script]
+* _Enabled_: checked
+* Click _Add_ to save
+
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media-type.png" | prepend: site.baseurl }}" alt="Add an item">
+
+Zabbix also requires at least one user to "send" to using your new media type so
+define contact media as follows (from _Administration_ > _Users_ > [User] >
+_Media_ > _Add_):
+
+* _Type_: [Media type defined above]
+* _Send to_: [Recipient passed to script]
+* Click _Add_ to save the media
+* Click _Update_ to save the user
+
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media.png" | prepend: site.baseurl }}" alt="Add an item">
+
+
 ## Create an action
+
+Navigate to _Configuration_ > _Actions_ > _Create action_ and enter a desirable
+name, default subject and message for your action. Select the _Conditions_ tab
+and add a new condition with:
+
+* _New condition_: `Trigger = [dummy trigger]`
+* Click _Add_ to save the condition
+
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-conditions.png" | prepend: site.baseurl }}" alt="Add an item">
+
+Select the _Operations_ tab and add a new operation as follows:
+
+* _Send to Users_: [user with custom media type]
+* _Send only to_: [custom media type]
+* Click _Add_ to save to the operation
+
+<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-operation.png" | prepend: site.baseurl }}" alt="Add an item">
+
+Finally, click _Add_ to save the action.
 
 ## Toggle the trigger
 
-To put the trigger into a `PROBLEM` state, simple submit a value for your test
+To put the trigger into a `PROBLEM` state, simply submit a value for your test
 item using `zabbix_sender` that is different to the previous value. The simplest
 way to generate a new value on each command line call is to embed a timestamp
 using `$(date --rfc-3339=ns)`. Send a new value to the Zabbix server with the
