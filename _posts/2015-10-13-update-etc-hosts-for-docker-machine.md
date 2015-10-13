@@ -19,14 +19,14 @@ eval "$(boot2docker shellinit)"
 
 This will set the `DOCKER_HOST` environment variable which isn't actually much
 use outside of the Docker client as it includes the `tcp://` prefix and port
-suffix. If you want to access your Docker containers from a web browser or other
-clients, it's more convenient to use a DNS name.
+suffix. If you want to access published ports on your Docker containers from a
+web browser or other clients, it's more convenient to use a hostname.
 
-Once the above code is included in your `~/.profile` to set `DOCKER_HOST`, you
-can add a few extra lines to update your `/etc/hosts` file automatically each
-time you log in to the terminal.
+Once the above code is included in your `~/.profile` to set the `DOCKER_HOST`
+environment variable, you can add a few extra lines to update your `/etc/hosts`
+file automatically each time you log in to the terminal.
 
-The following example creates a DNS entry named `docker.local` which will
+The following example creates a hosts entry named `docker.local` which will
 resolve to your docker-machine IP:
 
 {% highlight bash %}
@@ -40,7 +40,7 @@ DOCKER_IP="$(echo ${DOCKER_HOST} | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\
 [[ -n $DOCKER_IP ]] && sudo /bin/bash -c "echo \"${DOCKER_IP}	docker.local\" >> /etc/hosts"
 {% endhighlight %}
 
-Check it out! You can now ping the host using the DNS hostname:
+Check it out! You can now ping the host using the hostname:
 
 {% highlight text %}
 $ ping -c 3 docker
@@ -61,7 +61,7 @@ running correctly:
 
 ## Bonus credit
 
-If you use more than one docker-machine, you might like to assign a DNS name for
+If you use more than one docker-machine, you might like to assign a hostname for
 each one. This example assigns a name for each machine in the `.docker.internal`
 namespace (e.g. `default.docker.internal`).
 
