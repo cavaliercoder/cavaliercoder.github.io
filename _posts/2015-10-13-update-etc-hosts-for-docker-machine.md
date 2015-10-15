@@ -26,6 +26,9 @@ Once the above code is included in your `~/.profile` to set the `DOCKER_HOST`
 environment variable, you can add a few extra lines to update your `/etc/hosts`
 file automatically each time you log in to the terminal.
 
+> Maybe you'd rather roll your own docker-machine DNS server? Check out
+  [Joe Chrzanowski's article](https://engineering.salesforceiq.com/2015/10/08/up-the-rabbit-hole-part-i-a-docker-machine-dns-server.html)
+
 The following example creates a hosts entry named `docker.local` which will
 resolve to your docker-machine IP:
 
