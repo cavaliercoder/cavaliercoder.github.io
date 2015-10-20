@@ -53,10 +53,20 @@ SMBIOS data is accessible from a file path.
   $ make && make install
   {% endhighlight %}
 
+The above steps install the dmidecode binary into `/usr/local/bin`. If this is
+not in your `$PATH`, you'll need to add it or call the full file path:
+
+	$ /usr/local/bin/dmidecode
+
+
+There is a [pull request](https://github.com/Homebrew/homebrew/pull/45185) to
+add dmidecode to Homebrew's formula list. Hopefully that will be available
+shortly.
+
 ## Sample output
 
-Here's some sample `dmidecode` output from my MacBook Pro 2010 running OS X
-10.9.5; modified for privacy and brevity:
+Here's some sample dmidecode output from my MacBook Pro 2010 running
+OS X 10.9.5; modified for privacy and brevity:
 
 {% highlight text %}
 # dmidecode 3.0
@@ -113,3 +123,15 @@ Base Board Information
 ...
 
 {% endhighlight %}
+
+## Getting help
+
+This port is thoroughly tested on x86_64 iMacs and MacBook Pros running 10.9+.
+All API calls have documented compatability since OS X 10.0 but without the
+opportunity to test on older machines, I'll be relying on the community for
+feedback.
+
+If you encounter any issues, please raise an issue on the [GitHub page](
+https://github.com/cavaliercoder/dmidecode-osx/issues) and include your Apple
+device details and OS X version. Please first check for existing issues which
+may match your problem.
