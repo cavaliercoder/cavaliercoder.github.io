@@ -53,10 +53,10 @@ SMBIOS data is accessible from a file path.
   $ make && make install
   {% endhighlight %}
 
-The above steps install the dmidecode binary into `/usr/local/bin`. If this is
+The above steps install the dmidecode binary into `/usr/local/sbin`. If this is
 not in your `$PATH`, you'll need to add it or call the full file path:
 
-	$ /usr/local/bin/dmidecode
+	$ /usr/local/sbin/dmidecode
 
 
 There is a [pull request](https://github.com/Homebrew/homebrew/pull/45185) to
