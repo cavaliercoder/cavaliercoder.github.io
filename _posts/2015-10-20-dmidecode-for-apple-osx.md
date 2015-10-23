@@ -31,7 +31,7 @@ out-of-box OS X machine) is to use Apple's proprietary IOService API.
 
 This port of dmidecode aims to minimize deviation from the upstream codebase to
 ensure that ongoing maintenance is as simple as possible. The challenge has
-been achieving this without butching the code with a bunch of
+been achieving this without butchering the code with a bunch of
 `if apple... else...` blocks but cleanly navigating around code that assumes
 SMBIOS data is accessible from a file path.
 
