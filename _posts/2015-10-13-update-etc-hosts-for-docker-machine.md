@@ -78,7 +78,7 @@ variable.
 
 The script sample above exports a new environment variable `DOCKER_IP` which
 contains only the IP of your Docker machine instance. Append this (and the
-`docker.local` namesapce) to your environment by adding the following to your
+`docker.local` namespace) to your environment by adding the following to your
 `~/.profile`:
 
 {% highlight text %}
@@ -102,7 +102,7 @@ update-docker-hosts(){
 	# iterate over each machine
 	docker-machine ls | tail -n +2 | awk '{print $1}' \
 	| while read -r MACHINE; do
-		MACHINE_IP="$(docker-machine env ${MACHINE} | grep DOCKER_HOST | grep -oE '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
+		MACHINE_IP="$(docker-machine ip ${MACHINE} 2>/dev/null)"
 		[[ -n $MACHINE_IP ]] && sudo /bin/bash -c "echo \"${MACHINE_IP}	${MACHINE}.docker.local\" >> /etc/hosts"
 		export no_proxy=$no_proxy,$MACHINE_IP
 	done
