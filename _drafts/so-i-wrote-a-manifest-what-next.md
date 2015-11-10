@@ -28,6 +28,8 @@ SysAdmins can and should use Source Control to manage Puppet
 * Trace changes back to the source
 * Roll back vs roll forward
 
+## Angles?
+* Rule 1: Use source control, Rule 2: See rule 1
 
 Start with the story of when I started out
 
@@ -40,14 +42,14 @@ Analogy: Incremental backups?
 
 Choosing VCS tool? Make sure it is distributed
 
-Where to store passwords?
+Where to store passwords? (eyaml)
 
 How to layout roles/profiles? (use GitHub as a reference)
 
 
 
 ## VCS Benefits:
-* It's not "Infrastructure-As-Copy-And-Paste"
+* It's not "Infrastructure-As-Copy-And-Paste" - .baks files, 
 * Backup, audit trail, error prevention, deployment, isolation of work, change
   log, resolve conflicts, definitive versioning
 
