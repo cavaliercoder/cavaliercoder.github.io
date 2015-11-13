@@ -13,7 +13,7 @@ SysAdmins can and should use Source Control to manage Puppet
 * SysAdmins can handle code and source control
 * Use source control and r10k
 * use packaging instead of building
-
+* End on: Imagine you solve the orgs biggest bottleneck in a preproducable, automated, measurable and portable way.
 
 ## Address problems:
 
@@ -27,9 +27,14 @@ SysAdmins can and should use Source Control to manage Puppet
 * Stage deployments
 * Trace changes back to the source
 * Roll back vs roll forward
+* Use packaging instead of automated compiles
 
 ## Angles?
 * Rule 1: Use source control, Rule 2: See rule 1
+* Source control = Back to the Future
+* PUppet = Hammer, Nail gun, 3d Printer
+* Config drift = "Ryan Special"
+* Contribute to the product - PostgreSQL Module
 
 Start with the story of when I started out
 
