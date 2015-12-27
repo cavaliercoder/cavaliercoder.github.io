@@ -195,4 +195,4 @@ traces mean, etc..
 
 If you can grok this book, all of these concepts become much clearer and you'll
 even be able to build small tools of your own, participate better in open source
-communities and communicate with developers in a common tounge.
+communities and communicate with developers in a common tongue.
