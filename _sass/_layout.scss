@@ -251,3 +251,11 @@
 img.osx-window {
     margin: (- $spacing-unit / 2) auto (- $spacing-unit) auto;
 }
+
+img.book-cover {
+    //margin: -3em 1em 1em 1em;
+    margin: 1em;
+    max-height: 200px;
+    max-width: 130px;
+    float: right;
+}
