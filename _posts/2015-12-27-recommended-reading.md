@@ -173,3 +173,26 @@ actually be perceived as threatening.
 I'm making a point of reading this regularly to make sure I don't get trapped in
 the arrogance of success or miss the writing on the wall when my comfort zones
 start to change.
+
+
+## The C Programming Language
+
+<a href="http://amzn.com/0131103628" target="_blank">
+    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-c-programming-language.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+</a>
+By Brian W. Kernighan and Dennis M. Ritchie
+
+Not a programmer? Doesn't matter. The concepts in this book and the tutorials
+will be a real challenge for a first time programmer and you may even give up.
+In fact, I did give up. But I came back a few years later and conquered it
+cover to cover.
+
+As a Sysadmin, it's important to understand the difference between the heap and
+the stack, what a pointer is, what shared memory is for, how memory gets
+allocated and corrupted, how memory leaks happen, how code patterns affect
+performance and capacity, how shared libraries are really used, what stack
+traces mean, etc..
+
+If you can grok this book, all of these concepts become much clearer and you'll
+even be able to build small tools of your own, participate better in open source
+communities and communicate with developers in a common tounge.
