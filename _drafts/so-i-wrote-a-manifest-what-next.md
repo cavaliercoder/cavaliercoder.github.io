@@ -7,6 +7,7 @@ title:  "So I wrote a manifest... what next?"
 
 SysAdmins can and should use Source Control to manage Puppet
 
+Slides: http://www.slideshare.net/PuppetLabs/so-i-wrote-a-manifest
 
 ## Key concepts:
 

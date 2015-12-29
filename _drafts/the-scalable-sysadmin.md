@@ -106,8 +106,19 @@ write documentation, etc.?
 ### Diversity
 
 No matter what you do, you can never reduce the diversity of customer needs to a
-single use case. Enforcement of a rigid, uniform solution will always fail.
+single use case. They will always require discrete, unique solutions to numerous
+business needs. Worse still, these requirements will change over time.
 
+The answer here, is too become adaptable to change and as technology agnostic as
+possible. Tools, practices and solution designs which enable this will share
+common attributes:
+
+* they offer a common workflow to manage discrete platforms (OS, device type,
+  code language, etc.)
+* they can be easily tweaked and reused to overcome new challenges faster
+* they are easily extended upon and simple to integrate with other systems
+* they are portable and travel with you - they work on your laptop when you're
+  offline and in large scale live production deployments
 
 ### Entropy
 
@@ -131,7 +142,7 @@ yourself three things:
 
 
 ## TODO:
-
+* Deliver above the line (expense)
 * We will always need "Click-next" juniors
 * click next batch automation
 
