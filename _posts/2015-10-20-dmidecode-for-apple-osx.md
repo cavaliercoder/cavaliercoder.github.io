@@ -3,10 +3,10 @@ layout: post
 title:  "dmidecode for Apple OS X"
 ---
 
-[Dmidecode](http://www.nongnu.org/dmidecode/) is a long standing, effective tool
-for reading manufacturer info from the SMBIOS tables present on most modern x86
-based systems. It's been available for many years on most Unix like operating
-systems and has also been ported to
+[Dmidecode](https://github.com/cavaliercoder/dmidecode-osx) is a long standing,
+effective tool for reading manufacturer info from the SMBIOS tables present on
+most modern x86 based systems. It's been available for many years on most Unix
+like operating systems and has also been ported to
 [Windows](http://gnuwin32.sourceforge.net/packages/dmidecode.htm). Until now, it
 had never made the leap to OS X.
 
@@ -21,7 +21,47 @@ From the [dmidecode website](http://www.nongnu.org/dmidecode/):
   and memory module slots, and the list of I/O ports (e.g. serial, parallel,
   USB).
 
-## Portability
+
+## Installation on OS X
+
+The easiest way to install `dmidecode` is with the [homebrew](http://brew.sh/)
+package manager:
+
+	$ brew install cavaliercoder/dmidecode/dmidecode
+
+To build from source, sources are available from [the project page on
+GitHub](https://github.com/cavaliercoder/dmidecode-osx/releases).
+
+Once cloned or extracted from the release tarball, you may build and install
+with:
+
+  {% highlight bash %}
+  $ make && make install
+  {% endhighlight %}
+
+The above steps install the `dmidecode` binary into `/usr/local/sbin`. If this
+is not in your `$PATH`, you'll need to add it or call the full file path:
+
+	$ /usr/local/sbin/dmidecode
+
+
+## Getting help
+
+For all issues related to `dmidecode` itself, please see the
+[dmidecode website](http://www.nongnu.org/dmidecode/).
+
+This port is thoroughly tested on x86_64 iMacs and MacBook Pros running 10.9+.
+All API calls have documented compatability since OS X 10.0 but without the
+opportunity to test on older machines, I'll be relying on the community for
+feedback.
+
+If you encounter any issues, please raise an issue on the [GitHub page](
+https://github.com/cavaliercoder/dmidecode-osx/issues) and include your Apple
+device details and OS X version. Please first check for existing issues which
+may match your problem.
+
+
+## The portability challenge
 
 Dmidecode ports very nicely onto any Unix-like platform that exposes raw system
 memory (specifically the range where SMBIOS lives) as a file handle (such as
@@ -35,33 +75,6 @@ been achieving this without butchering the code with a bunch of
 `if apple... else...` blocks but cleanly navigating around code that assumes
 SMBIOS data is accessible from a file path.
 
-## Installation on OS X
-
-* Clone the `dmidecode` sources with git:
-  {% highlight bash %}
-  $ git clone https://github.com/cavaliercoder/dmidecode-osx.git
-  {% endhighlight %}
-
-* Or, download the latest `dmidecode-osx` release tarball [from GitHub](
-  https://github.com/cavaliercoder/dmidecode-osx/releases) and extract with:
-  {% highlight bash %}
-  $ tar -xzf dmidecode-osx-*.tar.gz
-  {% endhighlight %}
-
-* Build and install to `/usr/local` with:
-  {% highlight bash %}
-  $ make && make install
-  {% endhighlight %}
-
-The above steps install the dmidecode binary into `/usr/local/sbin`. If this is
-not in your `$PATH`, you'll need to add it or call the full file path:
-
-	$ /usr/local/sbin/dmidecode
-
-
-There is a [pull request](https://github.com/Homebrew/homebrew/pull/45185) to
-add dmidecode to Homebrew's formula list. Hopefully that will be available
-shortly.
 
 ## Sample output
 
@@ -123,15 +136,3 @@ Base Board Information
 ...
 
 {% endhighlight %}
-
-## Getting help
-
-This port is thoroughly tested on x86_64 iMacs and MacBook Pros running 10.9+.
-All API calls have documented compatability since OS X 10.0 but without the
-opportunity to test on older machines, I'll be relying on the community for
-feedback.
-
-If you encounter any issues, please raise an issue on the [GitHub page](
-https://github.com/cavaliercoder/dmidecode-osx/issues) and include your Apple
-device details and OS X version. Please first check for existing issues which
-may match your problem.
