@@ -48,5 +48,15 @@ You need quantifiable evidence that things are working and _when_ (not if) they
 will likely break. 
 
 
+When designing monitoring:
 
+* Start with the constracted SLAs
+* Next consider the user experience
+* COnsider the components which composite towards the above
+* Condider components which are useful in a debug situation.
 
+For each component:
+* Utilisation, saturation, error rate
+* Throughput
+* Exceptions and error conditions
+* Predict outages and capacity constraints
