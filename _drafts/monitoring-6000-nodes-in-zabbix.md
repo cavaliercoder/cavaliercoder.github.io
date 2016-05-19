@@ -3,15 +3,38 @@ layout: post
 title:  "Monitoring 6000+ hosts in Zabbix"
 ---
 
+## Agenda
+
+
+
 ## The problem
 
+* Multiple monitoring tools
+	- HP OM
+	- HP NNMi
+	- 4x Cacti
+	- Nagios
+	- SolarWinds
+	- Scripts and scheduled tasks
+
+* Hope is not a strategy
 
 <img
 	src="{{ "/assets/2016-05-16-monitoring-6000-hosts-in-zabbix/stats.png" | prepend: site.baseurl }}"
 	alt="Status of Zabbix">
 
+What we needed:
+
+* Single pane of glass
+* Extensibility and an API
+* Scalability
+* Ease of administration
+
 ## Why Zabbix
-* extensibility
+
+* great API
+* low footprint and scalable architecture
+* 
 * open source opportunities
 * Scalability
 * Configuration UI
@@ -37,6 +60,7 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 
 ## Collaborating as a team
 
+* Jira + Scrum
 * Discrete environments
 * Discrete product branches
 * System integration tests
@@ -76,7 +100,8 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 * Drill down on host and data
 
 ## Dependencies
-
+* SQL Import
+* Central, ISP, Router, switch, Virtual Host
 
 ## Agent benchmark
 
@@ -87,6 +112,8 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 * community
 
 ## Infrastructure as code
+* Environment sync
+* 
 
 ## Weeknesses
 
@@ -99,10 +126,12 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 ## Lessons learned
 
 * Use discrete package management
-* Theory of contraints - change management slowdown
+* Theory of contraints - change management slowdown - small releases is better
 * Let go and let others
 * Portability sucks....
 * Mass updates slow
+* Skilled required
+* Building templates is boring but necessary
 
 
 ## Future plans
@@ -111,3 +140,10 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 * More applications
 * Log files
 * Event 
+
+## Open source projects
+
+* libzbxpgsql
+* zabbix_agent_bench
+* zabbix-msi
+* g2z
