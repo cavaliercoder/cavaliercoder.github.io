@@ -17,7 +17,11 @@ title:  "Monitoring 6000+ hosts in Zabbix"
 	- SolarWinds
 	- Scripts and scheduled tasks
 
-* Hope is not a strategy
+This lead to
+ * duplication of effort
+ * lack of correlation
+ * inconsistent practice on alerting, etc.
+ * difficulty in SLA reporting
 
 <img
 	src="{{ "/assets/2016-05-16-monitoring-6000-hosts-in-zabbix/stats.png" | prepend: site.baseurl }}"
@@ -32,19 +36,23 @@ What we needed:
 
 ## Why Zabbix
 
+* collection, alerting, visualization, RBAC, all in one
 * great API
-* low footprint and scalable architecture
-* 
+* small footprint and scalable architecture
+* configuration UI
 * open source opportunities
-* Scalability
-* Configuration UI
 
 ## How Zabbix works
-* agent items
+* passive checks
+* active checks
+* templates
+* hosts
+* low-level discovery
 
 ## Deployment
 * Monolith vs proxies
 * PostgreSQL Partitions
+* Templates and classes
 
 <img
 	class="osx-window lightbox"
@@ -56,15 +64,14 @@ What we needed:
 * CI Manager
 * Active Directory
 * Service management
-* White box monitoring
+* White box monitoring (BSM)
 
 ## Collaborating as a team
 
 * Jira + Scrum
-* Discrete environments
-* Discrete product branches
-* System integration tests
-
+* Discrete environments in Vagrant
+* Discrete feature branches using nvie git workflow
+* System integration tests in Bamboo
 
 <img
 	class="osx-window"
@@ -74,10 +81,10 @@ What we needed:
 ## Windows monitoring
 
 * Customisations
+  - Performance counter discovery
 	- Windows disk and volume discovery
 	- Service discovery
 	- Hostname casings
-	- 
 * MSI package + scripts
 * Perfcounter import
 * Test script
@@ -86,11 +93,15 @@ What we needed:
 * Modules
 * Test script
 
+## Agent benchmark
+* Find issues before production
+
 ## SNMP monitoring
 * mib2zabbix
 
 ## Templates and classes
-* Macros
+* Classes (roles)
+* Macros for triggers and configuration
 * Sender and batch data
 * Disabled items
 
@@ -99,11 +110,10 @@ What we needed:
 * Permissions
 * Drill down on host and data
 
-## Dependencies
-* SQL Import
+## Trigger Dependencies
+* SQL Import from CMDB
 * Central, ISP, Router, switch, Virtual Host
-
-## Agent benchmark
+* Central infrastructure
 
 
 ## Open source
@@ -112,8 +122,7 @@ What we needed:
 * community
 
 ## Infrastructure as code
-* Environment sync
-* 
+* Environment sync 
 
 ## Weeknesses
 
@@ -139,7 +148,8 @@ What we needed:
 * Network devices
 * More applications
 * Log files
-* Event 
+* Event aggregation
+* Data aggregation for capacity rollups
 
 ## Open source projects
 
