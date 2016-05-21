@@ -18,8 +18,8 @@ state because change is constant.
 ## Pg. 3
 
 > In order to maintain competitive advantage, old ways of working for our
-more predictable solutions are no longer appropriate when we need to create new value by
-working on speculative, creative solutions.
+more predictable solutions are no longer appropriate when we need to create new
+value by working on speculative, creative solutions.
 
 ## Pg. 5
 
@@ -76,4 +76,75 @@ structures.
 
 > Forward leaning organisations need less structure not more. You don’t make
 work faster, better, cheaper or happier by adding more layers of management.
+
+## Pg. 13
+
+> Using the hybrid dynamic model organisations can have multiple operating
+models co-existing harmoniously within a single enterprise portfolio in an
+organisation.
+
+## Pg. 14
+
+> Organisations should adopt the general principle that the default starting
+point is the smallest operating structure possible and only increase the
+structural complexity as and when it becomes necessary.
+
+## Pg. 15
+
+> Where co-location is not possible, or complexity requires the power of a crowd
+or networked ecosystem, then communities can be brought together by
+collaboration technology and open source ways of working.
+
+> The industry needs to develop a culture of “Customer Obsession” where teams
+and individuals throughout the organisation understand who their true customers
+and stakeholders are and work to deliver value to the point of service.
+
+## Pg. 16
+
+> Unfortunately, when badly applied, both approaches [Agile and Lean] can mask
+the customer proxy problem rather than solve it, further extending the cone of
+uncertainty and moving delivery risk into the business rather than reducing it.
+
+> Businesses may feel that they cannot afford for their operational business
+personnel to be spending a good proportion of their time involved in software
+development. In reality these organisations cannot afford not to spend time
+ensuring their software investment is directed properly, resulting in real
+business value.
+
+> The industry needs less Project and Programme Managers, less plans and
+documentation, less abstract architecture, less bureaucracy, less process and
+less structure.
+
+## Pg. 17
+
+> The technology business needs less passive plan followers and more active
+problem solvers.
+
+
+## Pg. 21
+
+> Analytical focus can often lead to knowing the cost of everything and the
+value of nothing.
+
+## Pg. 22
+
+> Less time needs to be spent “learning to plan” and with more time “planning
+to learn”.
+
+## Pg. 23
+
+> Separate business and technical areas make a collaborative focus on customer
+business value difficult as everyone thinks various parts of the equation
+“aren’t their job”. This mentality leads to transactional waterfall behaviours,
+which impede collaboration.
+
+
+## Pg. 24
+
+> Above all people need to be skilled in collaboration and communication.
+
+> Today’s organisations need people with a deep understanding of technology,
+software development and how that can be applied in the context of business
+strategy and business goals.
+
 
