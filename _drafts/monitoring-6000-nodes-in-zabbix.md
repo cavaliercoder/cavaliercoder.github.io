@@ -89,6 +89,30 @@ What we needed:
 * Perfcounter import
 * Test script
 
+### Windows disk and volume discovery
+
+__The problem:__ 
+
+ * Drive letters are nonpersistent for disks and volumes. This means metric
+   collection is disjointed
+ * Clustered disks are discovered on all cluster nodes while system disks appear
+   and disappear on the cluster IP
+ * Performance counters use a nonpersistent identifiers for all drives and
+   volumes which are sensitive to reboots
+
+__The solution:__
+
+* MBR disks provides a pseudo-unique, persistent, 32 bit signature written in
+  the master boot record
+* GPT disks (required on EFI systems) include a GUID encoded in the disk header
+* Both are available in the `DeviceIOControl` API
+* Volumes include a persistent GUID which is exposed in the 
+  `GetVolumeInformation` function
+* translate disk identifiers to `PhysicalDisk` performance counter indexes (use
+  i18n indexes for best compatibility)
+* translare volume GUIDs to `LogicalDisk` performance counter drive letters
+
+
 ## Linux monitoring
 * Modules
 * Test script
