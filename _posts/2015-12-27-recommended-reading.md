@@ -3,11 +3,13 @@ layout: post
 title:  "Recommended reading"
 ---
 
-To me, the best measure of a book is whether it changes the way I think. For
-those that do, there is no better way to digest a book than to share it with
-others, adopt a common language and share insights and perspectives.
+I have had the great privilege of being mentored by world class people like Jim
+Collins, Eric Ries, Jez Humble, Jim Whitehurst, Patrick Lencioni, Kernighan and
+Ritchie, folks from the Google SRE team and many more leaders in business and
+IT operations through their elaborate and refined writings.
 
-The books in this list (in no particular order) are those which have had such an
+To me, the best measure of a book is whether it changes the way I think. The
+books in this list (in no particular order) are those which have had such an
 effect on me, as both an IT professional, and as a person.
 
 If you read any of these, please leave some thoughts in the comment section
@@ -196,3 +198,85 @@ traces mean, etc..
 If you can grok this book, all of these concepts become much clearer and you'll
 even be able to build small tools of your own, participate better in open source
 communities and communicate with developers in a common tongue.
+
+
+## Good to Great
+
+<a href="http://www.jimcollins.com/books.html" target="_blank">
+    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/good-to-great.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+</a>
+By Jim Collins
+
+Good to Great is probably the most thoroughly researched and well presented
+work I have ever encountered. Jim Collins dissects the differenciators between
+companies which outperform the market consistently over fifteen years to those
+that don't. The findings are often counter-intuitive but are very well
+established in the presented facts.
+
+Jim condenses everything down into a tangible framework called *The Flywheel*
+which offers stepping stones to replicating the success of the Great companies.
+
+One stage of the flywheel, *The Hedgehog Concept* complements the idea presented
+in [Made to Stick](#made-to-stick) that succinct, unidirectional strategies are
+most effective at enabling a company to move forward in unison.
+
+A later stage, *First Who, Then What* emphasises that "getting the right people
+on the bus" is the first and most critical part of building a successful
+company. This idea is echoed as the *First Key* in
+[First, Break All the Rules](#first-break-all-the-rules).
+
+I'd strongly recommend anyone read this book as it offers a great sense of
+context around organisational success. More importantly however, the principals
+of a *Level Five Leader* should be taken on board by team members at any level
+of experience or title.
+
+
+## First, Break All the Rules
+
+<a href="http://amzn.com/1595621113" target="_blank">
+    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/first-break-all-the-rules.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+</a>
+By Marcus Buckingham and Curt Coffman
+
+This book brings together the findings from interviews with more than 80,000
+successful managers to find out what makes them so effective.
+
+The following keys are found to be consistent across most of the managers who
+took part in the study:
+
+* They hire for talent and understand the recurring thoughts, feelings and
+  behaviors that are needed on their team
+* They define clear and valuable outcomes and leave the implementation to their
+  employees
+* They focus on developing strengths instead of trying to fix weaknesses
+* They work to fit people where they belong and can succeed
+
+I'd recommend this book to anyone looking to move into a management or
+leadership role, anyone looking to expand their team, hoping to land on the
+right hire, or anyone hoping to understand why their current org-structure is
+letting them down.
+
+
+## Site Reliability Engineering
+
+<a href="http://www.amazon.in/dp/149192912X" target="_blank">
+    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/site-reliability-engineering.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+</a>
+Edited by Betsy Beyer, Chris Jones, Jennifer Petoff and Niall Richard Murphy.
+
+This book collects essays from key members of Google's SRE teams that build,
+deploy, monitor and maintain Google's large scale production systems. The essays
+cover the philosophies, processes, architectures, mantras and mistakes that
+enable Google to be so successful.
+
+Many of the lessons are directly applicable in a much smaller scale IT service
+provider, like as their incident response procedures, on-call rostering and
+philosophies concerning risk management and eliminating low value "toil".
+
+Some of the lessons were less applicable, but equally interesting, such as the
+design challenges of distributed consensus systems, automated deployment and
+data processing pipelines.
+
+I'd recommend this book to engineers and operations managers in any IT org. It's
+a real privilege to be able to learn from the refined and battle hardened
+practices of some of the world's most talented operators.

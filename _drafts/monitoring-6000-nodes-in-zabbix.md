@@ -34,6 +34,8 @@ What we needed:
 * Scalability
 * Ease of administration
 
+## Department topology and stats
+
 ## Why Zabbix
 
 * collection, alerting, visualization, RBAC, all in one
@@ -165,7 +167,6 @@ __The solution:__
 * Mass updates slow
 * Skilled required
 * Building templates is boring but necessary
-
 
 ## Future plans
 
