@@ -269,11 +269,11 @@ deploy, monitor and maintain Google's large scale production systems. The essays
 cover the philosophies, processes, architectures, mantras and mistakes that
 enable Google to be so successful.
 
-Many of the lessons are directly applicable in a much smaller scale IT service
-provider, like as their incident response procedures, on-call rostering and
+Many of the lessons are directly applicable to much smaller scale IT service
+providers, like their incident response procedures, on-call rostering and
 philosophies concerning risk management and eliminating low value "toil".
 
-Some of the lessons were less applicable, but equally interesting, such as the
+Other lessons were less applicable, but equally interesting, such as the
 design challenges of distributed consensus systems, automated deployment and
 data processing pipelines.
 

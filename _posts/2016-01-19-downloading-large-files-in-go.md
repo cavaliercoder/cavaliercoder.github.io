@@ -416,7 +416,7 @@ func main() {
 	client.UserAgent = "Grab example"
 
 	// create requests from command arguments
-	reqs := make(grab.Requests, 0)
+	reqs := make([]*grab.Request, 0)
 	for _, url := range os.Args[1:] {
 		req, err := grab.NewRequest(url)
 		if err != nil {
