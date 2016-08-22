@@ -6,6 +6,7 @@ description: >
 
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://cavaliercoder.github.io" # the base hostname & protocol for your site
+cdnurl: "http://cdn.cavaliercoder.com/blog"
 twitter_username: cavaliercoder
 github_username:  cavaliercoder
 
