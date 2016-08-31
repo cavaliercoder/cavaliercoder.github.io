@@ -15,10 +15,28 @@ effect on me, as both an IT professional, and as a person.
 If you read any of these, please leave some thoughts in the comment section
 below.
 
+## Lean Enterprise
+<a href="https://amzn.com/1449368425" target="_blank">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/lean-enterprise.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
+</a>
+By Jez Humble, Joanne Molesky and Barry O'Reilly
+
+When an IT organization gets large enough, the need for predictability and
+stability starts to stifle innovation until fast moving, unencumbered startups
+disrupt them.
+
+Lean Enterprise provides a prescriptive process and plenty of follow up reading
+to enable large organizations to overcome "inertia" while minimizing cost and
+risk. The business is divided into three horizons where first, exploration and
+experimentation take place. Experiments that prove to deliver value are
+transitioned into the 'Exploitation' horizon where an MVP is quickly transformed
+into a sustainable product. Finally, the 'Stabilization' horizon focuses on
+efficiency and stability; keeping the lights on so new experimentation can get
+underway.
 
 ## The Open Organization
 <a href="http://amzn.com/1625275277" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-open-organization.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/the-open-organization.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Jim Whitehurst
 
@@ -39,11 +57,10 @@ remit.
 
 
 ## Made to Stick
-
 <a href="http://amzn.com/1400064287" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/made-to-stick.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/made-to-stick.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
-by Chip Heath and Dan Heath
+By Chip Heath and Dan Heath
 
 Ever wondered why the latest company strategy is not getting any traction? Why
 your marketing pitch is falling on deaf ears? Why even clear, concise facts are
@@ -59,9 +76,8 @@ projects, and in writing for my blog.
 
 
 ## The Five Dysfunctions of a Team
-
 <a href="http://amzn.com/0787960756" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-five-dysfunctions-of-a-team.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/the-five-dysfunctions-of-a-team.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Patrick Lencioni
 
@@ -82,7 +98,7 @@ vulnerable.
 
 ## The Phoenix Project
 <a href="http://amzn.com/0988262509" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-phoenix-project.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/the-phoenix-project.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Gene Kim, Kevin Behr and George Spafford
 
@@ -104,9 +120,8 @@ whole.
 
 
 ## The Goal
-
 <a href="http://amzn.com/0884271951" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-goal.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/the-goal.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Eliyahu M. Goldratt
 
@@ -122,9 +137,8 @@ I've written a full review in
 [The Goal: A challenge to IT Operations]({% post_url 2015-12-12-the-goal %})
 
 ## Toyota Kata
-
 <a href="http://amzn.com/0071635238" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/toyota-kata.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/toyota-kata.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Mike Rother
 
@@ -151,9 +165,8 @@ rather than approaching it as sporadic and typically unsuccessful projects.
 
 
 ## Who Moved My Cheese?
-
 <a href="http://amzn.com/0399144463" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/who-moved-my-cheese.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/who-moved-my-cheese.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Spencer Johnson M.D
 
@@ -178,9 +191,8 @@ start to change.
 
 
 ## The C Programming Language
-
 <a href="http://amzn.com/0131103628" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/the-c-programming-language.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/the-c-programming-language.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Brian W. Kernighan and Dennis M. Ritchie
 
@@ -201,9 +213,8 @@ communities and communicate with developers in a common tongue.
 
 
 ## Good to Great
-
 <a href="http://www.jimcollins.com/books.html" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/good-to-great.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/good-to-great.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Jim Collins
 
@@ -232,9 +243,8 @@ of experience or title.
 
 
 ## First, Break All the Rules
-
 <a href="http://amzn.com/1595621113" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/first-break-all-the-rules.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/first-break-all-the-rules.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 By Marcus Buckingham and Curt Coffman
 
@@ -258,9 +268,8 @@ letting them down.
 
 
 ## Site Reliability Engineering
-
 <a href="http://www.amazon.in/dp/149192912X" target="_blank">
-    <img class="book-cover" src="{{ "/assets/2015-12-27-recommended-reading/site-reliability-engineering.jpg" | prepend: site.baseurl }}" alt="Buy on Amazon">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/site-reliability-engineering.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
 </a>
 Edited by Betsy Beyer, Chris Jones, Jennifer Petoff and Niall Richard Murphy.
 
