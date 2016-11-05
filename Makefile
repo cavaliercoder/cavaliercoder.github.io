@@ -9,4 +9,7 @@ clean:
 run:
 	jekyll serve --baseurl="" --drafts
 
+get-deps:
+	gem install jekyll bundler
+
 .PHONY: all build clean run
