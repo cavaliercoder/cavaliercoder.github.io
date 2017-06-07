@@ -21,11 +21,27 @@ might even consider contributing more rad features to them.
 
 A native Zabbix module for high performance monitoring of PostgreSQL servers.
 
-## Deployment
+### [Systemd Module](https://github.com/cavaliercoder/zabbix-module-systemd)
+
+A native Zabbix module to monitor systemd units via D-Bus.
+
+### [Sockets Module](https://github.com/cavaliercoder/zabbix-module-sockets)
+
+A native Zabbix module for monitoring Linux sockets - include TCP, TCP6, UNIX,
+etc.
+
+## Configuration
+
+### [Zabbops](https://github.com/cavaliercoder/zabbix-module-python)
+
+A Python package for automating Zabbix configuration using Amazon Web Services
+APIs and services.
 
 ### [PostgreSQL Partioning scripts](https://github.com/cavaliercoder/zabbix-pgsql-partitioning)
 
 PostgreSQL scripts to create and manage partitions for massive Zabbix databases.
+
+## Deployment
 
 ### [Docker-Zabbix](https://github.com/cavaliercoder/docker-zabbix)
 
@@ -65,7 +81,6 @@ simplify the creation of embedded Zabbix modules.
 A simple binary for highly parallel stress testing of a Zabbix agent and its
 loaded modules or User Parameters. Useful for highlighting issues in code or
 for simple integration tests.
-
 
 ## Templating
 
