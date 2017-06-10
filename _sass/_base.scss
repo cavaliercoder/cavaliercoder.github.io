@@ -138,16 +138,19 @@ blockquote {
  */
 pre,
 code {
-    color: #e8e8e2;
+    /* color: #e8e8e2; */
+    color: #282828;
     font-size: 15px;
     border: 1px solid $grey-color-light;
     border-radius: 7px;
-    background-color: #282828;
+    /* background-color: #282828; */
+    background-color: #e3ecfc;
 }
 
 code {
     padding: 1px 5px;
     font-weight: 100pt;
+    /* white-space: nowrap; */
 }
 
 pre {
