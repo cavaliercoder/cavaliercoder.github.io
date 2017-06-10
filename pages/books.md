@@ -17,6 +17,19 @@ effect on me, as both an IT professional, and as a person.
 If you read any of these, please leave some thoughts in the comment section
 below.
 
+## Thinking in Systems
+<a href="https://amzn.com/1603580557" target="_blank">
+    <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/thinking-in-systems.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
+</a>
+By Donella H. Meadows
+
+Everything is connected, across time and space. Donella beautifully illustrates
+a number of different systems "Animals" - common patterns that appear in
+air-conditioner thermostats, the art of steering a car on the road and
+distributed computing systems. This book taught me to prefer small, calculated
+moves over wholesale systems changes and to better interpret and respond to
+measurements over time.
+
 ## Lean Enterprise
 <a href="https://amzn.com/1449368425" target="_blank">
     <img class="book-cover" src="{{ "/2015-12-27-recommended-reading/lean-enterprise.jpg" | prepend: site.cdnurl }}" alt="Buy on Amazon">
@@ -290,4 +303,5 @@ data processing pipelines.
 
 I'd recommend this book to engineers and operations managers in any IT org. It's
 a real privilege to be able to learn from the refined and battle hardened
+
 practices of some of the world's most talented operators.
