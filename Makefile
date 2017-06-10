@@ -7,7 +7,10 @@ clean:
 	rm -rf _site/ .sass-cache/
 
 run:
-	jekyll serve --baseurl="" --drafts
+	jekyll serve \
+		--config=_config.yml,_config_dev.yml \
+		--baseurl="" \
+		--drafts
 
 get-deps:
 	gem install jekyll bundler
