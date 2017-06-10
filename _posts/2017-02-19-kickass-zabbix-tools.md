@@ -27,8 +27,8 @@ A native Zabbix module to monitor systemd units via D-Bus.
 
 ### [Sockets Module](https://github.com/cavaliercoder/zabbix-module-sockets)
 
-A native Zabbix module for monitoring Linux sockets - include TCP, TCP6, UNIX,
-etc.
+A native Zabbix module for monitoring Linux sockets - including TCP, TCP6, UDP,
+UDP6 and UNIX.
 
 ## Configuration
 

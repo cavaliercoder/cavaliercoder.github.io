@@ -1,9 +1,11 @@
 ---
 layout: post
-title:  "Great articles"
+title:  "My bookmarks"
 ---
 
-Links to great articles that have tranformed my thinking.
+Here are some links to great resources that have tranformed my thinking.
+I also have a list of [recommended books]({{ site.baseurl }}{% post_url 2015-12-27-recommended-reading %})
+if you have a little more time on your hands.
 
 ## Agile
 
@@ -15,7 +17,7 @@ Links to great articles that have tranformed my thinking.
 
 ## Teamwork
 
-* [The Science Behind Why Jeff Bezos’s Two-Pizza Team Rule Works](The Science Behind Why Jeff Bezos’s Two-Pizza Team Rule Works)
+* [The Science Behind Why Jeff Bezos’s Two-Pizza Team Rule Works](http://blog.idonethis.com/two-pizza-team/)
 
 ## Product lifecycle
 
@@ -28,3 +30,5 @@ Links to great articles that have tranformed my thinking.
 ## Operating System Internals
 
 * [Ops Class](https://www.ops-class.org/)
+
+* [Anything Brendan Gregg has written, ever](http://www.brendangregg.com/)
