@@ -2,7 +2,7 @@
 title: Ryan Armstrong's Blog
 email: ryan@cavaliercoder.com
 description: >
-    Interneting all the thoughts with varying levels of validity and accuracy.
+    The poorly maintained ramblings of an Infrastructure/Software engineer.
 
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://cavaliercoder.github.io" # the base hostname & protocol for your site
