@@ -5,17 +5,14 @@ permalink: /blog/recommended-reading.html
 menu: Books
 ---
 
-I have had the great privilege of being mentored by world class people like Jim
-Collins, Eric Ries, Jez Humble, Jim Whitehurst, Patrick Lencioni, Kernighan and
-Ritchie, folks from the Google SRE team and many more leaders in business and
-IT operations through their elaborate and refined writings.
+The following books have all been instrumental in forging my career as a
+successful DevOps Lord.
 
-To me, the best measure of a book is whether it changes the way I think. The
-books in this list (in no particular order) are those which have had such an
-effect on me, as both an IT professional, and as a person.
+For me, the best measure of a book is whether it changes the way I think. The
+books in this list are (in no particular order) those which have had such an
+effect on me, both as a professional, and as a human bean.
 
-If you read any of these, please leave some thoughts in the comment section
-below.
+Love them or hate? Please leave some thoughts in the comment section below.
 
 ## Thinking in Systems
 <a href="https://amzn.com/1603580557" target="_blank">

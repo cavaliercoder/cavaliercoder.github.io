@@ -17,3 +17,9 @@ Let's connect!
 * [LinkedIn](https://www.linkedin.com/in/ryanarmstrongwa/)
 * [Twitter](https://twitter.com/CavalierCoder)
 * [GitHub](https://github.com/cavaliercoder)
+
+You might also be interested in:
+
+* [Books that I like]({{ site.baseurl }}/blog/recommended-reading.html)
+* [Resources that I found revelationary]({{ site.baseurl }}/resources/)
+* [Zabbix tools I've written]({{ site.baseurl }}/blog/kickass-zabbix-tools.html)
