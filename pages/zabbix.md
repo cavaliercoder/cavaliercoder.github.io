@@ -1,6 +1,8 @@
 ---
-layout: post
+layout: page
 title:  "Kickass Zabbix Tools"
+permalink: /blog/kickass-zabbix-tools.html
+menu: Zabbix
 ---
 
 I've had the pleasure of working with Zabbix for many years now, (since 2.0).

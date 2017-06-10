@@ -1,10 +1,12 @@
 ---
-layout: post
-title:  "My bookmarks"
+layout: page
+title:  "External resources"
+permalink: /resources/
+menu: Links
 ---
 
 Here are some links to great resources that have tranformed my thinking.
-I also have a list of [recommended books]({{ site.baseurl }}{% post_url 2015-12-27-recommended-reading %})
+I also have a list of [recommended books]({{ site.baseurl }}/books)
 if you have a little more time on your hands.
 
 ## Agile

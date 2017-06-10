@@ -1,6 +1,8 @@
 ---
-layout: post
-title:  "Recommended reading"
+layout: page
+title:  "Recommended books"
+permalink: /blog/recommended-reading.html
+menu: Books
 ---
 
 I have had the great privilege of being mentored by world class people like Jim
