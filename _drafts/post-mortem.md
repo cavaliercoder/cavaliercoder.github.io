@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  "A WebOps Post-mortem"
-date:      2017-05-27 12:00:00
+date:   2017-05-27 12:00:00
+rtime:  11 minutes
 ---
 
 Early in the day, May 18, 2017, alerts started appearing from our Content
@@ -11,37 +12,34 @@ responses.
 
 <img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
 
-I work with the Production Engineering team at Seven West Media in Western
-Australia and the alerts indicated an issue with
-[thewest.com.au](https://thewest.com.au). We initiated our Incident Response
-process which borrows heavily from ITIL Incident Management and Google Site
-Reliability Engineering.
+I lead the Production Engineering team at Seven West Media in Western Australia
+and the alerts indicated an issue with [thewest.com.au](https://thewest.com.au). 
 
-The team started investigating, looking for fire to match the smoke. We explored
-a few different avenues which included:
+Our internal process did produce a postmortem report that differs from this one,
+but only in formality, not in terms of the facts. This is my summarized and more
+technically focused treatment of the incident.
 
-- a support call to our CDN provider to access some more detailed logging
+I hope to highlight here some of the principles that we employ that were
+advantageous to us, as well as simply exploring an interesting problem that
+reminded us to stay humble.
 
-- investigation of our monitoring tools for other alerts or anomylous trends -
-  including AWS CloudWatch, Sumo Logic and Zabbix
+While reports came in from our colleagues and customers that images were failing
+to display on the site, a ragtag team of Developers and SysAdmins invoked our
+Incident Response process. We borrow heavily from ITIL Incident Management and
+[Google's Site Reliability Engineering](https://landing.google.com/sre/book.html).
 
-- exploratory testing of the site to try and identify any impact
+The process calls us to stay calm, objective and to seek out quality information
+to assist us in better decision making.
 
-None of our investigations revealed impact or associated errors, so we became
-skeptical of the alerts from our CDN. But then reports started rolling in from
-colleages and customers that some images were intermittently failing to display
-on the site.
-
-## Observation A: Network I/O deviations
-With all hands on deck, we discovered unusual network I/O on our Content API
-servers.
+## Network I/O deviations
+Initially we discovered unusual network I/O patterns on our Content API servers.
 
 The Content API is a Node.js/Express application fronted by a local instance of
 nginx. It is responsible for serving article content, listings, curations, etc.
 to both our internal web servers (for server-side rendering) and to our
 client-side Javascript which uses the Single-Page Application model (see:
-[Going Isomorphic with React](https://bensmithett.github.io/going-isomorphic-with-react/#/)).
-It also serves static assets, such as pristine images, that it pipes directly
+[Isomorphic Javascript: The Future of Web Apps](https://medium.com/airbnb-engineering/isomorphic-javascript-the-future-of-web-apps-10882b7a2ebc)).
+It also serves static assets, such as pristine images, which it pipes directly
 from AWS S3.
 
 <img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/network-io.png" | prepend: site.cdnurl }}" alt="Network I/O on Content API instance" />
@@ -57,8 +55,8 @@ to build a clearer picture of network performance. We observed:
 - throughput between each component was otherwise typical, with plenty of
   headroom
 
-- no dropped packets, retransmits or other known TCP/IP issues that would
-  indicate saturation or contention
+- no dropped packets, interface errors or other known TCP/IP issues that would
+  indicate saturation or congestion
 
 - no error messages in any of the counters or logs we knew to check
 
@@ -69,7 +67,7 @@ to build a clearer picture of network performance. We observed:
 There was one important metric that we neglected to check for saturation but
 more on that later!
 
-## Observation B: HTTP 499 errors
+## HTTP 499 errors
 
 One fastidious engineer noticed something else amiss: a large number of
 [499 Client Closed Request](http://lxr.nginx.org/source/src/http/ngx_http_request.h#0124)
@@ -80,11 +78,11 @@ responses being logged by nginx on the same Content API servers.
 The above screen grab from Sumo Logic of the same instance shows the uptick in
 499 status messages at the same time that the network I/O anomaly appeared. The
 uptick is obvious in this image, but it was visually masked on our dashboards
-by the thousands of successful requests occuring at the same time.
+by the thousands of successful requests occurring at the same time.
 
 Reviewing the nginx logs on each server revealed an interesting pattern that
 helped us to understand the scope of the issue: all 499 responses were
-constrained to static assets only. Requests for dynamic content were uneffected.
+constrained to static assets only. Requests for dynamic content were unaffected.
 
 This finding was easy to confirm locally on any of the production servers. A
 quick `$ curl -iv http://localhost/...` for any static asset would
@@ -106,10 +104,10 @@ So here's what we knew:
   request
 
 - Requests to the Content API for static assets were falling into a black hole
-  which meant that image content on the site was failing to transfer and display
+  which meant that image content on the site was failing to display
 
-At this point we decided we had sufficient information to experiment with a
-plan for service restoration.
+At this point we decided we had sufficient information about the scope of the
+issue to consider a mitigation plan.
 
 ## Stem the bleeding
 Our incident response process emphasizes small, non-destructive changes over
@@ -125,15 +123,18 @@ collected.
 <img class="inline" src="{{ "/2017-05-27-a-webops-post-mortem/kanye-not-impressed.jpg" | prepend: site.cdnurl }}" alt="Kanye West is not impressed" title="Cool, calm and collected" />
 
 We formed a hypothesis that freshly launched instances of the Content API might
-behave correctly and we proceeded to test this. Fortunately, we were right!
-The unhealthy hosts were manually marked out of the load balancers and services
-were fully restored - at least for the immediate future.
+behave correctly and we found that we were right! We detached the unhealthy
+Content API instances from the load balancers and the errors we have observed
+subsided.
 
 We did have the option to instead simply restart the unhealthy instances, but
 our process also encourages the preservation of evidence. Restarting the
 instances would have reset their state - and as we learned later - would have
-reset the key metric we neglected to observe. We would not have found the root
-cause until the issue resurfaced and again impacted production.
+reset the key metric we neglected to observe. We might not have found the root
+cause until the issue resurfaced to again impact production.
+
+At this stage, we had no reason to believe that the circumstances that led to
+this incident had in any way changed.
 
 ## Root cause analysis
 
@@ -158,19 +159,28 @@ Could this be the beginning of a very slow connection leak?
 Remember that key metric that we neglected to observe during our network
 performance observations? We needed to measure the **number of `CLOSE_WAIT`
 sockets on a server**. Queue length and the other sockets states might also have
-been useful under different circumstances.
+been useful under differing circumstances.
 
 According to [Gordon McKinney's TCP/IP State Transition Diagram](http://www.cs.northwestern.edu/~agupta/cs340/project2/TCPIP_State_Transition_Diagram.pdf),
 `CLOSE_WAIT` indicates that the socket is:
 
 > ... waiting for a connection termination request from the local user
 
-In our case the _"local user"_ is the Node.js application. Somewhere in our
-application, sockets were being created but never cleaned up. These sockets were
-exhausting an unknown upper limit, causing new requests to hang.
+In our case the _"local user"_ was the Node.js application. Adding `-p` to the
+netstat call printed the PID that owned the leaked sockets. The PID belonged to
+our application. 
 
-We set about tracing the codepath for S3 requests in our codebase and found
-that...
+Somewhere in our application, sockets were being created for S3 requests, but
+never cleaned up. These sockets were exhausting some unknown upper limit,
+causing new requests to hang.
+
+Now we know where to look and our picture of the control path has a little more
+detail. Here's how it looked once the leaked sockets reached critical mass:
+
+<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+
+We set about tracing the code path for S3 requests in our codebase and found
+the following.
 
 ## AWS SDK for Node.js
 
@@ -180,34 +190,33 @@ Node.js. The SDK was inadvertently pinned in our codebase to
 was released shortly before we relaunched thewest.com.au.
 
 We trawled through GitHub issues, PRs and the SDK Changelog in search of similar
-issues. The closest we found was a note in the [2.50.0](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2500)
+sounding issues that may have been addressed since this release. The closest we
+found was a note in the [2.50.0](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2500)
 release notes:
 
 > bugfix: Request: Updates node.js request handling to obey socket read timeouts
 after response headers have been received. Previously timeouts were being
 ignored once headers were received, sometimes causing connections to hang.
 
-Now, the SDK uses a pool of sockets for connections to S3. The default
-[maximum size of the pool is 50](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-configuring-maxsockets.html).
+The SDK uses a pool of sockets for connections to S3. The default [maximum size
+of the pool is 50](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-configuring-maxsockets.html).
 If sockets were leaking and there is an upper boundary to the number of active
 sockets, it stands to reason that new requests to S3 (in our case, for static
 assets) would queue forever once 50 sockets had leaked. The number 50
 anecdotally matched the number of `CLOSE_WAIT` sockets we had seen with
-`netstat`.
+netstat.
 
-<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
-
-We formed a hypothesis that updating the AWS SDK would cause these leaked
-sockets to be cleaned up and emit errors that could be correctly handled. There
-were strong coincidences that suggested this was our issue. Patching the SDK was
-low risk, easily tested and probably overdue anyway, but...
+We formed a hypothesis that updating the AWS SDK would cause all sockets to be
+cleaned up correctly or emit errors that could be safely handled. There were
+strong coincidences that suggested this was our issue. Patching the SDK was low
+risk, easily tested and definitely overdue, but...
 
 ## Measurements
 It was important that we started measuring these socket metrics before
-implementing a fix. Before-and-after measurments are critial to validate any
+implementing a fix. Before-and-after measurements are critical to validate any
 fix, and they make for great graphics in blog posts (below).
 
-I wrote a Zabbix module and template named [zabbix-module-sockets](https://github.com/cavaliercoder/zabbix-module-sockets)
+I wrote a Zabbix module named [zabbix-module-sockets](https://github.com/cavaliercoder/zabbix-module-sockets)
 to capture the following metrics:
 
 - the number of sockets in each state
@@ -216,10 +225,8 @@ to capture the following metrics:
 
 - the sum of the send queue of all sockets
 
-With simulated load via [spodermen](https://github.com/cavaliercoder/spodermen),
-another project of mine (albiet a horrible, Frankenstein hack job) we were able
-to replicate the connection leak in pre-production environments and measure the
-results in Zabbix.
+With a little simulated load we were able to replicate the connection leak in
+pre-production environments and measure the results in Zabbix.
 
 ## The fix
 
@@ -227,8 +234,8 @@ With a reasonable hypothesis, measurements in place and way to validate our plan
 in pre-production, we deployed the updated AWS SDK to our pre-production
 environments.
 
-It worked. The following figure from Zabbix shows the dramatic change in
-behavior around June 2nd, when the fix was finally deployed to production.
+It worked! The following figure from Zabbix shows the dramatic change in
+behavior around June 2nd, when the fix was subsequently deployed to production.
 
 <img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/recvq-fix.png" | prepend: site.cdnurl }}" alt="Socket Recv-Q graph" />
 
@@ -252,8 +259,8 @@ Case closed.
 
 ## Lesson learned
 In our context, we have to _"move fast and break things"_. Everything is a
-compromise and we aim make the best possible moves with the limited information
-and resources we have available at any given time.
+compromise and we aim to make the best possible moves with the limited
+information and resources we have available at any given time.
 
 That said, this event highlighted some priorities that could at least help us
 to prevent similar issues in the future.
@@ -261,17 +268,19 @@ to prevent similar issues in the future.
 ### Alert on 499 responses
 For HTTP servers that support HTTP 499 like nginx, a small number of
 `499 Client Closed Request` responses should be expected at the edge, where
-clients do have the perogative to disconnect prematurely. But in higher
+clients do have the prerogative to disconnect prematurely. But in higher
 frequency, or at other points in your signal chain, these responses might
 indicate that timeouts are incorrectly configured. So...
 
 ### Get your timeouts right
 Each component should be configured with a timeout that is longer than all its
 upstream dependencies. By example, if you have a 3 second timeout on database
-queries, then the application server must not cancel requests any sooner than
-this.
+queries, then the application server should not cancel requests any sooner than
+this. Otherwise the source of the problem is obscured and all you are presented
+with is a timeout error from a component other that the one that misbehaved - as
+we experienced.
 
-This is complicated by services that need multiple round-trips or have
+This solution is complicated by services that need multiple round-trips or have
 asynchronous behaviors, but...
 
 ### Everything should be bounded
@@ -280,7 +289,7 @@ operation that completes too quickly or too slowly should create an error that
 is meaningfully propagated, logged and alerted on.
 
 In this case, our Content API servers should have been configured with a tightly
-contrained timeout on all requests to S3. Error handlers in our code would then
+constrained timeout on all requests to S3. Error handlers in our code would then
 have sent a meaningful 5xx error back downstream.
 
 This principle should also apply to the incoming request to the API. We should
@@ -288,6 +297,9 @@ cancel any request that runs too long, *for any reason*. This has operational
 advantages, but is also good security practice to prevent denial of service.
 
 ### Health checks must validate all dependencies
+<a href="https://aws.amazon.com/message/41926/" target="_blank">
+  <img class="right inline" src="{{ "/2017-05-27-a-webops-post-mortem/everything-fails.jpg" | prepend: site.cdnurl }}" alt="Everything fails, all the time" />
+</a>
 Each of our micro-services have a health check route that quickly validates each
 of its known dependencies (e.g. it can connect to the database, write to a log
 file, etc.). In this case we had neglected to include the dependency on S3 in
@@ -298,5 +310,34 @@ instances would have been marked out of the load balancer, alerts would have
 escalated and new healthy instances would have been rolled in automatically.
 
 ## Summary
+Under the stress of trying to restore services, we never felt any hunch to check
+the battle-hardened AWS SDK for leaked sockets to the notoriously reliable AWS
+S3 service. But this was our root cause.
 
-__TODO:__ Summary
+As unlikely as the issue was, having a response plan in place and sticking to it
+gave us the best possible outcomes:
+
+- We followed the facts and found the root cause
+
+- Services were restored quickly, without introducing unnecessary risk or
+  destroying evidence
+
+- We uncovered other weaknesses in our systems that can be addressed before they
+  lead to disaster
+
+- We learned a whole lot about the software and systems we work with
+
+Thanks for reading! I'd love to hear your thoughts in the comments section
+below.
+
+## Appendix: Leaks in other buckets
+
+With our new socket monitoring in place in Zabbix, we noticed a much smaller
+number of sockets to S3 being leaked on almost all of our application servers.
+
+We discovered that the AWS CodeDeploy Agent was the culprit. We use CodeDeploy
+to deploy our Node.js applications and S3 is used as the storage backend.
+
+Fortunately, these sockets leak much slower (we've only seen up to 3 on any one
+instance). For now, routine restarts will suffice until AWS are able to address
+[the issue](https://github.com/aws/aws-codedeploy-agent/issues/115).

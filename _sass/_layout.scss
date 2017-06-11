@@ -241,12 +241,12 @@
 }
 
 .left {
-    margin: 1em;
+    margin: $spacing-unit;
     float: left;
 }
 
 .right {
-    margin: 1em;
+    margin: 0 ($spacing-unit / 2) 0 ($spacing-unit / 2);
     float: right;
 }
 
