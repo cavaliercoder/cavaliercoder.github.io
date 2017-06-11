@@ -6,7 +6,8 @@ date:      2017-05-27 12:00:00
 
 Early in the day, May 18, 2017, alerts started appearing from our Content
 Distribution Network that a number of user requests were being served with
-`504 Gateway Timeout` responses.
+[504 Gateway Timeout](https://tools.ietf.org/html/rfc7231#section-6.6.5)
+responses.
 
 <img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
 
@@ -63,14 +64,16 @@ to build a clearer picture of network performance. We observed:
 
 - no network issues were being reported by AWS
 
+- Health checks on the Content API servers were passing
+
 There was one important metric that we neglected to check for saturation but
 more on that later!
 
 ## Observation B: HTTP 499 errors
 
 One fastidious engineer noticed something else amiss: a large number of
-`499 Client Closed Request` responses being logged by nginx on the same Content
-API servers.
+[499 Client Closed Request](http://lxr.nginx.org/source/src/http/ngx_http_request.h#0124)
+responses being logged by nginx on the same Content API servers.
 
 <img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/499-graph.png" | prepend: site.cdnurl }}" alt="HTTP 409 status graph" />
 
@@ -96,10 +99,10 @@ So here's what we knew:
 
 <img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
 
-- Either our CDN or Load Balancing layer was cancelling requests and returning
-  status 504 as no timely response was received from upstream
+- Either our CDN or Load Balancing layer was cancelling some requests and
+  returning status 504 as no timely response was received from upstream
 
-- Nginx was logging a status 499 when the downstream components cancelled the
+- Nginx was logging a status 499 when the downstream components cancelled a
   request
 
 - Requests to the Content API for static assets were falling into a black hole
@@ -152,26 +155,57 @@ By comparison the healthy server has only one `CLOSE_WAIT` socket and the
 Receive Queues are mostly empty, except for the lonely `CLOSE_WAIT` socket.
 Could this be the beginning of a very slow connection leak?
 
-According to [Gordon McKinney's TCP/IP State Transition Diagram](http://www.cs.northwestern.edu/~agupta/cs340/project2/TCPIP_State_Transition_Diagram.pdf),
-`CLOSE_WAIT` indicates that the socket is:
-
-> ... waiting for a connection termination request from the local user
-
-In our case the _"local user"_ is the Node.js application.
-
-__TODO:__ Why did the leak break services?
-
 Remember that key metric that we neglected to observe during our network
 performance observations? We needed to measure the **number of `CLOSE_WAIT`
 sockets on a server**. Queue length and the other sockets states might also have
 been useful under different circumstances.
 
-__TODO:__ Detail AWS SDK bug
+According to [Gordon McKinney's TCP/IP State Transition Diagram](http://www.cs.northwestern.edu/~agupta/cs340/project2/TCPIP_State_Transition_Diagram.pdf),
+`CLOSE_WAIT` indicates that the socket is:
+
+> ... waiting for a connection termination request from the local user
+
+In our case the _"local user"_ is the Node.js application. Somewhere in our
+application, sockets were being created but never cleaned up. These sockets were
+exhausting an unknown upper limit, causing new requests to hang.
+
+We set about tracing the codepath for S3 requests in our codebase and found
+that...
+
+## AWS SDK for Node.js
+
+All of the connections to AWS S3 were being established via the AWS SDK for
+Node.js. The SDK was inadvertently pinned in our codebase to
+[v2.6.14](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2614) which
+was released shortly before we relaunched thewest.com.au.
+
+We trawled through GitHub issues, PRs and the SDK Changelog in search of similar
+issues. The closest we found was a note in the [2.50.0](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2500)
+release notes:
+
+> bugfix: Request: Updates node.js request handling to obey socket read timeouts
+after response headers have been received. Previously timeouts were being
+ignored once headers were received, sometimes causing connections to hang.
+
+Now, the SDK uses a pool of sockets for connections to S3. The default
+[maximum size of the pool is 50](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-configuring-maxsockets.html).
+If sockets were leaking and there is an upper boundary to the number of active
+sockets, it stands to reason that new requests to S3 (in our case, for static
+assets) would queue forever once 50 sockets had leaked. The number 50
+anecdotally matched the number of `CLOSE_WAIT` sockets we had seen with
+`netstat`.
+
+<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+
+We formed a hypothesis that updating the AWS SDK would cause these leaked
+sockets to be cleaned up and emit errors that could be correctly handled. There
+were strong coincidences that suggested this was our issue. Patching the SDK was
+low risk, easily tested and probably overdue anyway, but...
 
 ## Measurements
 It was important that we started measuring these socket metrics before
 implementing a fix. Before-and-after measurments are critial to validate any
-fix, and they make for great graphics in blog posts.
+fix, and they make for great graphics in blog posts (below).
 
 I wrote a Zabbix module and template named [zabbix-module-sockets](https://github.com/cavaliercoder/zabbix-module-sockets)
 to capture the following metrics:
@@ -189,19 +223,19 @@ results in Zabbix.
 
 ## The fix
 
-With a solid hypothesis, measurements in place and way to validate our plan in
-pre-production, we deployed the updated AWS SDK to our pre-production
+With a reasonable hypothesis, measurements in place and way to validate our plan
+in pre-production, we deployed the updated AWS SDK to our pre-production
 environments.
 
-The following figure from Zabbix shows the dramatic change in behavior around
-June 2nd, when the fix was deployed to production.
+It worked. The following figure from Zabbix shows the dramatic change in
+behavior around June 2nd, when the fix was finally deployed to production.
 
 <img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/recvq-fix.png" | prepend: site.cdnurl }}" alt="Socket Recv-Q graph" />
 
-The gradual and orderly increase in the Receive Queue length stops at the time
-of the deployment and continues forward at nominal levels. The earlier drops in
-queue length you may observe are from service restarts and were ineffective to
-stop the continued leak until the fix was deployed.
+The gradual upward trend of the Receive Queue length (green) stops after the
+production deployment and the queue length stabilizes. The earlier sawtooth
+pattern you may observe is caused by application restarts that were triggered to
+remediate the socket pool being exhausted.
 
 The following figure shows sockets states on the same server. You will notice
 the thin, red slice of `CLOSE_WAIT` sockets discontinues around the time of the
@@ -209,14 +243,27 @@ fix deployment.
 
 <img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/state-fix.png" | prepend: site.cdnurl }}" alt="Socket states graph" />
 
+Hey, check out the value in the max column for `CLOSE_WAIT` sockets...
+
+It never went above 50! Coincidently, the maximum number of sockets allowed by
+the AWS SDK for connections to S3.
+
+Case closed.
 
 ## Lesson learned
+In our context, we have to _"move fast and break things"_. Everything is a
+compromise and we aim make the best possible moves with the limited information
+and resources we have available at any given time.
+
+That said, this event highlighted some priorities that could at least help us
+to prevent similar issues in the future.
 
 ### Alert on 499 responses
-A small number of `499 Client Closed Request` responses should be expected at
-the edge, where clients do have the perogative to disconnect prematurely. But
-in higher frequency, or at other points in your signal chain, these responses
-might indicate that timeouts are incorrectly configured. So...
+For HTTP servers that support HTTP 499 like nginx, a small number of
+`499 Client Closed Request` responses should be expected at the edge, where
+clients do have the perogative to disconnect prematurely. But in higher
+frequency, or at other points in your signal chain, these responses might
+indicate that timeouts are incorrectly configured. So...
 
 ### Get your timeouts right
 Each component should be configured with a timeout that is longer than all its
@@ -236,9 +283,9 @@ In this case, our Content API servers should have been configured with a tightly
 contrained timeout on all requests to S3. Error handlers in our code would then
 have sent a meaningful 5xx error back downstream.
 
-This principle should also apply to the incoming request. We should cancel any
-requests that runs too long, *for any reason*. This has operational advantages,
-but is also good security practice to prevent denial of service.
+This principle should also apply to the incoming request to the API. We should
+cancel any request that runs too long, *for any reason*. This has operational
+advantages, but is also good security practice to prevent denial of service.
 
 ### Health checks must validate all dependencies
 Each of our micro-services have a health check route that quickly validates each
@@ -250,6 +297,6 @@ If we had included S3 in the health checks, the checks would have failed, these
 instances would have been marked out of the load balancer, alerts would have
 escalated and new healthy instances would have been rolled in automatically.
 
-## Oustanding questions
+## Summary
 
-* What was the upper limit of `CLOSE_WAIT` sockets that caused things to fail?
+__TODO:__ Summary
