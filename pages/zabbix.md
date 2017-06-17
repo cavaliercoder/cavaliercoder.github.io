@@ -34,7 +34,7 @@ UDP6 and UNIX.
 
 ## Configuration
 
-### [Zabbops](https://github.com/cavaliercoder/zabbix-module-python)
+### [Zabbops](https://github.com/cavaliercoder/zabbops)
 
 A Python package for automating Zabbix configuration using Amazon Web Services
 APIs and services.
