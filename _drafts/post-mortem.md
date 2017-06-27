@@ -10,10 +10,12 @@ Distribution Network that a number of user requests were being served with
 [504 Gateway Timeout](https://tools.ietf.org/html/rfc7231#section-6.6.5)
 responses.
 
-<img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
+<a href="https://www.shopthewalkingdead.com/" target="_blank">
+  <img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
+</a>
 
 I lead the Production Engineering team at Seven West Media in Western Australia
-and the alerts indicated an issue with [thewest.com.au](https://thewest.com.au). 
+and the alerts indicated an issue with [thewest.com.au](https://thewest.com.au).
 
 Our internal process did produce a postmortem report that differs from this one,
 but only in formality, not in terms of the facts. This is my summarized and more
@@ -24,12 +26,12 @@ advantageous to us, as well as simply exploring an interesting problem that
 reminded us to stay humble.
 
 While reports came in from our colleagues and customers that images were failing
-to display on the site, a ragtag team of Developers and SysAdmins invoked our
+to display on the site, a killer team of Developers and SysAdmins invoked our
 Incident Response process. We borrow heavily from ITIL Incident Management and
 [Google's Site Reliability Engineering](https://landing.google.com/sre/book.html).
 
-The process calls us to stay calm, objective and to seek out quality information
-to assist us in better decision making.
+The process calls for us to stay calm, objective and to seek out quality
+information for better decision making.
 
 ## Network I/O deviations
 Initially we discovered unusual network I/O patterns on our Content API servers.
@@ -39,8 +41,8 @@ nginx. It is responsible for serving article content, listings, curations, etc.
 to both our internal web servers (for server-side rendering) and to our
 client-side Javascript which uses the Single-Page Application model (see:
 [Isomorphic Javascript: The Future of Web Apps](https://medium.com/airbnb-engineering/isomorphic-javascript-the-future-of-web-apps-10882b7a2ebc)).
-It also serves static assets, such as pristine images, which it pipes directly
-from AWS S3.
+It also serves static assets, such as images, which it pipes directly from
+Amazon S3.
 
 <img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/network-io.png" | prepend: site.cdnurl }}" alt="Network I/O on Content API instance" />
 
@@ -117,24 +119,24 @@ we must:
 > Avoid corrective surgery - just stem the bleeding
 
 Corrective surgery is best performed once the situation has stabilized, we have
-better information and everyone is 300 - like the Romans. Cool, calm and
-collected.
-
-<img class="inline" src="{{ "/2017-05-27-a-webops-post-mortem/kanye-not-impressed.jpg" | prepend: site.cdnurl }}" alt="Kanye West is not impressed" title="Cool, calm and collected" />
+better information and everyone is cool, calm and collected.
 
 We formed a hypothesis that freshly launched instances of the Content API might
-behave correctly and we found that we were right! We detached the unhealthy
-Content API instances from the load balancers and the errors we have observed
-subsided.
+behave correctly and we found that we were right! The new servers were not
+producing any errors once marked in.
 
 We did have the option to instead simply restart the unhealthy instances, but
 our process also encourages the preservation of evidence. Restarting the
 instances would have reset their state - and as we learned later - would have
 reset the key metric we neglected to observe. We might not have found the root
-cause until the issue resurfaced to again impact production.
+cause until the issue surfaced again.
 
-At this stage, we had no reason to believe that the circumstances that led to
-this incident had in any way changed.
+Besides that, servers should be treated [like cattle, not pets](http://cloudscaling.com/blog/cloud-computing/the-history-of-pets-vs-cattle/). A
+freshly launched instance represents a known good state.
+
+With the healthy instances in rotation, everything stabilized. The 499 log
+messages disappeared, our `curl` test started behaving correctly and users
+were confirming a positive outcome.
 
 ## Root cause analysis
 
@@ -168,7 +170,7 @@ According to [Gordon McKinney's TCP/IP State Transition Diagram](http://www.cs.n
 
 In our case the _"local user"_ was the Node.js application. Adding `-p` to the
 netstat call printed the PID that owned the leaked sockets. The PID belonged to
-our application. 
+our application.
 
 Somewhere in our application, sockets were being created for S3 requests, but
 never cleaned up. These sockets were exhausting some unknown upper limit,
@@ -185,26 +187,32 @@ the following.
 ## AWS SDK for Node.js
 
 All of the connections to AWS S3 were being established via the AWS SDK for
-Node.js. The SDK was inadvertently pinned in our codebase to
-[v2.6.14](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2614) which
-was released shortly before we relaunched thewest.com.au.
+Node.js.
 
-We trawled through GitHub issues, PRs and the SDK Changelog in search of similar
-sounding issues that may have been addressed since this release. The closest we
-found was a note in the [2.50.0](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2500)
-release notes:
+The SDK uses socket pooling for connections to S3. The default [maximum size of
+the pool is 50](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-configuring-maxsockets.html).
+If sockets were leaking and there is an upper boundary to the number of active
+sockets, it stands to reason that new requests to S3 (in our case, for static
+assets) would fail in some way once 50 sockets had leaked. The number 50
+anecdotally matched the number of `CLOSE_WAIT` sockets we had seen with
+netstat.
+
+We also found that our version of the SDK had been inadvertently pinned in our
+codebase to [v2.6.14](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2614),
+which was released shortly before we relaunched thewest.com.au.
+
+Given the age of our SDK version, it was conceivable that the socket leak was
+now a known issue. We trawled through GitHub issues, PRs and the SDK Changelog
+and found a suspect note in the
+[2.50.0](https://github.com/aws/aws-sdk-js/blob/HEAD/CHANGELOG.md#2500) release
+notes:
 
 > bugfix: Request: Updates node.js request handling to obey socket read timeouts
 after response headers have been received. Previously timeouts were being
 ignored once headers were received, sometimes causing connections to hang.
 
-The SDK uses a pool of sockets for connections to S3. The default [maximum size
-of the pool is 50](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-configuring-maxsockets.html).
-If sockets were leaking and there is an upper boundary to the number of active
-sockets, it stands to reason that new requests to S3 (in our case, for static
-assets) would queue forever once 50 sockets had leaked. The number 50
-anecdotally matched the number of `CLOSE_WAIT` sockets we had seen with
-netstat.
+Inspecting the code also revealed a significant body of other work had also been
+released concerning sockets.
 
 We formed a hypothesis that updating the AWS SDK would cause all sockets to be
 cleaned up correctly or emit errors that could be safely handled. There were
@@ -250,17 +258,15 @@ fix deployment.
 
 <img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/state-fix.png" | prepend: site.cdnurl }}" alt="Socket states graph" />
 
-Hey, check out the value in the max column for `CLOSE_WAIT` sockets...
-
-It never went above 50! Coincidently, the maximum number of sockets allowed by
-the AWS SDK for connections to S3.
+Hey, check out the value in the _max_ column for `CLOSE_WAIT` sockets...
 
 Case closed.
 
 ## Lesson learned
-In our context, we have to _"move fast and break things"_. Everything is a
-compromise and we aim to make the best possible moves with the limited
-information and resources we have available at any given time.
+In our context, we have to [_"move fast and break things"_](https://xkcd.com/1428/). Most things require
+a trade-off between time-to-market and accrued technical debt. We aim to make
+the best possible moves with the limited information and resources we have
+available at any given time.
 
 That said, this event highlighted some priorities that could at least help us
 to prevent similar issues in the future.
@@ -276,7 +282,7 @@ indicate that timeouts are incorrectly configured. So...
 Each component should be configured with a timeout that is longer than all its
 upstream dependencies. By example, if you have a 3 second timeout on database
 queries, then the application server should not cancel requests any sooner than
-this. Otherwise the source of the problem is obscured and all you are presented
+this. Otherwise the source of a problem is obscured and all you are presented
 with is a timeout error from a component other that the one that misbehaved - as
 we experienced.
 
@@ -294,16 +300,16 @@ have sent a meaningful 5xx error back downstream.
 
 This principle should also apply to the incoming request to the API. We should
 cancel any request that runs too long, *for any reason*. This has operational
-advantages, but is also good security practice to prevent denial of service.
+advantages, but is also good security practice to mitigate denial of service.
 
 ### Health checks must validate all dependencies
 <a href="https://aws.amazon.com/message/41926/" target="_blank">
-  <img class="right inline" src="{{ "/2017-05-27-a-webops-post-mortem/everything-fails.jpg" | prepend: site.cdnurl }}" alt="Everything fails, all the time" />
+  <img class="inline" src="{{ "/2017-05-27-a-webops-post-mortem/everything-fails.jpg" | prepend: site.cdnurl }}" alt="Everything fails, all the time" />
 </a>
-Each of our micro-services have a health check route that quickly validates each
+Each of our micro-services has a health check route that quickly validates each
 of its known dependencies (e.g. it can connect to the database, write to a log
-file, etc.). In this case we had neglected to include the dependency on S3 in
-the checks. As a result, each service was advertising itself as healthy.
+file, etc.). In this case we had neglected to include S3 in the dependency
+checks. As a result, each service was advertising itself as healthy.
 
 If we had included S3 in the health checks, the checks would have failed, these
 instances would have been marked out of the load balancer, alerts would have
@@ -322,15 +328,15 @@ gave us the best possible outcomes:
 - Services were restored quickly, without introducing unnecessary risk or
   destroying evidence
 
-- We uncovered other weaknesses in our systems that can be addressed before they
-  lead to disaster
+- We uncovered other weaknesses in our systems that could be addressed before
+  they led to disaster
 
 - We learned a whole lot about the software and systems we work with
 
 Thanks for reading! I'd love to hear your thoughts in the comments section
 below.
 
-## Appendix: Leaks in other buckets
+## Appendix: Leaks from other buckets
 
 With our new socket monitoring in place in Zabbix, we noticed a much smaller
 number of sockets to S3 being leaked on almost all of our application servers.
