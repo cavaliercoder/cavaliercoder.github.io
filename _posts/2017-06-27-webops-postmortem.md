@@ -2,6 +2,7 @@
 layout: post
 title:  "A WebOps Postmortem"
 rtime:  11 minutes
+hero: /2017-05-27-a-webops-post-mortem/recvq-fix.png
 ---
 
 Early in the day, May 18, 2017, alerts started appearing from our Content
