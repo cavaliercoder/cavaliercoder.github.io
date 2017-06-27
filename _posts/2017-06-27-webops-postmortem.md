@@ -1,7 +1,6 @@
 ---
 layout: post
-title:  "A WebOps Post-mortem"
-date:   2017-05-27 12:00:00
+title:  "A WebOps Postmortem"
 rtime:  11 minutes
 ---
 
