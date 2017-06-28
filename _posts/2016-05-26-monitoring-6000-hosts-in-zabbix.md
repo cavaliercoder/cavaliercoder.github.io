@@ -1,7 +1,7 @@
 ---
 layout:         post
 title:          "Monitoring 6000+ hosts in Zabbix"
-image:          /2016-05-26-monitoring-6000-hosts-in-zabbix/slides.pdf
+image:          /2016-05-26-monitoring-6000-hosts-in-zabbix/slide1.png
 description:    Slides from Perth DevOps Meetup
 ---
 
