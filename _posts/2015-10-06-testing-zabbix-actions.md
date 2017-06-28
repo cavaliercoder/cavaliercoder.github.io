@@ -18,7 +18,6 @@ a trigger which will fire every time the value of the dummy items changes.
 Instruction is also provided for creating the required media types and actions,
 and finally, triggering a notification on demand using `zabbix_sender`.
 
-
 ## Create an item
 
 First create a dummy item. Navigate to the desired host or template (a
@@ -37,8 +36,9 @@ type for storing an arbitrary timestamp as follows:
 * _Enabled_: checked
 * Click _Add_ to save
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-item.png" | prepend: site.baseurl }}" alt="Add an item">
-
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-item.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-item.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 ## Create a trigger
 
@@ -57,8 +57,9 @@ the first time.
 * _Severity_: Any (except _Not classified_)
 * Click _Add_ to save
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-trigger.png" | prepend: site.baseurl }}" alt="Add an item">
-
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-trigger.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-trigger.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 ## Create a media type
 
@@ -71,7 +72,9 @@ media type_) with the name of your script as follows:
 * _Enabled_: checked
 * Click _Add_ to save
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media-type.png" | prepend: site.baseurl }}" alt="Add an item">
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media-type.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media-type.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 Zabbix also requires at least one user to "send" to using your new media type so
 define contact media as follows (from _Administration_ > _Users_ > [User] >
@@ -82,8 +85,9 @@ _Media_ > _Add_):
 * Click _Add_ to save the media
 * Click _Update_ to save the user
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media.png" | prepend: site.baseurl }}" alt="Add an item">
-
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-media.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 ## Create an action
 
@@ -94,7 +98,9 @@ and add a new condition with:
 * _New condition_: `Trigger = [dummy trigger]`
 * Click _Add_ to save the condition
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-conditions.png" | prepend: site.baseurl }}" alt="Add an item">
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-conditions.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-conditions.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 Select the _Operations_ tab and add a new operation as follows:
 
@@ -102,7 +108,9 @@ Select the _Operations_ tab and add a new operation as follows:
 * _Send only to_: [custom media type]
 * Click _Add_ to save to the operation
 
-<img class="osx-window lightbox" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-operation.png" | prepend: site.baseurl }}" alt="Add an item">
+<a class="lightbox" href="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-operation.png" | prepend: site.baseurl }}">
+    <img class="osx-window" src="{{ "/assets/2015-10-06-testing-zabbix-actions/add-action-operation.png" | prepend: site.baseurl }}" alt="Add an item">
+</a>
 
 Finally, click _Add_ to save the action.
 

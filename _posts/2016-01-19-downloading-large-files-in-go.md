@@ -24,8 +24,8 @@ This article will step you through using a Go package called
 provide these features. We'll build a simple 'wget'-like binary to make use of
 all such awesomeness.
 
-`grab` provides convenience methods `grab.Get()`, `grab.GetAsync()` and
-`grab.GetBatch()` for simple operations. When you need more control over the
+`grab` provides convenience methods `grab.Get`, `grab.GetAsync` and
+`grab.GetBatch` for simple operations. When you need more control over the
 HTTP session, you can use a `grab.Client` and configure it to your needs.
 
 Examples for these functions and using a custom client are included below.
@@ -37,12 +37,12 @@ To get started, install the `grab` package with:
 
 ## Download a file
 
-The simplest way to download a file is using `grab.Get()`. It accepts two
-parameters; a destination file path and the source URL. `grab.Get()` uses
+The simplest way to download a file is using `grab.Get`. It accepts two
+parameters; a destination file path and the source URL. `grab.Get` uses
 `grab.DefaultClient` as a HTTP client which has default settings. It will follow
 redirect responses from remote servers and use a corporate proxy if configured
-on the host system. Essentially, `grab.Get()` is a wrapper for
-`grab.DefaultClient.Do()`.
+on the host system. Essentially, `grab.Get` is a wrapper for
+`grab.DefaultClient.Do`.
 
 You may specify an existing or non-existing file path as the destination or you
 may specify an existing directory.
@@ -50,17 +50,17 @@ may specify an existing directory.
 If a directory is given as the destination, `grab` will determine the filename
 using `Content-Disposition` headers if they are returned by the remote server or
 extract a filename from the source URL. If either of these features fails, an
-error is returned which can be identified using `grab.IsNoFilename()`.
+error is returned which can be identified using `grab.IsNoFilename`.
 
 If the destination filename exists, `grab` assumes it is a complete or partially
 complete download and will resume downloading from the end of the file if
 supported by the remote server. Otherwise the file will be overwritten.
 
-`grab.Get()` and all other download functions return a `grab.Response` which
+`grab.Get` and all other download functions return a `grab.Response` which
 includes context about the downloaded file; including the path where the file
 was saved.
 
-`grab.Get()` is a blocking, synchronous operation, which means that the function
+`grab.Get` is a blocking, synchronous operation, which means that the function
 does not return a response until the download is complete or encounters an
 error. This is not terribly useful for lengthy downloads so I'll solve this
 problem a little further down.
@@ -116,11 +116,11 @@ The simple example above will download a file but it is not practical for
 lengthy downloads which should provide some feedback to the user with the
 progress of the download.
 
-The following example uses `grab.GetAsync()` which immediately returns a channel
+The following example uses `grab.GetAsync` which immediately returns a channel
 which will receive a `*grab.Response` and close as soon as the download has been
 negotiated with the remote server, before the file transfer has started.
 
-`grab.GetAsync()` is a wrapper for `grab.DefaultClient.DoAsync()`.
+`grab.GetAsync` is a wrapper for `grab.DefaultClient.DoAsync`.
 
 Once the response is received, it can be polled periodically to monitor the
 progress of the file transfer until it is finished. This example simply prints a
@@ -290,9 +290,9 @@ or transport. Much like the `net/http` package, `grab` enable such controls as
 well as additional features such as checksum validation via `grab.Client`,
 `grab.Request` and `grab.Response`.
 
-In the same way that the `grab.Get*()` methods work behind the scenes, using
+In the same way that the `grab.Get*` methods work behind the scenes, using
 a client requires that you define and configure a `grab.Client`, one or more
-`grab.Requests` and pass them to one of the `grab.Client.Do*()` methods which
+`grab.Requests` and pass them to one of the `grab.Client.Do*` methods which
 then return a `grab.Response` for each request.
 
 Let's take a look at some of the configuration options available when creating
@@ -347,9 +347,9 @@ req.HTTPRequest.SetBasicAuth("username", "password")
 ## Using a custom Client
 
 `grab` provides a default client, `grab.DefaultClient` which is used by each of
-the `grab.Get*()` methods. If you wish to customize HTTP transport rules such
+the `grab.Get*` methods. If you wish to customize HTTP transport rules such
 as connection timeouts, proxy configuration, redirect policies, etc. you may
-create a custom client with `grab.NewClient()`.
+create a custom client with `grab.NewClient`.
 
 The following code includes examples of customizing a client:
 
@@ -373,17 +373,17 @@ client.HTTPClient = &http.Client{
 {% endhighlight %}
 
 Once you have configured a client and some requests, you pass the requests to
-whichever of the `grab.Do*()` methods best match your use case. These methods
-are synonymous with the `grab.Get*()` methods and behave as follows:
+whichever of the `grab.Do*` methods best match your use case. These methods
+are synonymous with the `grab.Get*` methods and behave as follows:
 
- * `grab.Client.Do()` - blocks and returns a response once the download is
+ * `grab.Client.Do` - blocks and returns a response once the download is
    completed or an error occurs
 
- * `grab.Client.DoAsync()` - immediately returns a channel which will receive a
+ * `grab.Client.DoAsync` - immediately returns a channel which will receive a
    single `*grab.Response` and close as soon as the download has been negotiated
    with the remote server; before the transfer has started
 
- * `grab.Client.DoBatch()` - accepts multiple requests and executes them
+ * `grab.Client.DoBatch` - accepts multiple requests and executes them
    simultaneously. It accepts a `workers` parameter which determines how many
    downloads will be in process at any given time, while the remaining requests
    are queued until a worker is available. It returns a channel which will

@@ -1,12 +1,13 @@
 ---
-layout:    post
-title:     "Zabbix Conference 2016"
+layout:       post
+title:        "Zabbix Conference 2016"
+description:  Automation and tools for Zabbix at Zabbix Conference 2016
+image:        /2016-09-18-zabbix-conference-2016/slides.png
 ---
 
 <iframe id="ytplayer" type="text/html" width="740" height="420"
   src="https://www.youtube.com/embed/nlk3nMHy188?autoplay=1&origin=http://cavaliercoder.com"
   frameborder="0"></iframe>
-
 
 <a href="{{ "/2016-09-18-zabbix-conference-2016/slides.pdf" | prepend: site.cdnurl }}" target="_blank">
     <img class="right" src="{{ "/2016-09-18-zabbix-conference-2016/slides.png" | prepend: site.cdnurl }}" alt="Download slide deck">

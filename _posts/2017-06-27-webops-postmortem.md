@@ -2,7 +2,7 @@
 layout: post
 title:  "A WebOps Postmortem"
 rtime:  11 minutes
-hero: /2017-05-27-a-webops-post-mortem/recvq-fix.png
+image:  /2017-05-27-a-webops-post-mortem/recvq-fix.png
 ---
 
 Early in the day, May 18, 2017, alerts started appearing from our Content
@@ -10,9 +10,7 @@ Distribution Network that a number of user requests were being served with
 [504 Gateway Timeout](https://tools.ietf.org/html/rfc7231#section-6.6.5)
 responses.
 
-<a href="https://www.shopthewalkingdead.com/" target="_blank">
-  <img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
-</a>
+<img class="inline right" src="{{ "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" | prepend: site.cdnurl }}" alt="Negan: I hope you have your shitting pants on" />
 
 I lead the Production Engineering team at Seven West Media in Western Australia
 and the alerts indicated an issue with [thewest.com.au](https://thewest.com.au).
@@ -44,7 +42,9 @@ client-side Javascript which uses the Single-Page Application model (see:
 It also serves static assets, such as images, which it pipes directly from
 Amazon S3.
 
-<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/network-io.png" | prepend: site.cdnurl }}" alt="Network I/O on Content API instance" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/network-io.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/network-io.png" | prepend: site.cdnurl }}" alt="Network I/O on Content API instance" />
+</a>
 
 The above figure from Zabbix shows that network I/O became more _"ordered"_ on
 one of the Content API instances around 7 AM. A [brief exploration of Complexity
@@ -75,7 +75,9 @@ One fastidious engineer noticed something else amiss: a large number of
 [499 Client Closed Request](http://lxr.nginx.org/source/src/http/ngx_http_request.h#0124)
 responses being logged by nginx on the same Content API servers.
 
-<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/499-graph.png" | prepend: site.cdnurl }}" alt="HTTP 409 status graph" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/499-graph.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/499-graph.png" | prepend: site.cdnurl }}" alt="HTTP 409 status graph" />
+</a>
 
 The above screen grab from Sumo Logic of the same instance shows the uptick in
 499 status messages at the same time that the network I/O anomaly appeared. The
@@ -97,7 +99,9 @@ response or error.
 
 So here's what we knew:
 
-<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/what-we-know.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+</a>
 
 - Either our CDN or Load Balancing layer was cancelling some requests and
   returning status 504 as no timely response was received from upstream
@@ -147,7 +151,9 @@ A call to `$ netstat -t4` shows all TCPv4 sockets on a Linux system. The
 following figure shows the results of this call on both an unhealthy (left) and
 healthy (right) Content API instance.
 
-<img class="osx-window lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/netstat-bad.png" | prepend: site.cdnurl }}" alt="netstat session" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/netstat-bad.png" | prepend: site.cdnurl }}">
+  <img class="osx-window" src="{{ "/2017-05-27-a-webops-post-mortem/netstat-bad.png" | prepend: site.cdnurl }}" alt="netstat session" />
+</a>
 
 Notice that the unhealthy instance has a large number of sockets in a
 `CLOSE_WAIT` state and also that most sockets have a large quantity of packets
@@ -179,7 +185,9 @@ causing new requests to hang.
 Now we know where to look and our picture of the control path has a little more
 detail. Here's how it looked once the leaked sockets reached critical mass:
 
-<img class="lightbox figure" src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/what-we-know-2.png" | prepend: site.cdnurl }}" alt="Sequence diagram" />
+</a>
 
 We set about tracing the code path for S3 requests in our codebase and found
 the following.
@@ -245,7 +253,9 @@ environments.
 It worked! The following figure from Zabbix shows the dramatic change in
 behavior around June 2nd, when the fix was subsequently deployed to production.
 
-<img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/recvq-fix.png" | prepend: site.cdnurl }}" alt="Socket Recv-Q graph" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/recvq-fix.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/recvq-fix.png" | prepend: site.cdnurl }}" alt="Socket Recv-Q graph" />
+</a>
 
 The gradual upward trend of the Receive Queue length (green) stops after the
 production deployment and the queue length stabilizes. The earlier sawtooth
@@ -256,7 +266,9 @@ The following figure shows sockets states on the same server. You will notice
 the thin, red slice of `CLOSE_WAIT` sockets discontinues around the time of the
 fix deployment.
 
-<img class="lightbox" src="{{ "/2017-05-27-a-webops-post-mortem/state-fix.png" | prepend: site.cdnurl }}" alt="Socket states graph" />
+<a class="lightbox" href="{{ "/2017-05-27-a-webops-post-mortem/state-fix.png" | prepend: site.cdnurl }}">
+  <img src="{{ "/2017-05-27-a-webops-post-mortem/state-fix.png" | prepend: site.cdnurl }}" alt="Socket states graph" />
+</a>
 
 Hey, check out the value in the _max_ column for `CLOSE_WAIT` sockets...
 
@@ -306,6 +318,7 @@ advantages, but is also good security practice to mitigate denial of service.
 <a href="https://aws.amazon.com/message/41926/" target="_blank">
   <img class="inline" src="{{ "/2017-05-27-a-webops-post-mortem/everything-fails.jpg" | prepend: site.cdnurl }}" alt="Everything fails, all the time" />
 </a>
+
 Each of our micro-services has a health check route that quickly validates each
 of its known dependencies (e.g. it can connect to the database, write to a log
 file, etc.). In this case we had neglected to include S3 in the dependency

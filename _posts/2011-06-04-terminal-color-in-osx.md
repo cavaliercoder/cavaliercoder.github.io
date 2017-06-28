@@ -7,7 +7,9 @@ date:   2011-06-04 12:00:00
 Have you ever wanted to add some color to the text in your OSX terminal? Colored text makes output
 so much easier to read, it leaves me surprised that Apple have not implemented it themselves.
 
-<img class="osx-window" src="{{ "/assets/2011-06-04-terminal-color-in-osx/osx-color.png" | prepend: site.baseurl }}" alt="screenshot">
+<a class="lightbox" href="{{ "/assets/2011-06-04-terminal-color-in-osx/osx-color.png" }}">
+	<img class="osx-window" src="{{ "/assets/2011-06-04-terminal-color-in-osx/osx-color.png" | prepend: site.baseurl }}" alt="screenshot">
+</a>
 
 Adding color requires editing the PS1 environment variable in BASH. BASH is the command interpreter
 used by OSX Terminal, and PS1 is the variable that represents the command prompt displayed to the

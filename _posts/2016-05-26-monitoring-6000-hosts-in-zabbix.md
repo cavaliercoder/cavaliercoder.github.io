@@ -1,6 +1,8 @@
 ---
-layout:    post
-title:     "Monitoring 6000+ hosts in Zabbix"
+layout:         post
+title:          "Monitoring 6000+ hosts in Zabbix"
+image:          /2016-05-26-monitoring-6000-hosts-in-zabbix/slides.pdf
+description:    Slides from Perth DevOps Meetup
 ---
 
 <a href="{{ "/2016-05-26-monitoring-6000-hosts-in-zabbix/slides.pdf" | prepend: site.cdnurl }}" target="_blank">
