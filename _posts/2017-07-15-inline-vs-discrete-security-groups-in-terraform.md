@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Inline vs. discrete rules for AWS Security Groups in Terraform"
+image:  /2017-07-15-inline-vs-discrete-security-groups-in-terraform/terraform.png
 ---
 
 There are two ways to configure AWS Security Groups in Terraform. You may define
