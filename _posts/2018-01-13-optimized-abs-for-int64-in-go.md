@@ -28,7 +28,7 @@ don't directly apply to integers, due to their underlying encoding.
 There must be other options. So begins my adventure into optimizing a simple
 function in Go!
 
-## Stdlib vs Conditionals
+## Type conversion vs. branching
 
 The most obvious solution to me for this problem was a very basic function which
 returns `n` if `n` is zero or greater, and returns `-n` if `n` is less than
@@ -101,7 +101,7 @@ program, meaning that [pipelining processors cannot predict what will happen
 next](http://euler.mat.uson.mx/~havillam/ca/CS323/0708.cs-323007.html). Sounds
 important?
 
-## Hacker's delight
+## A non-branching solution
 
 [Chapter 2 of Hacker's Delight by Henry S. Warren](
 https://books.google.com.au/books?id=VicPJYM0I5QC&lpg=PA18&ots=2o-SROAuXq&dq=hackers%20delight%20absolute&pg=PA18#v=onepage&q=hackers%20delight%20absolute&f=false)
