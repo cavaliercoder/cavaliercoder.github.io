@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Optimized abs() for int64 in Go"
+image:  /2018-01-13-optimized-abs-for-int64-in-go/RFrench-Gopher.jpg
 ---
 
 The Go programming language has no built in `abs` function for computing the
