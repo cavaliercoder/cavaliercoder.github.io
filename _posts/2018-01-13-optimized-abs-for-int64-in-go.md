@@ -29,6 +29,9 @@ don't directly apply to integers, due to their underlying encoding.
 There must be other options. So begins my adventure into optimizing a simple
 function in Go!
 
+You can find the source code and tests for this article on
+[GitHub](https://github.com/cavaliercoder/go-abs).
+
 ## Type conversion vs. branching
 
 The most obvious solution to me for this problem was a very basic function which
