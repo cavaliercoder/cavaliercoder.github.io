@@ -34,3 +34,9 @@ if you have a little more time on your hands.
 * [Ops Class](https://www.ops-class.org/)
 
 * [Anything Brendan Gregg has written, ever](http://www.brendangregg.com/)
+
+## Go lang
+
+* [Go functions in assembly language](https://github.com/golang/go/files/447163/GoFunctionsInAssembly.pdf)
+
+
