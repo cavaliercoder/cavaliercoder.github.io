@@ -39,4 +39,7 @@ if you have a little more time on your hands.
 
 * [Go functions in assembly language](https://github.com/golang/go/files/447163/GoFunctionsInAssembly.pdf)
 
+## Reliability
+
+* [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
 
