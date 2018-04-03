@@ -43,3 +43,11 @@ if you have a little more time on your hands.
 
 * [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
 
+## CS Papers
+
+* [In Search of an Understandable Consensus Algorithm](https://raft.github.io/raft.pdf)
+
+* [ZooKeeper: Wait-free coordination for Internet-scale systems](https://www.usenix.org/legacy/event/atc10/tech/full_papers/Hunt.pdf)
+
+* [Condition Variables](http://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf)
+
