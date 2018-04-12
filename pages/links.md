@@ -35,11 +35,15 @@ if you have a little more time on your hands.
 
 * [Anything Brendan Gregg has written, ever](http://www.brendangregg.com/)
 
+* [Optimizing Non-Sequential Independent Loads with Software Prefetching](http://www.jeffplaisance.com/2014/07/optimizing-non-sequential-independent.html)
+
 ## Go lang
 
 * [Go functions in assembly language](https://github.com/golang/go/files/447163/GoFunctionsInAssembly.pdf)
 
 * [Go's work-stealing scheduler](https://rakyll.org/scheduler/)
+
+* [Effects of CPU caches](https://medium.com/@minimarcel/effect-of-cpu-caches-57db81490a7f)
 
 ## Reliability
 
