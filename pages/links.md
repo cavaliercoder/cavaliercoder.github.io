@@ -45,6 +45,8 @@ if you have a little more time on your hands.
 
 * [Effects of CPU caches](https://medium.com/@minimarcel/effect-of-cpu-caches-57db81490a7f)
 
+* [Go internals](https://github.com/teh-cmc/go-internals)
+
 ## Reliability
 
 * [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
