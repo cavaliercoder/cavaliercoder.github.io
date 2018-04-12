@@ -57,3 +57,5 @@ if you have a little more time on your hands.
 
 * [Condition Variables](http://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf)
 
+* [High Performance Microprocessors](http://euler.mat.uson.mx/~havillam/ca/CS323/index.html)
+
