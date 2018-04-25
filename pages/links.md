@@ -61,3 +61,5 @@ if you have a little more time on your hands.
 
 * [High Performance Microprocessors](http://euler.mat.uson.mx/~havillam/ca/CS323/index.html)
 
+* [Consistent Hashing and Random Trees](https://www.akamai.com/us/en/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf)
+
