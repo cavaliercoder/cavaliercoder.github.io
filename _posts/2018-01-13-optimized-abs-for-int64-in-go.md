@@ -35,8 +35,8 @@ You can find the source code and tests for this article on
 ## Type conversion vs. branching
 
 The most obvious solution to me for this problem was a very basic function which
-returns `n` if `n` is zero or greater, and returns `-n` if `n` is less than
-zero. The double negative is, of course, always positive.
+returns `n` if `n` is zero or greater, and returns negative `n` if `n` is less
+than zero. The double negative is, of course, always positive.
 
 Since it relies on a branching control structure to calculate an absolute value,
 let's call this function `abs.WithBranch`.
@@ -87,9 +87,52 @@ ok      github.com/cavaliercoder/abs    2.320s
 ```
 
 At 0.30 ns/op (nanoseconds per operation), `WithBranch` is more than twice as
-fast! It also has the advantage that it won't truncate any large numbers when
-converting from a signed `int64` to an IEEE-754 `float64`, which loses bits to
-represent the decimal point.
+fast! But our benchmark doesn't represent the real world...
+
+## Benchmarking
+
+We know that branching code breaks the sequential flow of a
+program, meaning that [pipelining processors must predict what will happen
+next](http://euler.mat.uson.mx/~havillam/ca/CS323/0708.cs-323007.html) to
+maintain similar performance to a sequential program.
+
+In the above benchmark, we used a constant value as the input to each call to
+`abs`. Because of this, the processor is able to predict which branch to take
+every time, because it's the same every time.
+
+We can trip the processor's ability to predict the flow of execution, and better
+represent real world use-cases by introducing a Pseudo Random-Number Generator.
+If the input is random, the output will be random and the processor's
+predictions should be wrong more often.
+
+Given there are only two possible futures, I assume a pipelining processor can
+compute both outcomes at once, without a performance penalty. Let's test by
+experiment.
+
+```
+$ go test -bench=.
+goos: darwin
+goarch: amd64
+pkg: github.com/cavaliercoder/go-abs
+BenchmarkRand-8                 1000000000               2.59 ns/op
+BenchmarkWithBranch-8           200000000                6.36 ns/op
+BenchmarkWithStdLib-8           500000000                3.13 ns/op
+PASS
+ok      github.com/cavaliercoder/go-abs 6.692s
+```
+
+I've introduced a new benchmark, `BenchmarkRand`, to measure the overhead of the
+RNG. We can substract the resulting overhead from the other benchmarks for an
+approximation of their actual runtime.
+
+It turns out, `abs.WithBranch` doesn't perform very well with random input. In
+fact, `abs.WithStdLib` is nearly seven times faster.
+
+## Truncation
+
+Before we throw out the branching approach, it should be noted that it has the
+advantage that it won't truncate any large numbers by converting from a signed
+`int64` to an IEEE-754 `float64`, losing bits to represent the decimal point.
 
 By example, `abs.WithBranch(-9223372036854775807)` correctly returns
 `9223372036854775807`, while `abs.WithStdLib(-9223372036854775807)` experiences
@@ -97,13 +140,8 @@ an overflow during the type conversion and incorrectly returns
 `-9223372036854775808`. It even returns the same incorrect, negative result for
 a high positive input, `abs.WithStdLib(9223372036854775807)`.
 
-The branching approach is clearly faster and more correct for signed integers,
-but can we do better?
-
-We know that branching code breaks the sequential flow of a
-program, meaning that [pipelining processors cannot predict what will happen
-next](http://euler.mat.uson.mx/~havillam/ca/CS323/0708.cs-323007.html). Sounds
-important?
+The type conversion approach is faster with random input, but the branching
+approach is more correct. Can we do better?
 
 ## A non-branching solution
 
@@ -115,11 +153,8 @@ https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html) arithmetic.
 
 To compute the absolute value of `x`, first, we compute the value `y` which is
 equal to `x ⟫ 63`. That is, `x` right shifted by 63 bits on a 64 bit
-architecture. If you're familiar with signed integers, you'll note the value of
-`y` will now be `1` if `x` is negative, otherwise `0`.
-
-Finally, compute `(x ⨁ y) - y`. That is, `x` exclusive-or `y`, take `y`. This
-yields the absolute value of `x`.
+architecture. Finally, compute `(x ⨁ y) - y`. That is, `x` exclusive-or `y`,
+take `y`. This yields the absolute value of `x`.
 
 Because we live hardcore, let's implement this in assembly!
 
@@ -154,18 +189,18 @@ And the benchmarks results:
 $ go test -bench=.
 goos: darwin
 goarch: amd64
-pkg: github.com/cavaliercoder/abs
-BenchmarkWithBranch-8           2000000000               0.29 ns/op
-BenchmarkWithStdLib-8           2000000000               0.78 ns/op
-BenchmarkWithASM-8              2000000000               1.78 ns/op
+pkg: github.com/cavaliercoder/go-abs
+BenchmarkRand-8                 1000000000               2.52 ns/op
+BenchmarkWithBranch-8           200000000                5.91 ns/op
+BenchmarkWithStdLib-8           500000000                2.88 ns/op
+BenchmarkWithASM-8              1000000000               2.78 ns/op
 PASS
-ok      github.com/cavaliercoder/abs    6.059s
+ok      github.com/cavaliercoder/go-abs 9.454s
 ```
 
-Well, that's embarrassing!!! WTF?
-
-It turn's out, in my naive benchmarks, that the non-branching, highly succinct
-assembler code runs significantly slower at 1.78 ns/op. How can this be?
+All right! We observe a minor improvement of 0.10 ns/op. That's actually a ~38%
+speed up. Still, there could be more! It might help to understand how Go
+treats ASM code.
 
 ## Compiler optimizations
 
@@ -226,7 +261,7 @@ to be inlined, but `WithASM` is not. Even the underlying call to `math.Abs` is
 inlined into `WithStdLib`.
 
 Since our `WithASM` function cannot be inlined, each caller incurs the overhead
-of a function call. This means allocating a stack, copying in arguments,
+of a function call. This means writing a stack frame, copying in arguments,
 branching the program pointer, etc.
 
 What if we even the playing field and disable inlining on our other Go
@@ -257,31 +292,30 @@ abs.go:22:23: inlining call to math.Abs
 And here are the benchmark results:
 
 ```
-$ go test -bench=.
+$go test -bench=.
 goos: darwin
 goarch: amd64
-pkg: github.com/cavaliercoder/abs
-BenchmarkWithBranch-8           1000000000               1.87 ns/op
-BenchmarkWithStdLib-8           1000000000               1.94 ns/op
-BenchmarkWithASM-8              2000000000               1.84 ns/op
+pkg: github.com/cavaliercoder/go-abs
+BenchmarkRand-8                 1000000000               2.40 ns/op
+BenchmarkWithBranch-8           200000000                7.06 ns/op
+BenchmarkWithStdLib-8           500000000                3.46 ns/op
+BenchmarkWithASM-8              1000000000               2.86 ns/op
 PASS
-ok      github.com/cavaliercoder/abs    8.122s
+ok      github.com/cavaliercoder/go-abs 10.032s
 ```
 
-Each function now performs at around ~1.9ns/op.
-
-You might infer the overhead of a function call to be around ~1.5ns for each
-solution. The overhead appears to negate any minor speed advantage in the
-body of our functions.
+The performance of `WithASM` remains unchanged, while `WithStdLib` is three
+times slower thanks to the overhead of the non-inline function call.
 
 The lesson learned for me here, is that the performance gained by implementing
 ASM by hand needs to outweigh the benefits of compiler type safety, garbage
-collection and function inlining. In most cases, this won't be the true, though
-there are exceptions, like taking advantage of [SIMD](
+collection, function inlining, etc. In most cases, this won't be the true,
+though there are exceptions; like taking advantage of [SIMD](
 https://goroutines.com/asm) instructions for cryptography or media encoding.
 
-Running the benchmarks a few times it becomes clear that there are no
-significant performance gains to be had. We need function inlining.
+Running the benchmarks a few times it becomes clear that there is a reasonable
+performance gain to be had via ASM. But, can we somehow retain the benefits of
+inlining?
 
 ## One inline function, please
 
@@ -305,20 +339,21 @@ $ go tool compile -m abs.go
 abs.go:26:6: can inline WithTwosComplement
 ```
 
-How does it perform? It turns out, when we re-enable inlining, it performs very
-similar to `WithBranch`:
+How does it perform? It turns out, when we re-enable inlining, it performs even
+better! A whole 0.18 ns better, or roughly 60%.
 
 ```plain
 $ go test -bench=.
 goos: darwin
 goarch: amd64
-pkg: github.com/cavaliercoder/abs
-BenchmarkWithBranch-8                   2000000000               0.29 ns/op
-BenchmarkWithStdLib-8                   2000000000               0.79 ns/op
-BenchmarkWithTwosComplement-8           2000000000               0.29 ns/op
-BenchmarkWithASM-8                      2000000000               1.83 ns/op
+pkg: github.com/cavaliercoder/go-abs
+BenchmarkRand-8                         1000000000               2.39 ns/op
+BenchmarkWithBranch-8                   300000000                5.71 ns/op
+BenchmarkWithStdLib-8                   1000000000               3.01 ns/op
+BenchmarkWithASM-8                      1000000000               2.88 ns/op
+BenchmarkWithTwosComplement-8           1000000000               2.70 ns/op
 PASS
-ok      github.com/cavaliercoder/abs    6.777s
+ok      github.com/cavaliercoder/go-abs 14.417s
 ```
 
 Now that the overhead of a function call is gone, the Two's Complement
@@ -358,13 +393,22 @@ same ideal behavior. When I run `go test -bench=. -benchmem`, I observe that
 each of the functions result in zero allocation operations and zero bytes
 allocated within the function body.
 
+## Homework
+
+A few exercises for the reader:
+
+1. What if we implemented the assembly for `abs` as a compiler intrinsic, rather
+   than a runtime function call?
+
+2. What if we used the `PABSQ` instruction included in SSSE3? This is not
+   currently supported in Go's ASM.
+
 ## Conclusion
 
 The Two's Complement implementation in Go offers portability, function inlining,
-non-branching code, zero allocations and no integer truncation due to type
-conversions. The benchmarks never showed any significant speed advantage over
-the branching approach, but this approach was selected anyway as, _in theory_,
-non-branching code should perform better in more diverse scenarios.
+predictable performance, zero allocations and no integer truncation due to type
+conversions. The benchmarks showed a significant speed advantage over the other
+approaches.
 
 The end result:
 
