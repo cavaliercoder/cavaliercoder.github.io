@@ -21,6 +21,8 @@ if you have a little more time on your hands.
 
 * [The Science Behind Why Jeff Bezos’s Two-Pizza Team Rule Works](http://blog.idonethis.com/two-pizza-team/)
 
+* [Becoming a 10x developer](https://kateheddleston.com/blog/becoming-a-10x-developer)
+
 ## Product lifecycle
 
 * [On mapping and the evolution axis](http://blog.gardeviance.org/2014/03/on-mapping-and-evolution-axis.html)
