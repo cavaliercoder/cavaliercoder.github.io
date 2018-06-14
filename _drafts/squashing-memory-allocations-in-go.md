@@ -31,7 +31,7 @@ Every time you declare a variable using `:=` or `var` or call functions like
 
 Memory needs to be reserved before it can be written to. We call this process
 _memory allocation_, frequently observed in functions like `malloc`. On modern
-systems, The Go runtime incurs a small (10s of nanoseconds) penalty for most
+systems, the Go runtime incurs a small penalty (10s of nanoseconds) for most
 types of memory allocations. Depending on your program, these small latencies
 might quickly compound into a performance bottleneck. Maybe. Read on.
 
@@ -66,7 +66,7 @@ other place it can be, the home of our longer lived data: the _heap_.
 
 ### The heap
 
-The heap is where all other data go to live. A heap _object_ is a variable, or
+The heap is where most other data go to live. A heap _object_ is a variable, or
 some referencable chunk of data that is stored and tracked in the heap. Heap
 objects can be any size (within available memory limits) and are not cleaned up
 when the function that created them exits.
@@ -97,7 +97,7 @@ trade-offs you are making by doing so.
 By example, there is no point in sacrificing the readability of your code to
 remove a heap allocation that only ever occurs once or twice.
 
-I'll explain how to identify these bottlenecks (optimization opportunities), in
+I'll explain how to identify these bottlenecks or optimization opportunities, in
 the following sections.
 
 ## Example code
@@ -174,7 +174,7 @@ The output will be correct:
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
 ```
 
-Head on over the full example on [Github](https://github.com/cavaliercoder/memtest/blob/master/decoder_test.go)
+Head on over to the full example on [Github](https://github.com/cavaliercoder/memtest/blob/master/decoder_test.go)
 to see this in effect - including the code for the following benchmarks.
 
 A simple benchmark processes this same input as fast as possible:
@@ -203,8 +203,12 @@ or latency waiting on locks. In fact, there is a great article in the
 [Go wiki](https://github.com/golang/go/wiki/Performance) which describes all of
 this and more.
 
-Let's zoom in on memory allocations, since we know that a reduction in heap
-allocations should result in:
+Further, you should take some time to read [Brendan Gregg's blog](http://www.brendangregg.com/methodology.html)
+or books. Brendan's material could be considered the canon of the art of systems
+performance analysis.
+
+For now, let's zoom in on memory allocations, since we know that a reduction in
+heap allocations should result in:
 
 - less time spent allocating memory
 - better utilization of CPU caches
@@ -230,8 +234,8 @@ We see that there were, on average, 9 heap allocations for each call to
 `DecodeSimple` (you may need to scroll right a little).
 
 To see where these allocations are occuring, let's run the benchmarks again,
-but this time, profiling every memory allocation and storing the results for
-analysis in a file named `mem.prof`.
+but this time, profiling every memory allocation and storing the results in a
+file named `mem.prof` for later analysis.
 
 ```plain
 $ go test \
@@ -295,10 +299,10 @@ they map to the following code:
 - `s := string(b)` - converting bytes to a string
 - `tokens := strings.Split(s, " ")` - splitting the string into tokens
 
-There are two problems to solve:
+There are two problems to solve. Frequent allocations are cause by:
 
-- input and output buffers require allocation
-- working with strings requires allocations
+- reading and writing to input and output buffers
+- working with strings
 
 Let's start by optimizing around the input and output buffer problem.
 
@@ -379,14 +383,14 @@ As presumed, these lines map to our work with strings:
 
 ### Optimization 2: Avoid string manipulation
 
-In Go, stings are immutable. This means that under the hood, they can not be
-modified, stuck together, split in half, converted to bytes, etc..
+In Go, strings are immutable. Under the hood, they can not be modified, stuck
+together, split in half, converted to bytes, etc..
 
 All of these operations result in the creation (and potential allocation) of a
 new string!
 
 Don't get me wrong: strings are perfectly safe to use. It's just that they need
-be understood when memory allocation is a concerned.
+be understood when memory allocation is a concern.
 
 The following `DecoderFunc` negates the need for strings by parsing the input
 byte stream manually. I call it `DecodeNoAlloc` for a reason you will shortly
@@ -470,8 +474,8 @@ Would you look at that! An 85% performance increase over our first example at
 That's the difference between 1 million requests per second, and 5 million.
 That means more predictable memory consumption and less time spent in GC.
 
-Despite this, we still suffer the restrictions imposed by a fixed size input and
-output buffer. This won't do for larger inputs.
+Despite this, we now suffer from limited input sizes and corruption during
+concurrent usage.
 
 ## Trade-offs
 
@@ -609,7 +613,7 @@ buffers is only incurred once for each goroutine. The cost of dynamic buffer
 expansion still applies.
 
 The following example is not a `DecoderFunc`, but instead is a function that
-returns a `DecoderFunc`.
+returns a `DecoderFunc` with its own input and output buffers.
 
 ```go
 // NewDecodeConcurrent returns a DecoderFunc that behaves similarly to
@@ -719,7 +723,7 @@ If concurrency is important to you, this seems like a reasonable trade-off.
 
 ## Summary
 
-We managed to optimize away all memory allocations and dramatically improve
+We managed to optimize away most memory allocations and dramatically improve
 the latency of our `DecoderFuncs`. We made reasonable performance trade-offs
 that enabled our code to be concurrency-safe and accept inputs of any length,
 within available memory constraints. Not bad!
