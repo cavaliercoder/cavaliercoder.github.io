@@ -65,3 +65,4 @@ if you have a little more time on your hands.
 
 * [Consistent Hashing and Random Trees](https://www.akamai.com/us/en/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf)
 
+* [Monadic Parser Combinators](http://eprints.nottingham.ac.uk/237/1/monparsing.pdf)
