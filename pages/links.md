@@ -9,27 +9,21 @@ Here are some links to great resources that have tranformed my thinking.
 I also have a list of [recommended books]({{ site.baseurl }}/books)
 if you have a little more time on your hands.
 
-## Agile
+## Methodology
 
 * [When agile is the wrong choice for your organization](http://techbeacon.com/when-agile-wrong-choice-your-organization)
 
-## Management
-
 * [The Definitive Guide to Google Snippets](http://blog.idonethis.com/google-snippets-internal-tool/)
-
-## Teamwork
 
 * [The Science Behind Why Jeff Bezos’s Two-Pizza Team Rule Works](http://blog.idonethis.com/two-pizza-team/)
 
 * [Becoming a 10x developer](https://kateheddleston.com/blog/becoming-a-10x-developer)
 
-## Product lifecycle
-
 * [On mapping and the evolution axis](http://blog.gardeviance.org/2014/03/on-mapping-and-evolution-axis.html)
 
-## Disruption and change
-
 * [GCHQ's Boiling Frogs research paper](https://github.com/GovernmentCommunicationsHeadquarters/BoilingFrogs)
+
+* [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
 
 ## Operating System Internals
 
@@ -38,6 +32,8 @@ if you have a little more time on your hands.
 * [Anything Brendan Gregg has written, ever](http://www.brendangregg.com/)
 
 * [Optimizing Non-Sequential Independent Loads with Software Prefetching](http://www.jeffplaisance.com/2014/07/optimizing-non-sequential-independent.html)
+
+* [TCMalloc](http://goog-perftools.sourceforge.net/doc/tcmalloc.html)
 
 ## Go lang
 
@@ -50,12 +46,6 @@ if you have a little more time on your hands.
 * [Go internals](https://github.com/teh-cmc/go-internals)
 
 * [Go memory management](https://povilasv.me/go-memory-management/)
-
-* [TCMalloc](http://goog-perftools.sourceforge.net/doc/tcmalloc.html)
-
-## Reliability
-
-* [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
 
 ## CS Papers
 
