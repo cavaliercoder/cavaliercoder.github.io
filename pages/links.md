@@ -51,6 +51,8 @@ if you have a little more time on your hands.
 
 * [Go memory management](https://povilasv.me/go-memory-management/)
 
+* [TCMalloc](http://goog-perftools.sourceforge.net/doc/tcmalloc.html)
+
 ## Reliability
 
 * [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
