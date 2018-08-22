@@ -49,6 +49,8 @@ if you have a little more time on your hands.
 
 * [Go internals](https://github.com/teh-cmc/go-internals)
 
+* [Go memory management](https://povilasv.me/go-memory-management/)
+
 ## Reliability
 
 * [Dickerson's Hierarchy of Service Reliability](https://landing.google.com/sre/book/chapters/part3.html)
