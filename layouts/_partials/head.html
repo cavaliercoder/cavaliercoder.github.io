@@ -1,0 +1,33 @@
+{{- $title := cond .IsHome site.Title .Title -}}
+{{- $summary := "" -}}
+{{- with .Params.description -}}
+  {{- $summary = . -}}
+{{- else -}}
+  {{- $summary = cond .IsHome site.Params.description (trim (.Summary | plainify | htmlUnescape | replaceRE `\s+` " ") " ") -}}
+{{- end -}}
+{{- $css := resources.Get "css/main.scss" | css.Sass (dict "transpiler" "libsass" "targetPath" "css/main.css" "includePaths" (slice "assets/css/_sass")) -}}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ $title }}</title>
+  <meta name="description" content="{{ $summary | truncate 160 }}">
+
+  <meta name="og:type" content="article" />
+  <meta name="og:title" content="{{ $title }}" />
+  <meta name="og:description" content="{{ $summary }}" />
+  <meta name="og:url" content="{{ .Permalink }}" />
+  {{- with .Params.image }}
+  <meta name="og:image" content="{{ printf "%s%s" site.Params.cdnurl . }}" />
+  {{- end }}
+
+  <meta name="twitter:card" content="summary" />
+
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "feed.xml" | absURL }}" />
+
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css">
+
+</head>

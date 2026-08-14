@@ -1,0 +1,24 @@
+# Local development: serve blog assets from ./s3 (populated by `make s3-pull`)
+# instead of the live CDN. Mirrors the old Jekyll _config_dev.yml.
+[params]
+  cdnurl = "/s3"
+
+[[module.mounts]]
+  source = "assets"
+  target = "assets"
+
+[[module.mounts]]
+  source = "content"
+  target = "content"
+
+[[module.mounts]]
+  source = "layouts"
+  target = "layouts"
+
+[[module.mounts]]
+  source = "static"
+  target = "static"
+
+[[module.mounts]]
+  source = "s3"
+  target = "static/s3"

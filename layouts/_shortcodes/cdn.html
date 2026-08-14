@@ -1,0 +1,2 @@
+{{- /* Emit a URL for an asset hosted on the blog CDN. Usage: {{< cdn "/img.png" >}} */ -}}
+{{- printf "%s%s" site.Params.cdnurl (.Get 0) -}}

@@ -1,19 +1,16 @@
 all: build
 
 build:
-	jekyll build
+	hugo --minify
 
 clean:
-	rm -rf _site/ .sass-cache/
+	rm -rf public/ resources/
 
 run:
-	jekyll serve \
-		--config=_config.yml,_config_dev.yml \
-		--baseurl="" \
-		--drafts
+	hugo server --buildDrafts --disableFastRender
 
 get-deps:
-	gem install jekyll bundler
+	brew install hugo
 
 s3-pull:
 	mkdir ./s3/ || :
@@ -22,4 +19,4 @@ s3-pull:
 s3-push:
 	aws s3 sync ./s3/ s3://s3.cavaliercoder.com/blog/
 
-.PHONY: all build clean run
+.PHONY: all build clean run get-deps s3-pull s3-push

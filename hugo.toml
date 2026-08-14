@@ -1,0 +1,44 @@
+baseURL = "https://cavaliercoder.com/"
+locale = "en-au"
+title = "Ryan Armstrong's Blog"
+enableRobotsTXT = true
+
+# No taxonomies are used, and RSS is only wanted for the home page.
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "The poorly maintained ramblings of an Infrastructure/Software engineer."
+  cdnurl = "https://cdn.cavaliercoder.com/blog"
+  github_username = "cavaliercoder"
+  googleAnalytics = "UA-10121904-2"
+
+# Preserve the URLs minted by Jekyll: /blog/:title.html. Posts that set `url`
+# in front matter (e.g. /jclouds) override this. The .html suffix comes from
+# uglyURLs rather than the pattern, or Hugo would treat it as a directory name.
+[permalinks.page]
+  posts = "/blog/:slug"
+
+[uglyURLs]
+  posts = true
+
+[outputs]
+  home = ["html", "rss"]
+  page = ["html"]
+  section = ["html"]
+
+# Jekyll published the feed at /feed.xml, not Hugo's default /index.xml.
+[outputFormats.rss]
+  baseName = "feed"
+
+[markup.goldmark.renderer]
+  # Posts embed raw HTML (lightbox anchors, jQuery demos) alongside Markdown.
+  unsafe = true
+
+[markup.highlight]
+  # Emit Pygments-compatible classes so assets/css/_sass/_syntax-highlighting.scss
+  # keeps styling code blocks.
+  noClasses = false
+  lineNos = false
+
+[services.googleAnalytics]
+  ID = "UA-10121904-2"
