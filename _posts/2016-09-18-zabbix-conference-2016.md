@@ -31,6 +31,3 @@ rewritten for open source.
 
 Please also, check out the talks for all the other speakers at the
 [Zabbix Conference 2016 homepage](http://www.zabbix.com/conf2016_agenda.php).
-
-If you have any questions or comments, start the discussion below or get in
-touch with me on [Twitter](https://twitter.com/cavaliercoder).

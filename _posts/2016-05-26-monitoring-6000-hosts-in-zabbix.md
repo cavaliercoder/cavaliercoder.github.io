@@ -15,6 +15,3 @@ journey delivering a large scale monitoring project with Zabbix. Thanks to
 everyone who came long and for the great questions afterwards.
 
 Click the slide deck to [download a PDF copy]({{ "/2016-05-26-monitoring-6000-hosts-in-zabbix/slides.pdf" | prepend: site.cdnurl }}).
-
-If you have any questions or comments, start the discussion below or get in
-touch with me on [Twitter](https://twitter.com/cavaliercoder).

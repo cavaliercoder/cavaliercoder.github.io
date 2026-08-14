@@ -42,8 +42,6 @@ Slides: http://www.slideshare.net/PuppetLabs/so-i-wrote-a-manifest
 
 Start with the story of when I started out
 
-Share twitter handle
-
 
 Analogy: Incremental backups?
   * Only the difference is stored
@@ -63,9 +61,6 @@ How to layout roles/profiles? (use GitHub as a reference)
   log, resolve conflicts, definitive versioning
 
 
-Show twitter
-
-
 ## Tips
 * Run it by natalie
 * Have a discussion, don't give a speech
@@ -75,7 +70,6 @@ Show twitter
 * 1 - 2 sentence message. stress a single point instead of ten
 * Tell them what you're going to say, say it, and tell 'em what you said
 * Pictures, no words
-* Make sure they ask questions on twitter
 * tell a story, even if it's educational
 * What do they want to hear?
 * Come out strong with something personal and funny. 30 seconds

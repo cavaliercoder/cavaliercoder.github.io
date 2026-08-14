@@ -14,8 +14,6 @@ I write systems software to automate data-centres and clouds. I'm happiest when 
 
 Let's connect!
 
-* [LinkedIn](https://www.linkedin.com/in/ryanarmstrongwa/)
-* [Twitter](https://twitter.com/CavalierCoder)
 * [GitHub](https://github.com/cavaliercoder)
 
 You might also be interested in:
