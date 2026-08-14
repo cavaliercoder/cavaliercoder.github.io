@@ -2,7 +2,6 @@
 layout:    post
 title:     "Application Pool not starting on Windows 7"
 date:      2011-08-08 12:00:00
-disqus_id: "483 "
 ---
 
 I recently installed IIS7 on a Windows 7 workstation via batch file. The installation went off

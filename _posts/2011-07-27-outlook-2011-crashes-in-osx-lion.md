@@ -2,7 +2,6 @@
 layout:    post
 title:     "Outlook 2011 Crashes in OS X Lion"
 date:      2011-07-27 12:00:00
-disqus_id: "481 "
 ---
 
 Since installing OS X Lion on a MacBook Pro at work, I’ve had a problem starting Outlook 2011.

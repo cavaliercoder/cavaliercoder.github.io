@@ -2,7 +2,6 @@
 layout:    post
 title:     "Mac OSX Lion File Sharing Connection Failed"
 date:      2011-07-24 12:00:00
-disqus_id: "480 "
 ---
 
 After upgrading to OS X Lion 10.7 on both my iMac and Mac Book Pro, I’m interrupted by an ambiguous

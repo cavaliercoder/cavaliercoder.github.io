@@ -2,7 +2,6 @@
 layout:    post
 title:     "Recursively create .gitkeep files"
 date:      2014-06-03 12:00:00
-disqus_id: "780 http://www.cavaliercoder.com/?p=780"
 ---
 
 Want to create `.gitkeep` files in all empty folders in your source code project?

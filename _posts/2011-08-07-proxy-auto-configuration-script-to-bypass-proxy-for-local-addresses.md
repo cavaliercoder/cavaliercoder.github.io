@@ -2,7 +2,6 @@
 layout: post
 title:  "Proxy Auto-Configuration Script to Bypass Proxy for Local Addresses"
 date:   2011-08-07 12:00:00
-disqus_id: "479 "
 ---
 
 Most organizations will want to bypass their proxy server for local web servers (intranet, CMS,

@@ -2,7 +2,6 @@
 layout:    post
 title:     "Prevent CRL Check for PowerShell Remoting"
 date:      2012-12-05 12:00:00
-disqus_id: "722 http://www.cavaliercoder.com/?p=722"
 ---
 
 So I ran into this spot of bother today trying to establish a remote session from one server to another server in PowerShell:
