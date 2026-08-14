@@ -10,7 +10,6 @@ cdnurl: "http://cdn.cavaliercoder.com/blog"
 twitter_username: cavaliercoder
 github_username:  cavaliercoder
 
-heap_id: 383203067
 
 # Build settings
 markdown: kramdown
