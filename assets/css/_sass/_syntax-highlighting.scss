@@ -1,9 +1,11 @@
+@use "base";
+
 /**
  * Syntax highlighting styles
  */
 
 .highlight {
-    @extend %vertical-rhythm;
+    @include base.vertical-rhythm;
 
     .hll { background-color: #49483e }
     .c { color: #75715e } /* Comment */

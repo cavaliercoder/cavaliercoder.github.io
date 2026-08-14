@@ -5,7 +5,7 @@
 {{- else -}}
   {{- $summary = cond .IsHome site.Params.description (trim (.Summary | plainify | htmlUnescape | replaceRE `\s+` " ") " ") -}}
 {{- end -}}
-{{- $css := resources.Get "css/main.scss" | css.Sass (dict "transpiler" "libsass" "targetPath" "css/main.css" "includePaths" (slice "assets/css/_sass")) -}}
+{{- $css := resources.Get "css/main.scss" | css.Sass (dict "transpiler" "dartsass" "targetPath" "css/main.css" "includePaths" (slice "assets/css/_sass")) -}}
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">

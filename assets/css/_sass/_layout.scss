@@ -1,3 +1,7 @@
+@use "sass:math";
+@use "base";
+@use "variables" as *;
+
 /**
  * Site header
  */
@@ -98,7 +102,7 @@
 
 .footer-heading {
     font-size: 18px;
-    margin-bottom: $spacing-unit / 2;
+    margin-bottom: math.div($spacing-unit, 2);
 }
 
 .contact-list,
@@ -110,14 +114,14 @@
 .footer-col-wrapper {
     font-size: 15px;
     color: $grey-color;
-    margin-left: -$spacing-unit / 2;
-    @extend %clearfix;
+    margin-left: math.div(-$spacing-unit, 2);
+    @include base.clearfix;
 }
 
 .footer-col {
     float: left;
-    margin-bottom: $spacing-unit / 2;
-    padding-left: $spacing-unit / 2;
+    margin-bottom: math.div($spacing-unit, 2);
+    padding-left: math.div($spacing-unit, 2);
 }
 
 .footer-col-1 {
@@ -246,7 +250,7 @@
 }
 
 .right {
-    margin: 0 ($spacing-unit / 2) 0 ($spacing-unit / 2);
+    margin: 0 math.div($spacing-unit, 2) 0 math.div($spacing-unit, 2);
     float: right;
 }
 
@@ -254,11 +258,11 @@ img.thumb {
     display: inline-block;
     max-height: 200px;
     max-width: 200px;
-    margin: $spacing-unit / 2;
+    margin: math.div($spacing-unit, 2);
 }
 
 img.osx-window {
-    margin: (- $spacing-unit / 2) auto (- $spacing-unit) auto;
+    margin: math.div(-$spacing-unit, 2) auto (- $spacing-unit) auto;
 }
 
 img.book-cover {
