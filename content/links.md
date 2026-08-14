@@ -57,11 +57,9 @@ if you have a little more time on your hands.
 
 * [Condition Variables](http://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf)
 
-* [High Performance Microprocessors](http://euler.mat.uson.mx/~havillam/ca/CS323/index.html)
-
 * [Consistent Hashing and Random Trees](https://www.akamai.com/us/en/multimedia/documents/technical-publication/consistent-hashing-and-random-trees-distributed-caching-protocols-for-relieving-hot-spots-on-the-world-wide-web-technical-publication.pdf)
 
-* [Monadic Parser Combinators](http://eprints.nottingham.ac.uk/237/1/monparsing.pdf)
+* [Monadic Parser Combinators](https://people.cs.nott.ac.uk/pszgmh/monparsing.pdf)
 
 ## Interviewing
 

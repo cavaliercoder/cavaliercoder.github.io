@@ -93,9 +93,8 @@ fast! But our benchmark doesn't represent the real world...
 ## Benchmarking
 
 We know that branching code breaks the sequential flow of a
-program, meaning that [pipelining processors must predict what will happen
-next](http://euler.mat.uson.mx/~havillam/ca/CS323/0708.cs-323007.html) to
-maintain similar performance to a sequential program.
+program, meaning that pipelining processors must predict what will happen next
+to maintain similar performance to a sequential program.
 
 In the above benchmark, we used a constant value as the input to each call to
 `abs`. Because of this, the processor is able to predict which branch to take

@@ -17,7 +17,7 @@ effect on me, both as a professional, and as a human bean.
 Love them or hate? Please leave some thoughts in the comment section below.
 
 ## Thinking in Systems
-<a href="https://amzn.com/1603580557" target="_blank">
+<a href="https://www.amazon.com/dp/1603580557" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/thinking-in-systems.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Donella H. Meadows
@@ -30,7 +30,7 @@ moves over wholesale systems changes and to better interpret and respond to
 measurements over time.
 
 ## Lean Enterprise
-<a href="https://amzn.com/1449368425" target="_blank">
+<a href="https://www.amazon.com/dp/1449368425" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/lean-enterprise.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Jez Humble, Joanne Molesky and Barry O'Reilly
@@ -49,7 +49,7 @@ efficiency and stability; keeping the lights on so new experimentation can get
 underway.
 
 ## The Open Organization
-<a href="http://amzn.com/1625275277" target="_blank">
+<a href="https://www.amazon.com/dp/1625275277" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/the-open-organization.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Jim Whitehurst
@@ -71,7 +71,7 @@ remit.
 
 
 ## Made to Stick
-<a href="http://amzn.com/1400064287" target="_blank">
+<a href="https://www.amazon.com/dp/1400064287" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/made-to-stick.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Chip Heath and Dan Heath
@@ -90,7 +90,7 @@ projects, and in writing for my blog.
 
 
 ## The Five Dysfunctions of a Team
-<a href="http://amzn.com/0787960756" target="_blank">
+<a href="https://www.amazon.com/dp/0787960756" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/the-five-dysfunctions-of-a-team.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Patrick Lencioni
@@ -111,7 +111,7 @@ vulnerable.
 
 
 ## The Phoenix Project
-<a href="http://amzn.com/0988262509" target="_blank">
+<a href="https://www.amazon.com/dp/0988262509" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/the-phoenix-project.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Gene Kim, Kevin Behr and George Spafford
@@ -134,7 +134,7 @@ whole.
 
 
 ## The Goal
-<a href="http://amzn.com/0884271951" target="_blank">
+<a href="https://www.amazon.com/dp/0884271951" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/the-goal.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Eliyahu M. Goldratt
@@ -151,7 +151,7 @@ I've written a full review in
 [The Goal: A challenge to IT Operations]({{< relref "2015-12-12-the-goal.md" >}})
 
 ## Toyota Kata
-<a href="http://amzn.com/0071635238" target="_blank">
+<a href="https://www.amazon.com/dp/0071635238" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/toyota-kata.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Mike Rother
@@ -179,7 +179,7 @@ rather than approaching it as sporadic and typically unsuccessful projects.
 
 
 ## Who Moved My Cheese?
-<a href="http://amzn.com/0399144463" target="_blank">
+<a href="https://www.amazon.com/dp/0399144463" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/who-moved-my-cheese.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Spencer Johnson M.D
@@ -205,7 +205,7 @@ start to change.
 
 
 ## The C Programming Language
-<a href="http://amzn.com/0131103628" target="_blank">
+<a href="https://www.amazon.com/dp/0131103628" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/the-c-programming-language.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Brian W. Kernighan and Dennis M. Ritchie
@@ -257,7 +257,7 @@ of experience or title.
 
 
 ## First, Break All the Rules
-<a href="http://amzn.com/1595621113" target="_blank">
+<a href="https://www.amazon.com/dp/1595621113" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/first-break-all-the-rules.jpg" >}}" alt="Buy on Amazon">
 </a>
 By Marcus Buckingham and Curt Coffman

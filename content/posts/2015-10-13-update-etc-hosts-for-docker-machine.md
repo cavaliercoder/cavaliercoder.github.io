@@ -7,7 +7,7 @@ date: 2015-10-13
 If you're running docker-machine or boot2docker on OS X, chances are you want
 the Docker client environment variables set automatically when you log in to the
 terminal. There's plenty of help [out
-there](https://docs.docker.com/machine/reference/env/) to achieve this, but the
+there](https://docs.docker.com/machine/) to achieve this, but the
 basic gist is to add the following to your `~/.profile`:
 
 ```bash
@@ -28,7 +28,8 @@ environment variable, you can add a few extra lines to update your `/etc/hosts`
 file automatically each time you log in to the terminal.
 
 > Maybe you'd rather roll your own docker-machine DNS server? Check out
-  [Joe Chrzanowski's article](https://engineering.salesforceiq.com/2015/10/08/up-the-rabbit-hole-part-i-a-docker-machine-dns-server.html)
+  Joe Chrzanowski's article, *Up the rabbit hole, part I: a docker-machine
+  DNS server*.
 
 The following example creates a hosts entry named `docker.local` which will
 resolve to your docker-machine IP:

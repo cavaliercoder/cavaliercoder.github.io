@@ -117,6 +117,4 @@ Further Reading:
 
 * IE Proxy Result Caching: http://support.microsoft.com/kb/271361
 
-* Publishing via Apache: http://homepage.ntlworld.com/jonathan.deboynepollard/FGA/web-browser-auto-proxy-configuration.html
-
 * Best Practices: http://www.websense.com/content/support/library/web/v76/pac_file_best_practices/PAC_best_pract.aspx

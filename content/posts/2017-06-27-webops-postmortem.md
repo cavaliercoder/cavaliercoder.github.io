@@ -49,7 +49,7 @@ Amazon S3.
 
 The above figure from Zabbix shows that network I/O became more _"ordered"_ on
 one of the Content API instances around 7 AM. A [brief exploration of Complexity
-Theory](https://oneworld-publications.com/simply-complexity.html) teaches us
+Theory](https://oneworld-publications.com/products/simply-complexity) teaches us
 that things go wrong when systems transition to exhibiting ordered behaviors.
 
 We employed [Brendan Gregg's USE method](http://www.brendangregg.com/usemethod.html)
