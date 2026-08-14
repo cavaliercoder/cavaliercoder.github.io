@@ -48,8 +48,7 @@ your `puppet.conf` file. If you're not sure where this is, run:
 
 *Note:* If you see the following SSL certificate error when attempting to install a module from the
 Forge, you'll need to run Windows update or install the *GeoTrust Global CA* certificate (as per the
-Puppet [troubleshooting docs](https://docs.puppetlabs.com/windows/troubleshooting.html#error-
-messages)):
+Puppet troubleshooting docs):
 
 	Error: Could not connect via HTTPS to https://forge.puppetlabs.com
 	  Unable to verify the SSL certificate
