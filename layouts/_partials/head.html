@@ -5,7 +5,14 @@
 {{- else -}}
   {{- $summary = cond .IsHome site.Params.description (trim (.Summary | plainify | htmlUnescape | replaceRE `\s+` " ") " ") -}}
 {{- end -}}
-{{- $css := resources.Get "css/main.scss" | css.Sass (dict "transpiler" "dartsass" "targetPath" "css/main.css" "includePaths" (slice "assets/css/_sass")) -}}
+{{/* Pico first, then the overrides on top of it. Concatenated into one file so
+     the page still makes a single stylesheet request, and fingerprinted so it
+     can be cached indefinitely. No Sass: Pico ships compiled and the overrides
+     need no preprocessing, which keeps Dart Sass out of CI and local setup. */}}
+{{- $css := slice
+      (resources.Get "css/vendor/pico.classless.min.css")
+      (resources.Get "css/custom.css")
+    | resources.Concat "css/main.css" | minify | fingerprint -}}
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +38,9 @@
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "feed.xml" | absURL }}" />
 
-  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+
+  {{/* Pico supports both themes, so the browser should not force-darken. */}}
+  <meta name="color-scheme" content="light dark">
 
 </head>

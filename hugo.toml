@@ -13,7 +13,6 @@ disableKinds = ["taxonomy", "term"]
   # archive, remains under the personal account.
   github_username = "cavaliercoder"
   github_org = "cavaliergopher"
-  googleAnalytics = "UA-10121904-2"
 
 # Preserve the URLs minted by Jekyll: /blog/:title.html. Posts that set `url`
 # in front matter (e.g. /jclouds) override this. The .html suffix comes from
@@ -38,10 +37,7 @@ disableKinds = ["taxonomy", "term"]
   unsafe = true
 
 [markup.highlight]
-  # Emit Pygments-compatible classes so assets/css/_sass/_syntax-highlighting.scss
-  # keeps styling code blocks.
+  # Emit Chroma classes so assets/css/custom.css keeps styling code blocks.
   noClasses = false
   lineNos = false
 
-[services.googleAnalytics]
-  ID = "UA-10121904-2"

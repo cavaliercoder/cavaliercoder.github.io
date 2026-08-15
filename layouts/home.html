@@ -1,7 +1,6 @@
 {{ define "main" }}
-<div class="home">
 
-  <p class="site-intro">
+  <p>
     I build and scale storage and distributed systems infrastructure, currently
     as a Tech Lead in Google Cloud Storage.
     <a href="{{ "/about/" | relURL }}">More about me</a>, or see my
@@ -10,27 +9,30 @@
 
   {{ $featured := where site.RegularPages "Params.featured" true }}
   {{ with $featured }}
-  <h1 class="page-heading">Selected writing</h1>
+  <section>
+    <h2>Selected writing</h2>
 
-  <ul class="post-list">
+    {{/* Pico styles a bare `article` as a card, which suits a short curated
+         list. The full back catalogue uses a plain list instead. */}}
     {{ range sort . "Date" "desc" }}
-      <li>
-        <span class="post-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-        </h2>
-
-        {{ with .Params.blurb }}<p class="post-blurb">{{ . }}</p>{{ end }}
-      </li>
+    <article>
+      <hgroup>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="post-meta">
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+        </p>
+      </hgroup>
+      {{ with .Params.blurb }}<p>{{ . }}</p>{{ end }}
+    </article>
     {{ end }}
-  </ul>
+  </section>
   {{ end }}
 
-  <p class="rss-subscribe">
-    See the full <a href="{{ "/archive/" | relURL }}">archive</a>, or subscribe
-    <a href="{{ "feed.xml" | relURL }}">via RSS</a>.
+  <p>
+    <small>
+      See the full <a href="{{ "/archive/" | relURL }}">archive</a>, or subscribe
+      <a href="{{ "feed.xml" | relURL }}">via RSS</a>.
+    </small>
   </p>
 
-</div>
 {{ end }}

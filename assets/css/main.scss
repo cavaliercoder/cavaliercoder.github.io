@@ -1,9 +1,0 @@
-@charset "utf-8";
-
-// Partials are resolved from `includePaths` (see layouts/_partials/head.html)
-@use "base";
-@use "layout";
-@use "syntax-highlighting";
-
-// import fonts
-@import url(https://fonts.googleapis.com/css?family=Lato|Permanent+Marker);
