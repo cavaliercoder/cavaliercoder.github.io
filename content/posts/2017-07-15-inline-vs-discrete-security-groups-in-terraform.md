@@ -20,7 +20,7 @@ little research and experimentation I have a much clearer understanding and hope
 to save you all the bother.
 
 This article focuses on managing AWS Security Groups in Terraform but you will
-find that all of the principals explored here apply equally to Network ACLs and
+find that all of the principles explored here apply equally to Network ACLs and
 Route Tables - both of which allow inline or external rule management.
 
 ## Two approaches
