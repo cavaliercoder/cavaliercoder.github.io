@@ -1,9 +1,11 @@
 ---
 title: "Zabbix tools I've written"
 date: 2017-06-17
-# Retains the URL it was first published under, so inbound links keep working
-# even though the title has changed.
-url: "/blog/kickass-zabbix-tools.html"
+slug: "zabbix-tools"
+# Redirects the URL this was first published under, so inbound links and search
+# results keep working after the retitle.
+aliases:
+  - "/blog/kickass-zabbix-tools.html"
 ---
 
 I've had the pleasure of working with Zabbix for many years now, (since 2.0).
