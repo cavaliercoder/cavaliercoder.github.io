@@ -7,7 +7,7 @@ menus:
     weight: 10
 ---
 
-<img class="right" width="300" src="/ryan.jpg" alt="Ryan">
+<img class="right" width="300" src="{{< cdn "/ryan.jpg" >}}" alt="Ryan">
 
 I build and scale storage and distributed systems infrastructure.
 
