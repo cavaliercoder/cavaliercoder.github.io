@@ -13,8 +13,6 @@ Distribution Network that a number of user requests were being served with
 [504 Gateway Timeout](https://tools.ietf.org/html/rfc7231#section-6.6.5)
 responses.
 
-<img class="inline right" src="{{< cdn "/2017-05-27-a-webops-post-mortem/shitting-pants.jpg" >}}" alt="Negan: I hope you have your shitting pants on" />
-
 I lead the Production Engineering team at Seven West Media in Western Australia
 and the alerts indicated an issue with [thewest.com.au](https://thewest.com.au).
 
