@@ -72,5 +72,5 @@ A Motorola 68000 emulator written in Go, and the CPU core behind an
 ## Monitoring
 
 I maintained a number of Zabbix modules and tools over the years, including
-`libzbxpgsql`, `g2z` and `mib2zabbix`. They're listed separately on
-[Kickass Zabbix Tools](/blog/kickass-zabbix-tools.html).
+`libzbxpgsql`, `g2z` and `mib2zabbix`. They're listed separately in
+[Zabbix tools I've written](/blog/kickass-zabbix-tools.html).

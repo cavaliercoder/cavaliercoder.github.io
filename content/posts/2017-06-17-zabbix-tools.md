@@ -1,8 +1,9 @@
 ---
-title: "Kickass Zabbix Tools"
+title: "Zabbix tools I've written"
+date: 2017-06-17
+# Retains the URL it was first published under, so inbound links keep working
+# even though the title has changed.
 url: "/blog/kickass-zabbix-tools.html"
-# Kept at its original URL for inbound links, but no longer in the main menu.
-# Reachable from the Projects page.
 ---
 
 I've had the pleasure of working with Zabbix for many years now, (since 2.0).
