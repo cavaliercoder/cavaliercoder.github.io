@@ -23,8 +23,6 @@ This article assumes you are competent with C, Go and familiar with writing Zabb
 intention is to save you the hassle of solving some of the problems I encountered trying to write a
 module (and the g2z adapter) in Go.
 
-Comments and questions are welcomed below!
-
 ## Table of contents
 
 * [Prerequisites](#prerequisites)

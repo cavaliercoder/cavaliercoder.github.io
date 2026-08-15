@@ -25,7 +25,7 @@ advantageous to us, as well as simply exploring an interesting problem that
 reminded us to stay humble.
 
 While reports came in from our colleagues and customers that images were failing
-to display on the site, a killer team of Developers and SysAdmins invoked our
+to display on the site, a team of Developers and SysAdmins invoked our
 Incident Response process. We borrow heavily from ITIL Incident Management and
 [Google's Site Reliability Engineering](https://landing.google.com/sre/book.html).
 
@@ -347,8 +347,7 @@ gave us the best possible outcomes:
 
 - We learned a whole lot about the software and systems we work with
 
-Thanks for reading! I'd love to hear your thoughts in the comments section
-below.
+Thanks for reading.
 
 ## Appendix: Leaks from other buckets
 

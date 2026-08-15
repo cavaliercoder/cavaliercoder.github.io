@@ -158,7 +158,7 @@ equal to `x ⟫ 63`. That is, `x` right shifted by 63 bits on a 64 bit
 architecture. Finally, compute `(x ⨁ y) - y`. That is, `x` exclusive-or `y`,
 take `y`. This yields the absolute value of `x`.
 
-Because we live hardcore, let's implement this in assembly!
+Let's implement this in assembly!
 
 ```go
 // abs.go
@@ -383,12 +383,12 @@ $ go tool compile -S abs.go
 ...
 ```
 
-The compiler's implementation is exactly the god-damned same. Only this time, it
+The compiler's implementation is exactly the same. Only this time, it
 has the advantage of being correctly configured and being cross-platform
 portable! Running the compiler again with `GOARCH=386` produces a more
 complicated program that handles the 64-bit arithmetic on 32-bit machines.
 
-I need to be more trusting and slightly less hardcore.
+In this case I could be more trusting of the compiler.
 
 One last note about memory allocations; all of our implementations exhibit the
 same ideal behavior. When I run `go test -bench=. -benchmem`, I observe that
