@@ -1,10 +1,11 @@
 ---
 title: "Recommended books"
 url: "/blog/recommended-reading.html"
-menus:
-  main:
-    name: Books
-    weight: 40
+# Kept at its original URL for inbound links, but out of the main menu and the
+# sitemap, and marked noindex. Reachable from the About page.
+build:
+  list: never
+noindex: true
 ---
 
 For me, the best measure of a book is whether it changes the way I think. These

@@ -1,10 +1,11 @@
 ---
 title: "External resources"
 url: "/resources/"
-menus:
-  main:
-    name: Links
-    weight: 50
+# Kept at its original URL for inbound links, but out of the main menu and the
+# sitemap, and marked noindex. Reachable from the About page.
+build:
+  list: never
+noindex: true
 ---
 
 Here are some links to great resources that have transformed my thinking.
