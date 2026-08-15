@@ -1,10 +1,8 @@
 ---
 title: "Kickass Zabbix Tools"
 url: "/blog/kickass-zabbix-tools.html"
-menus:
-  main:
-    name: Zabbix
-    weight: 40
+# Kept at its original URL for inbound links, but no longer in the main menu.
+# Reachable from the Projects page.
 ---
 
 I've had the pleasure of working with Zabbix for many years now, (since 2.0).

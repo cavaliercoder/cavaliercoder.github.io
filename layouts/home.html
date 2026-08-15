@@ -1,7 +1,33 @@
 {{ define "main" }}
 <div class="home">
 
-  <h1 class="page-heading">Posts</h1>
+  <p class="site-intro">
+    I build and scale storage and distributed systems infrastructure, currently
+    as a Tech Lead in Google Cloud Storage.
+    <a href="{{ "/about/" | relURL }}">More about me</a>, or see my
+    <a href="{{ "/writing/" | relURL }}">writing and talks</a>.
+  </p>
+
+  {{ $featured := where site.RegularPages "Params.featured" true }}
+  {{ with $featured }}
+  <h1 class="page-heading">Selected writing</h1>
+
+  <ul class="post-list">
+    {{ range sort . "Date" "desc" }}
+      <li>
+        <span class="post-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
+
+        <h2>
+          <a class="post-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+
+        {{ with .Params.blurb }}<p class="post-blurb">{{ . }}</p>{{ end }}
+      </li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  <h1 class="page-heading">Archive</h1>
 
   <ul class="post-list">
     {{ range where site.RegularPages "Section" "posts" }}

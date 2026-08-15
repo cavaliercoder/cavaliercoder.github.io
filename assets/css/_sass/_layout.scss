@@ -173,6 +173,20 @@
     font-size: 20px;
 }
 
+.site-intro {
+    margin-bottom: $spacing-unit;
+    padding-bottom: math.div($spacing-unit, 2);
+    border-bottom: 1px solid $grey-color-light;
+    color: $grey-color-dark;
+}
+
+// Summary line beneath curated posts on the home page.
+.post-blurb {
+    margin-bottom: 0;
+    font-size: $small-font-size;
+    color: $grey-color;
+}
+
 .post-list {
     margin-left: 0;
     list-style: none;

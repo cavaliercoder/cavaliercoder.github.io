@@ -2,7 +2,17 @@
 slug: "downloading-large-files-in-go"
 title: "Downloading large files in Go"
 date: 2016-01-19
+featured: true
+blurb: "The design story behind grab, and what makes a download resumable, observable and correct."
 ---
+
+> **Note, 2026:** this article describes grab v1. The package has since moved to
+> [github.com/cavaliergopher/grab](https://github.com/cavaliergopher/grab) and
+> the v3 API differs from the code below — `GetAsync` is gone in favour of
+> `Client.Do` and `Client.DoChannel`, and `IsNoFilename` is now the
+> `ErrNoFilename` error value. The design discussion still holds; for working
+> code, see the
+> [current documentation](https://pkg.go.dev/github.com/cavaliergopher/grab/v3).
 
 The `net/http` package bundled with Go provides a really solid HTTP
 implementation which excels particularly as a base for HTTP based API clients
@@ -21,7 +31,7 @@ as:
 * validating downloaded files using checksums
 
 This article will step you through using a Go package called
-[grab](http://github.com/cavaliercoder/grab) which abstracts `net/http` to
+[grab](https://github.com/cavaliergopher/grab) which abstracts `net/http` to
 provide these features. We'll build a simple 'wget'-like binary to make use of
 all such awesomeness.
 

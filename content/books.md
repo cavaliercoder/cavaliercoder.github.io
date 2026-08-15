@@ -4,17 +4,13 @@ url: "/blog/recommended-reading.html"
 menus:
   main:
     name: Books
-    weight: 20
+    weight: 40
 ---
 
-The following books have all been instrumental in forging my career as a
-successful DevOps Lord.
-
-For me, the best measure of a book is whether it changes the way I think. The
-books in this list are (in no particular order) those which have had such an
-effect on me, both as a professional, and as a human bean.
-
-Love them or hate? Please leave some thoughts in the comment section below.
+For me, the best measure of a book is whether it changes the way I think. These
+are the ones that did, in no particular order. Most of them found me somewhere
+between running infrastructure teams and building storage systems, and they've
+shaped how I approach both.
 
 ## Thinking in Systems
 <a href="https://www.amazon.com/dp/1603580557" target="_blank">

@@ -7,9 +7,12 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  description = "The poorly maintained ramblings of an Infrastructure/Software engineer."
+  description = "Systems software, storage and reliability at scale."
   cdnurl = "https://cdn.cavaliercoder.com/blog"
+  # Go projects live in the cavaliergopher org; everything else, and the
+  # archive, remains under the personal account.
   github_username = "cavaliercoder"
+  github_org = "cavaliergopher"
   googleAnalytics = "UA-10121904-2"
 
 # Preserve the URLs minted by Jekyll: /blog/:title.html. Posts that set `url`

@@ -3,6 +3,8 @@ slug: "optimized-abs-for-int64-in-go"
 title: "Optimized abs() for int64 in Go"
 image: "/2018-01-13-optimized-abs-for-int64-in-go/RFrench-Gopher.jpg"
 date: 2018-01-13
+featured: true
+blurb: "Branch-free absolute value in Go assembly, and whether the compiler was already doing it better."
 ---
 
 The Go programming language has no built in `abs` function for computing the

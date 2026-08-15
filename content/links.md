@@ -4,10 +4,10 @@ url: "/resources/"
 menus:
   main:
     name: Links
-    weight: 30
+    weight: 50
 ---
 
-Here are some links to great resources that have tranformed my thinking.
+Here are some links to great resources that have transformed my thinking.
 I also have a list of [recommended books]({{< relref "books.md" >}})
 if you have a little more time on your hands.
 

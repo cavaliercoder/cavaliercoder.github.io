@@ -4,6 +4,8 @@ title: "A WebOps Postmortem"
 rtime: 11 minutes
 image: "/2017-05-27-a-webops-post-mortem/recvq-fix.png"
 date: 2017-06-27
+featured: true
+blurb: "Chasing a 504 across a CDN, nginx and Node.js, and what the incident taught us about staying humble."
 ---
 
 Early in the day, May 18, 2017, alerts started appearing from our Content

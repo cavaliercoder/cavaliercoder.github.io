@@ -2,6 +2,8 @@
 slug: "writing-a-zabbix-module-with-cgo"
 title: "Writing a Zabbix module with cgo"
 date: 2015-09-03
+featured: true
+blurb: "C and Go interop, and the sharp edges between them."
 ---
 
 So first thing out of the way, if you want to write a Zabbix module the easy way with Go, I've done

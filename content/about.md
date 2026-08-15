@@ -9,18 +9,35 @@ menus:
 
 <img class="right" src="{{< cdn "/ryan.jpg" >}}" alt="Ryan">
 
-None of the things I'm best at sound like real things:
+I build and scale storage and distributed systems infrastructure.
 
-Gopher, Puppetizer, Cloud guru, DevOps, Zabbix guy.
+I'm currently a Tech Lead in Google Cloud Storage, where I own the offline data
+plane behind Blobstore — the storage layer under YouTube, Google Workspace and
+GCS — and I'm responsible for the durability, byte efficiency and reliability of
+hundreds of exabytes of data. Before that I led reliability for MindMeld, a
+distributed in-memory filesystem built on RDMA that serves BigQuery and
+AlphaFold2.
 
-I write systems software to automate data-centres and clouds. I'm happiest when I'm learning something new and solving problems that haven't been solved before.
+Previously: Tech Lead for infrastructure at Canva, where I built the SRE
+organisation from scratch and set technical direction across 160 engineers;
+Production Engineer on ZippyDB at Facebook, the key/value store behind Ads,
+Feed, Instagram and WhatsApp; and SRE Tech Lead at Dropbox.
 
-Let's connect!
+I started out as a sysadmin in Perth, Western Australia, fixing Outlook crashes
+and writing VBScript. The oldest posts here are from that era and I've left them
+up on purpose.
 
-* [GitHub](https://github.com/cavaliercoder)
+I write about systems software, performance and reliability. Opinions are my
+own.
+
+* [github.com/cavaliercoder](https://github.com/cavaliercoder) — my open source
+  projects, and the archive
+* [github.com/cavaliergopher](https://github.com/cavaliergopher) — my maintained
+  Go packages, including grab
 
 You might also be interested in:
 
+* [Writing and talks]({{< relref "writing.md" >}})
+* [Projects]({{< relref "projects.md" >}})
 * [Books that I like](/blog/recommended-reading.html)
 * [Resources that I found revelationary](/resources/)
-* [Zabbix tools I've written](/blog/kickass-zabbix-tools.html)

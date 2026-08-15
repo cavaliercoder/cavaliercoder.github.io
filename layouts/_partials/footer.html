@@ -1,8 +1,12 @@
 <footer class="site-footer">
   <div class="wrapper">
       <div class="footer-col  footer-col-2">
+        {{/* Personal account first, then the org that holds the Go packages. */}}
+        {{- $accounts := slice -}}
+        {{- with site.Params.github_username }}{{ $accounts = $accounts | append . }}{{ end -}}
+        {{- with site.Params.github_org }}{{ $accounts = $accounts | append . }}{{ end -}}
         <ul class="social-media-list">
-          {{ with site.Params.github_username }}
+          {{ range $accounts }}
           <li>
             <a href="https://github.com/{{ . }}">
               <span class="icon  icon--github">
