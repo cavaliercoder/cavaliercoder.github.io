@@ -2,6 +2,11 @@
 slug: "terminal-color-in-osx"
 title: "Terminal Color in OSX"
 date: 2011-06-04 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Have you ever wanted to add some color to the text in your OSX terminal? Colored text makes output

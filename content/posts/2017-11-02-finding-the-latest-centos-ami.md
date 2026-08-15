@@ -3,6 +3,11 @@ slug: "finding-the-latest-centos-ami"
 title: "Finding the latest CentOS AMI"
 image: "/2017-11-02-finding-the-latest-centos-ami/centos_fancy.png"
 date: 2017-11-02
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Looking for the latest CentOS AMI image in your region? I'm frequently rewriting

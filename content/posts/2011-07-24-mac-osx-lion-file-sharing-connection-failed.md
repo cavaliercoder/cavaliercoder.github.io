@@ -2,6 +2,11 @@
 slug: "mac-osx-lion-file-sharing-connection-failed"
 title: "Mac OSX Lion File Sharing Connection Failed"
 date: 2011-07-24 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 After upgrading to OS X Lion 10.7 on both my iMac and Mac Book Pro, I’m interrupted by an ambiguous

@@ -3,6 +3,11 @@ slug: "expression-lab"
 title: "Expression Lab"
 date: 2013-04-01 12:00:00
 url: "/expression-lab"
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Expression Lab is a lightweight Windows application based on the .Net Framework 4.0 that allows you

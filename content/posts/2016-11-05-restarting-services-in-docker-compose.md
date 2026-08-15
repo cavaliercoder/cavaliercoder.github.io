@@ -2,6 +2,11 @@
 slug: "restarting-services-in-docker-compose"
 title: "Restart services in docker-compose"
 date: 2016-11-05
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 The following shell function allows you to quickly restart one or more services

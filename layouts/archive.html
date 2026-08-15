@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+  </header>
+
+  <article class="post-content">
+    {{ .Content }}
+
+    {{/* Exclude drafts explicitly so `make run` (--buildDrafts) previews the
+         archive as it will actually publish, rather than padding it with
+         unfinished posts and their zero dates. */}}
+    <ul class="post-list">
+      {{ range where (where site.RegularPages "Section" "posts") "Draft" false }}
+        <li>
+          <span class="post-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
+
+          <h2>
+            <a class="post-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </h2>
+        </li>
+      {{ end }}
+    </ul>
+  </article>
+
+</div>
+{{ end }}

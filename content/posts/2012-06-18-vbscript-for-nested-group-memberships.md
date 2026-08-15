@@ -2,6 +2,11 @@
 slug: "vbscript-for-nested-group-memberships"
 title: "VBScript for Nested Group Memberships"
 date: 2012-06-18 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Often VBScripts will be required to determine if a given user (or object) is a member of a given AD / LDAP group. For example this is useful for determining which network drives a user should mount during logon, based on their group memberships. A common issue with most script samples is that they will not account for nested group memberships.

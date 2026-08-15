@@ -4,6 +4,11 @@ title: "Monitoring 6000+ hosts in Zabbix"
 image: "/2016-05-26-monitoring-6000-hosts-in-zabbix/slide1.png"
 description: "Slides from Perth DevOps Meetup"
 date: 2016-05-26
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 <a href="{{< cdn "/2016-05-26-monitoring-6000-hosts-in-zabbix/slides.pdf" >}}" target="_blank">

@@ -2,6 +2,11 @@
 slug: "prevent-crl-check-for-powershell-remoting"
 title: "Prevent CRL Check for PowerShell Remoting"
 date: 2012-12-05 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 So I ran into this spot of bother today trying to establish a remote session from one server to another server in PowerShell:

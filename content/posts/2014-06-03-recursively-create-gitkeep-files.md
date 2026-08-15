@@ -2,6 +2,11 @@
 slug: "recursively-create-gitkeep-files"
 title: "Recursively create .gitkeep files"
 date: 2014-06-03 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Want to create `.gitkeep` files in all empty folders in your source code project?

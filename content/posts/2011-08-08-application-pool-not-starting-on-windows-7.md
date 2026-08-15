@@ -2,6 +2,11 @@
 slug: "application-pool-not-starting-on-windows-7"
 title: "Application Pool not starting on Windows 7"
 date: 2011-08-08 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 I recently installed IIS7 on a Windows 7 workstation via batch file. The installation went off

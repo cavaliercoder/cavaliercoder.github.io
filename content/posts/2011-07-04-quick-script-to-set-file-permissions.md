@@ -2,6 +2,11 @@
 slug: "quick-script-to-set-file-permissions"
 title: "Quick Script to Set File Permissions"
 date: 2011-07-04 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 When configuring a web server for the first time, balancing file permissions between locally

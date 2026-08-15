@@ -2,6 +2,11 @@
 slug: "proxy-auto-configuration-script-to-bypass-proxy-for-local-addresses"
 title: "Proxy Auto-Configuration Script to Bypass Proxy for Local Addresses"
 date: 2011-08-07 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Most organizations will want to bypass their proxy server for local web servers (intranet, CMS,

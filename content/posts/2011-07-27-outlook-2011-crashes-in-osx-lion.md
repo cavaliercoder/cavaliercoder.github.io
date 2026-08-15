@@ -2,6 +2,11 @@
 slug: "outlook-2011-crashes-in-osx-lion"
 title: "Outlook 2011 Crashes in OS X Lion"
 date: 2011-07-27 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Since installing OS X Lion on a MacBook Pro at work, I’ve had a problem starting Outlook 2011.

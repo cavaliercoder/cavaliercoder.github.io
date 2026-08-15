@@ -2,6 +2,11 @@
 slug: "zabbix-custom-discovery-check-template"
 title: "Zabbix custom discovery check template"
 date: 2014-06-09 12:00:00
+# Kept at its original URL for inbound links, but delisted from the archive,
+# the feed and the sitemap, and marked noindex.
+build:
+  list: never
+noindex: true
 ---
 
 Here’s a bootstrap C function for Zabbix Discovery rules.

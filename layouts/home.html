@@ -27,21 +27,10 @@
   </ul>
   {{ end }}
 
-  <h1 class="page-heading">Archive</h1>
-
-  <ul class="post-list">
-    {{ range where site.RegularPages "Section" "posts" }}
-      <li>
-        <span class="post-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
-        </h2>
-      </li>
-    {{ end }}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "feed.xml" | relURL }}">via RSS</a></p>
+  <p class="rss-subscribe">
+    See the full <a href="{{ "/archive/" | relURL }}">archive</a>, or subscribe
+    <a href="{{ "feed.xml" | relURL }}">via RSS</a>.
+  </p>
 
 </div>
 {{ end }}

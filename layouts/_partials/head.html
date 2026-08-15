@@ -13,6 +13,10 @@
 
   <title>{{ $title }}</title>
   <meta name="description" content="{{ $summary | truncate 160 }}">
+  {{- with .Params.noindex }}
+  {{/* Delisted posts stay reachable, but shouldn't rank. Links out still count. */}}
+  <meta name="robots" content="noindex, follow">
+  {{- end }}
 
   <meta name="og:type" content="article" />
   <meta name="og:title" content="{{ $title }}" />
