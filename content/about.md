@@ -34,10 +34,3 @@ own.
   projects, and the archive
 * [github.com/cavaliergopher](https://github.com/cavaliergopher) — my maintained
   Go packages, including grab
-
-You might also be interested in:
-
-* [Writing and talks]({{< relref "writing.md" >}})
-* [Projects]({{< relref "projects.md" >}})
-* [Books that I like](/blog/recommended-reading.html)
-* [Resources that I found revelationary](/resources/)
