@@ -1,11 +1,7 @@
 ---
 title: "Recommended books"
-url: "/blog/recommended-reading.html"
-# Kept at its original URL for inbound links, but out of the main menu and the
-# sitemap, and marked noindex. Reachable from the About page.
-build:
-  list: never
-noindex: true
+date: 2015-12-27
+slug: "recommended-reading"
 ---
 
 For me, the best measure of a book is whether it changes the way I think. These
@@ -52,15 +48,15 @@ underway.
 By Jim Whitehurst
 
 It's no secret I'm a big believer in the power of Free and Open Source Software
-and open source communities. This book offers an inside look at RedHat's success
+and open source communities. This book offers an inside look at Red Hat's success
 as the largest open source vendor in the world, from the perspective of their
 C.E.O., Jim Whitehurst.
 
-Jim explores how RedHat leverage the power of internal and external communities
+Jim explores how Red Hat leverage the power of internal and external communities
 to build the world class software products that run the New York Stock Exchange
 and countless other high profile enterprises.
 
-What I found most interesting was RedHat's adoption of a meritocracy; where
+What I found most interesting was Red Hat's adoption of a meritocracy; where
 community members and their contributions are evaluated on their merits, not
 their title or pay grade. This has changed the way I take on ideas from my
 colleagues and has also encouraged me to participate in discussions outside my
@@ -96,7 +92,7 @@ From the teams on the service desk to the executives and the board, nothing is
 more critical to the success of a business than effective teamwork. In _The Five
 Dysfunctions of a Team_, Patrick Lencioni illustrates the reforming of an
 executive team using a simple, five tier model which highlights the most common
-obstacles to being affective as a team.
+obstacles to being effective as a team.
 
 For me it highlighted some common sense cause and effect in interpersonal and
 inter-team politics in my own workplace. Where I might have previously strived
@@ -124,7 +120,7 @@ incorporates elements of The Goal's Theory of Constraints, Lean manufacturing,
 management recipe and way of thinking.
 
 It focuses primarily on helping the business achieve its goals using IT as a
-core competency, rather than focussing on the Dev/Ops relationship and
+core competency, rather than focusing on the Dev/Ops relationship and
 automation tools. It helped me to focus and realign my day-to-day activities to
 those that can be directly linked to successful outcomes for the business as a
 whole.
@@ -136,7 +132,7 @@ whole.
 </a>
 By Eliyahu M. Goldratt
 
-For a parable written in the 1984 concerning manufacturing plants, the
+For a parable written in 1984 concerning manufacturing plants, the
 application of _The Goal_ to modern IT development and operations is incredibly
 potent and is expanded on further in
 [The Phoenix Project](#the-phoenix-project).
@@ -156,9 +152,9 @@ By Mike Rother
 Almost every "improvement" initiative I have ever participated in could be
 described as an "implementation" of a known methodology. We implement Scrum or
 Lean or war rooms or silo crushing meetings or Continuous Delivery, etc., etc.,
-etc..
+etc.
 
-Sometimes the implementations are successful (I.e. a well run Scrum team) but
+Sometimes the implementations are successful (i.e. a well run Scrum team) but
 don't actually benefit the business in any tangible or profitable way and even
 moderately successful implementations tend to degrade very quickly.
 
@@ -166,7 +162,7 @@ Mike Rother takes a look inside Toyota's successful Continuous Improvement
 culture to show why people who copy Toyota's process _implementations_ typically
 cannot emulate Toyota's success.
 
-Toyota's Lean processes are actually an evolution, more explicitly, an adaption
+Toyota's Lean processes are actually an evolution, more explicitly, an adaptation
 to change, specific to their needs and environment. This book explores _how_
 Toyota approaches changes and develops improvements. Their way of thinking and
 "Improvement Kata" can be applied almost universally; including in IT.
@@ -179,7 +175,7 @@ rather than approaching it as sporadic and typically unsuccessful projects.
 <a href="https://www.amazon.com/dp/0399144463" target="_blank">
     <img class="book-cover" src="{{< cdn "/2015-12-27-recommended-reading/who-moved-my-cheese.jpg" >}}" alt="Buy on Amazon">
 </a>
-By Spencer Johnson M.D
+By Spencer Johnson M.D.
 
 It only took roughly an hour to read this profound little parable from cover to
 cover. _Who Moved My Cheese_ follows four little creatures, Sniff, Scurry, Hem
@@ -216,7 +212,7 @@ As a Sysadmin, it's important to understand the difference between the heap and
 the stack, what a pointer is, what shared memory is for, how memory gets
 allocated and corrupted, how memory leaks happen, how code patterns affect
 performance and capacity, how shared libraries are really used, what stack
-traces mean, etc..
+traces mean, etc.
 
 If you can grok this book, all of these concepts become much clearer and you'll
 even be able to build small tools of your own, participate better in open source
@@ -230,7 +226,7 @@ communities and communicate with developers in a common tongue.
 By Jim Collins
 
 Good to Great is probably the most thoroughly researched and well presented
-work I have ever encountered. Jim Collins dissects the differenciators between
+work I have ever encountered. Jim Collins dissects the differentiators between
 companies which outperform the market consistently over fifteen years to those
 that don't. The findings are often counter-intuitive but are very well
 established in the presented facts.
@@ -248,7 +244,7 @@ company. This idea is echoed as the *First Key* in
 [First, Break All the Rules](#first-break-all-the-rules).
 
 I'd strongly recommend anyone read this book as it offers a great sense of
-context around organisational success. More importantly however, the principals
+context around organisational success. More importantly however, the principles
 of a *Level Five Leader* should be taken on board by team members at any level
 of experience or title.
 
@@ -299,5 +295,4 @@ data processing pipelines.
 
 I'd recommend this book to engineers and operations managers in any IT org. It's
 a real privilege to be able to learn from the refined and battle hardened
-
 practices of some of the world's most talented operators.
