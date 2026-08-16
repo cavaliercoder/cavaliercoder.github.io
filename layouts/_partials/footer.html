@@ -22,13 +22,8 @@
 </footer>
 
 {{/*
-  Loaded only on pages that use it — seventeen anchors across four posts. This
-  replaces jQuery plus FancyBox, which previously loaded on every page from two
-  CDNs for the same purpose. Matched loosely on purpose: a false positive costs
-  half a kilobyte, a false negative breaks click-to-zoom.
+  No scripts. The seventeen `a.lightbox` anchors across four posts are left as
+  plain links to the full-size image, so click-to-zoom still works — the browser
+  does it, and the back button returns to the post. That replaces jQuery plus
+  FancyBox, which loaded on every page from two CDNs to do the same job.
 */}}
-{{ if strings.Contains .Content "lightbox" }}
-  {{- with resources.Get "js/lightbox.js" | minify | fingerprint -}}
-    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" defer></script>
-  {{- end }}
-{{ end }}

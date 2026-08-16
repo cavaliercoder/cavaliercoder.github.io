@@ -4,7 +4,8 @@
  * Deliberately small. Pico is doing the typography, colour, spacing and dark
  * theme; this file only covers what Pico has no opinion about — syntax
  * highlighting, the image helper classes used directly in post source, and the
- * lightbox — plus two adjustments where Pico's defaults do not suit a blog.
+ * linked screenshots — plus two adjustments where Pico's defaults do not suit
+ * a blog.
  *
  * Plain CSS, not Sass. Pico ships compiled, and what is left here needs no
  * preprocessing, so the Dart Sass dependency is gone from both CI and local
@@ -298,46 +299,19 @@ pre > code {
 .chroma .gp { color: #75715e; }
 
 /* ------------------------------------------------------------------ *
- * Lightbox
+ * Linked screenshots
  *
- * A native <dialog>, so the browser supplies focus trapping, Escape to close,
- * the backdrop and inertness of the page behind. Loaded only on the four posts
- * that contain an `a.lightbox`; see assets/js/lightbox.js.
+ * Seventeen anchors across four posts wrap a screenshot in a link to its
+ * full-size original. There is no lightbox: the browser opens the image and the
+ * back button returns, which is the whole of what the JavaScript used to do.
+ *
+ * The anchors still need styling, because Pico underlines links and these wrap
+ * an image rather than text.
  * ------------------------------------------------------------------ */
-
-/**
- * Pico already renders `dialog` as a full-viewport, dimmed flex container that
- * centres its contents, so the dialog itself needs no sizing here. The frame is
- * what the image and its close button live in, and what the button is
- * positioned against.
- */
-.lightbox-frame {
-    position: relative;
-    display: inline-block;
-    line-height: 0;
-}
-
-.lightbox-frame img {
-    display: block;
-    max-width: 92vw;
-    max-height: 92vh;
-    width: auto;
-    height: auto;
-    border-radius: var(--pico-border-radius);
-}
-
-.lightbox-close {
-    position: absolute;
-    top: -0.75rem;
-    right: -0.75rem;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    border-radius: 50%;
-    line-height: 1;
-}
 
 a.lightbox {
     display: inline-block;
+    text-decoration: none;
+    /* Signals that the click leads somewhere larger, not to another page. */
     cursor: zoom-in;
 }
