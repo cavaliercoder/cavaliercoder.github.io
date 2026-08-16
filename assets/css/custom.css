@@ -13,6 +13,60 @@
  */
 
 /* ------------------------------------------------------------------ *
+ * Identity
+ *
+ * Three small departures from stock Pico, chosen because they carry most of
+ * what makes a theme recognisable: the accent colour, the typeface of the
+ * furniture, and whether the listing is made of cards.
+ * ------------------------------------------------------------------ */
+
+/**
+ * Accent.
+ *
+ * Pico's azure is the single most identifying thing about it. Copper is about
+ * as far from it as legibility allows, and sits with the warm-dark Monokai
+ * code blocks rather than against them. Both values are measured: 4.6:1 on
+ * white and 6.5:1 on the dark page background.
+ */
+:root {
+    --pico-primary: #b55d1e;
+    --pico-primary-underline: rgba(181, 93, 30, 0.5);
+    --pico-primary-hover: #8f4715;
+    --pico-primary-focus: rgba(181, 93, 30, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --pico-primary: #e08543;
+        --pico-primary-underline: rgba(224, 133, 67, 0.5);
+        --pico-primary-hover: #f0a370;
+        --pico-primary-focus: rgba(224, 133, 67, 0.375);
+    }
+}
+
+[data-theme="dark"] {
+    --pico-primary: #e08543;
+    --pico-primary-underline: rgba(224, 133, 67, 0.5);
+    --pico-primary-hover: #f0a370;
+    --pico-primary-focus: rgba(224, 133, 67, 0.375);
+}
+
+/**
+ * Furniture in monospace.
+ *
+ * The site title, navigation, dates and footer are set in the system mono
+ * stack while prose stays in the sans one. It costs nothing — the stack is
+ * already defined by Pico — and it reads as a working engineer's site rather
+ * than as a default stylesheet.
+ */
+body > header nav,
+body > footer,
+.post-meta {
+    font-family: var(--pico-font-family-monospace);
+    letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------------ *
  * Adjustments to Pico's defaults
  * ------------------------------------------------------------------ */
 
@@ -124,11 +178,31 @@ body > main {
 .post-meta {
     margin-bottom: 0;
     color: var(--pico-muted-color);
-    font-size: 0.875em;
+    font-size: 0.8125em;
     font-variant-numeric: tabular-nums;
 }
 
-/* The blurb is the last thing in a card; Pico's paragraph margin adds a gap. */
+/**
+ * The listing is a list, not a deck of cards.
+ *
+ * Pico renders a bare `article` as a filled, rounded, shadowed card. Stacked
+ * five deep that reads as a component demo. Separating entries with a rule
+ * instead puts the weight on the titles, which is where it belongs.
+ */
+main article {
+    margin-bottom: 0;
+    padding: var(--pico-block-spacing-vertical) 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--pico-muted-border-color);
+    background: none;
+    box-shadow: none;
+}
+
+main article:last-of-type {
+    border-bottom: 0;
+}
+
+/* The blurb is the last thing in an entry; Pico's paragraph margin adds a gap. */
 article > p:last-child {
     margin-bottom: 0;
 }
