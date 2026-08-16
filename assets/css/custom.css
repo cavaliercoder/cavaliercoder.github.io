@@ -89,6 +89,27 @@ a.contrast:hover {
     text-decoration: underline;
 }
 
+/**
+ * Headings that are entirely a link.
+ *
+ * The project names on /projects/ are written as `### [grab](url)`, so they
+ * come out of Markdown as `h3 > a` and pick up Pico's link styling — a thick
+ * underline at heading size, which turns the page into a stack of shouting
+ * blue rules. Colour alone is affordance enough here, and the underline comes
+ * back on hover.
+ *
+ * Colour is deliberately left alone: these headings link out to GitHub, so the
+ * link colour is worth keeping. Setting a colour here would also override
+ * Pico's `.contrast` on the home page's post titles.
+ */
+main :is(h1, h2, h3, h4, h5, h6) > a {
+    text-decoration: none;
+}
+
+main :is(h1, h2, h3, h4, h5, h6) > a:hover {
+    text-decoration: underline;
+}
+
 /* Footer sits at the bottom of short pages rather than halfway up. */
 body {
     display: flex;
