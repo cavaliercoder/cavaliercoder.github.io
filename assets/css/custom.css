@@ -35,12 +35,35 @@
     --pico-primary-focus: rgba(181, 93, 30, 0.4);
 }
 
+/**
+ * The dark page, de-blued.
+ *
+ * Pico's dark palette is systematically blue: the background is
+ * rgb(19, 22.5, 30.5), and the text, muted and border tokens carry the same
+ * cast. Against a copper accent and the warm-dark code blocks it reads cold
+ * and slightly at odds with itself.
+ *
+ * These replacements hold the same lightness and shift the hue to warm
+ * neutral — the background's relative luminance moves from 0.0085 to 0.0087,
+ * and every text contrast ratio is preserved or improved.
+ */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
         --pico-primary: #e08543;
         --pico-primary-underline: rgba(224, 133, 67, 0.5);
         --pico-primary-hover: #f0a370;
         --pico-primary-focus: rgba(224, 133, 67, 0.375);
+
+        --pico-background-color: #191714;
+        --pico-color: #d3cdc4;
+        --pico-muted-color: #968d80;
+        --pico-muted-border-color: #2b2721;
+        --pico-contrast: #efeae2;
+        --pico-card-background-color: #1f1c18;
+        --pico-card-border-color: #2b2721;
+        --pico-code-background-color: #24211c;
+        --pico-code-color: #a79d8e;
+        --pico-mark-background-color: #5c3410;
     }
 }
 
@@ -49,6 +72,47 @@
     --pico-primary-underline: rgba(224, 133, 67, 0.5);
     --pico-primary-hover: #f0a370;
     --pico-primary-focus: rgba(224, 133, 67, 0.375);
+
+    --pico-background-color: #191714;
+    --pico-color: #d3cdc4;
+    --pico-muted-color: #968d80;
+    --pico-muted-border-color: #2b2721;
+    --pico-contrast: #efeae2;
+    --pico-card-background-color: #1f1c18;
+    --pico-card-border-color: #2b2721;
+    --pico-code-background-color: #24211c;
+    --pico-code-color: #a79d8e;
+    --pico-mark-background-color: #5c3410;
+}
+
+/**
+ * Headings in Source Serif 4.
+ *
+ * Self-hosted, so no third-party origin sits on the render path — same
+ * reasoning as vendoring Pico. One weight, Latin only, and deliberately the
+ * static instance rather than the variable one: the optical-size axis is most
+ * of the file, taking it from 52KB to 21KB, and it earns nothing at the three
+ * heading sizes this site uses.
+ *
+ * `swap` means headings paint immediately in the fallback and reflow once the
+ * face arrives; the fallback is a system serif so the substitution is a change
+ * of face rather than of genre. See assets/fonts/LICENSE.txt (SIL OFL 1.1).
+ */
+@font-face {
+    font-family: "Source Serif 4";
+    src: url("/fonts/source-serif-4-600-latin.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+main :is(h1, h2, h3, h4, h5, h6) {
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 /**
