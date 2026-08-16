@@ -10,7 +10,7 @@
      can be cached indefinitely. No Sass: Pico ships compiled and the overrides
      need no preprocessing, which keeps Dart Sass out of CI and local setup. */}}
 {{- $css := slice
-      (resources.Get "css/vendor/pico.classless.min.css")
+      (resources.Get "css/vendor/pico.min.css")
       (resources.Get "css/custom.css")
     | resources.Concat "css/main.css" | minify | fingerprint -}}
 <head>

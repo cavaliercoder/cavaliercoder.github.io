@@ -21,6 +21,14 @@
   var dialog = document.createElement("dialog");
   dialog.className = "lightbox-dialog";
 
+  // Pico styles `dialog` as a full-viewport flex container that centres an
+  // inner card, rather than as the modal box itself. The image and its close
+  // button therefore need a frame of their own to be positioned against —
+  // without it, the button anchors to the viewport and lands in the page
+  // corner.
+  var frame = document.createElement("div");
+  frame.className = "lightbox-frame";
+
   var image = document.createElement("img");
   image.alt = "";
 
@@ -30,8 +38,9 @@
   close.setAttribute("aria-label", "Close image");
   close.textContent = "×";
 
-  dialog.appendChild(image);
-  dialog.appendChild(close);
+  frame.appendChild(image);
+  frame.appendChild(close);
+  dialog.appendChild(frame);
   document.body.appendChild(dialog);
 
   links.forEach(function (link) {
@@ -48,19 +57,30 @@
     });
   });
 
-  close.addEventListener("click", function () {
-    dialog.close();
-  });
-
-  // Clicking the backdrop closes. The dialog is only as large as the image, so
-  // any click landing on the element itself is outside the image.
-  dialog.addEventListener("click", function (event) {
-    if (event.target === dialog) dialog.close();
-  });
-
-  // Drop the source on close so a large screenshot is not held in memory, and
-  // so reopening a different image never flashes the previous one.
-  dialog.addEventListener("close", function () {
+  /**
+   * Close, and drop the source so a full-size screenshot is not held in memory
+   * after the reader has dismissed it.
+   *
+   * Deliberately not hooked to the dialog's `close` event. That event is
+   * specified to fire on every close, but does not fire reliably in practice —
+   * verified here in Chrome, where `cancel` fires on Escape and the dialog
+   * closes, yet `close` never arrives, even for an explicit `dialog.close()`.
+   * Doing the cleanup at each close path is deterministic and costs nothing.
+   */
+  function closeLightbox() {
+    if (dialog.open) dialog.close();
     image.removeAttribute("src");
+  }
+
+  close.addEventListener("click", closeLightbox);
+
+  // Clicking outside the image closes. The dialog fills the viewport and the
+  // frame wraps the image, so a click landing on the dialog itself is outside.
+  dialog.addEventListener("click", function (event) {
+    if (event.target === dialog) closeLightbox();
   });
+
+  // Escape. `cancel` fires while the dialog is still open, so the default
+  // close still happens; `closeLightbox` just makes it explicit and clears up.
+  dialog.addEventListener("cancel", closeLightbox);
 })();

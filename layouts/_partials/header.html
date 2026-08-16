@@ -1,14 +1,16 @@
 {{/*
-  Pico's classless build styles `nav > ul > li > a` directly, so the menu needs
-  no classes. The previous header carried a hamburger that opened on `:hover`,
-  which could not be opened on touch or by keyboard; with three menu items the
-  links simply wrap instead (see the flex-wrap override in custom.css).
+  Pico styles `nav > ul > li > a` directly, so the menu needs no layout classes.
+  The previous header carried a hamburger that opened on `:hover`, which could
+  not be opened on touch or by keyboard; with three menu items the links simply
+  wrap instead (see the flex-wrap override in custom.css).
 */}}
-<header>
+<header class="container">
   <nav aria-label="Main">
     <ul>
       <li>
-        <a href="{{ "/" | relURL }}"><strong>{{ site.Title }}</strong></a>
+        {{/* `contrast` keeps the site title reading as a title rather than as
+             a saturated blue link. */}}
+        <a href="{{ "/" | relURL }}" class="contrast"><strong>{{ site.Title }}</strong></a>
       </li>
     </ul>
     <ul>

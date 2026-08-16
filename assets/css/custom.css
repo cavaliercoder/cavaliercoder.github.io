@@ -19,10 +19,18 @@
  * Pico's container grows to 1450px on large displays, which is far too wide
  * for running prose. Hold it to a reading measure instead.
  */
-body > header,
-body > main,
-body > footer {
+/**
+ * Pico's container steps up to 1450px on large displays, which is far too wide
+ * for running prose. Hold it to a reading measure.
+ *
+ * The horizontal padding has to be restored: Pico drops it to zero above 576px
+ * because its own max-width is narrow enough to leave margins on its own. With
+ * a wider container, zero padding would let text touch the viewport edge
+ * between roughly 576px and 768px.
+ */
+.container {
     max-width: 48rem;
+    padding-inline: var(--pico-spacing);
 }
 
 /**
@@ -65,31 +73,19 @@ body > header nav {
 }
 
 /**
- * Link colour in furniture.
+ * Titles that happen to be links.
  *
- * Pico's classless build deliberately omits the `.contrast` and `.secondary`
- * helper classes that the full build ships, so these are styled by element
- * instead. Without this, the site title, every post title in the listing and
- * every footer link render as saturated underlined blue, which reads as a wall
- * of links rather than as headings and chrome.
+ * Colour comes from Pico's own `.contrast` helper on the markup; all that is
+ * left here is dropping the underline, which Pico applies to `a.contrast` by
+ * default. Underlining a heading makes it read as a link first and a title
+ * second.
  */
-body > header nav ul:first-of-type a,
-main article hgroup a {
-    color: var(--pico-contrast);
+a.contrast {
     text-decoration: none;
 }
 
-body > header nav ul:first-of-type a:hover,
-main article hgroup a:hover {
+a.contrast:hover {
     text-decoration: underline;
-}
-
-body > footer a {
-    color: var(--pico-muted-color);
-}
-
-body > footer a:hover {
-    color: var(--pico-contrast);
 }
 
 /* Footer sits at the bottom of short pages rather than halfway up. */
@@ -309,23 +305,24 @@ pre > code {
  * that contain an `a.lightbox`; see assets/js/lightbox.js.
  * ------------------------------------------------------------------ */
 
-.lightbox-dialog {
-    max-width: 92vw;
-    max-height: 92vh;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    overflow: visible;
+/**
+ * Pico already renders `dialog` as a full-viewport, dimmed flex container that
+ * centres its contents, so the dialog itself needs no sizing here. The frame is
+ * what the image and its close button live in, and what the button is
+ * positioned against.
+ */
+.lightbox-frame {
+    position: relative;
+    display: inline-block;
+    line-height: 0;
 }
 
-.lightbox-dialog::backdrop {
-    background-color: rgb(0 0 0 / 78%);
-}
-
-.lightbox-dialog img {
+.lightbox-frame img {
     display: block;
     max-width: 92vw;
     max-height: 92vh;
+    width: auto;
+    height: auto;
     border-radius: var(--pico-border-radius);
 }
 

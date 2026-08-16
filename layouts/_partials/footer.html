@@ -4,7 +4,7 @@
   closing tag was left behind, which had silently disabled the footer's styling.
   Rebuilt here as a plain nav that Pico styles directly.
 */}}
-<footer>
+<footer class="container">
   <nav aria-label="Elsewhere">
     <ul>
       {{/* Personal account first, then the org that holds the Go packages. */}}
@@ -12,10 +12,10 @@
       {{- with site.Params.github_username }}{{ $accounts = $accounts | append . }}{{ end -}}
       {{- with site.Params.github_org }}{{ $accounts = $accounts | append . }}{{ end -}}
       {{ range $accounts }}
-      <li><a href="https://github.com/{{ . }}">{{ . }}</a></li>
+      <li><a href="https://github.com/{{ . }}" class="secondary">{{ . }}</a></li>
       {{ end }}
-      <li><a href="{{ "/archive/" | relURL }}">Archive</a></li>
-      <li><a href="{{ "feed.xml" | relURL }}">RSS</a></li>
+      <li><a href="{{ "/archive/" | relURL }}" class="secondary">Archive</a></li>
+      <li><a href="{{ "feed.xml" | relURL }}" class="secondary">RSS</a></li>
     </ul>
   </nav>
   <small>{{ site.Params.description }}</small>

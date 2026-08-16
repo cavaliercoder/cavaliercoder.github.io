@@ -17,7 +17,7 @@
     {{ range sort . "Date" "desc" }}
     <article>
       <hgroup>
-        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <h3><a href="{{ .RelPermalink }}" class="contrast">{{ .Title }}</a></h3>
         <p class="post-meta">
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
         </p>

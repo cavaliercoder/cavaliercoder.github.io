@@ -3,7 +3,9 @@
   {{ partial "head.html" . }}
   <body>
     {{ partial "header.html" . }}
-    <main>
+    {{/* The full Pico build takes width and centring from `.container`; only
+         the classless build derives them from `body > main` directly. */}}
+    <main class="container">
       {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}
