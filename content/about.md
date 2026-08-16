@@ -25,7 +25,7 @@ Feed, Instagram and WhatsApp; and SRE Tech Lead at Dropbox.
 
 I started out as a sysadmin in Perth, Western Australia, fixing Outlook crashes
 and writing VBScript. The oldest posts here are from that era and I've kept them
-in the [archive]({{< relref "archive.md" >}}) on purpose.
+on purpose.
 
 I write about systems software, performance and reliability. Opinions are my
 own.

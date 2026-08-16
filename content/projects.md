@@ -4,7 +4,7 @@ url: "/projects/"
 menus:
   main:
     name: Projects
-    weight: 30
+    weight: 40
 ---
 
 Maintained Go packages live in the

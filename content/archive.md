@@ -2,8 +2,9 @@
 title: "Archive"
 url: "/archive/"
 layout: archive
-# Deliberately not in the main menu. Reached from the About page and the
-# footer, so older posts keep a real internal link without leading the site.
+# Deliberately not in the main menu, and not in the footer either. The only way
+# in is the small link under the curated list on the home page, which keeps the
+# older work reachable without letting it lead the site.
 ---
 
 The fuller back catalogue, oldest work included. The early posts are from my

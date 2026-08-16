@@ -4,14 +4,12 @@
     I build and scale storage and distributed systems infrastructure, currently
     as a Tech Lead in Google Cloud Storage.
     <a href="{{ "/about/" | relURL }}">More about me</a>, or see my
-    <a href="{{ "/writing/" | relURL }}">writing and talks</a>.
+    <a href="{{ "/publications/" | relURL }}">publications</a>.
   </p>
 
   {{ $featured := where site.RegularPages "Params.featured" true }}
   {{ with $featured }}
   <section>
-    <h2>Selected writing</h2>
-
     {{/* Pico styles a bare `article` as a card, which suits a short curated
          list. The full back catalogue uses a plain list instead. */}}
     {{ range sort . "Date" "desc" }}

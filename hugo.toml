@@ -14,6 +14,16 @@ disableKinds = ["taxonomy", "term"]
   github_username = "cavaliercoder"
   github_org = "cavaliergopher"
 
+# The home page is the curated post list, so Posts points at it. Defined here
+# rather than in front matter because the home page has no content file of its
+# own. `pageRef` rather than `url`, or the entry has no page behind it and
+# `IsMenuCurrent` can never mark it. The other menu items are declared
+# alongside the pages they open.
+[[menus.main]]
+  name = "Posts"
+  pageRef = "/"
+  weight = 20
+
 # Preserve the URLs minted by Jekyll: /blog/:title.html. Posts that set `url`
 # in front matter (e.g. /jclouds) override this. The .html suffix comes from
 # uglyURLs rather than the pattern, or Hugo would treat it as a directory name.
