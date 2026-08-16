@@ -6,14 +6,15 @@
   {{/* Exclude drafts explicitly so `make run` (--buildDrafts) previews the
        archive as it will actually publish, rather than padding it with
        unfinished posts and their zero dates. */}}
-  <ul>
+  {{/* Date first so the mono, tabular dates form a column the eye can scan
+       down; the title then starts at a consistent left edge. */}}
+  <ul class="post-index">
     {{ range where (where site.RegularPages "Section" "posts") "Draft" false }}
       <li>
+        <time class="post-meta" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{- .Date.Format "Jan 2, 2006" -}}
+        </time>
         <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-        <br>
-        <small class="post-meta">
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
-        </small>
       </li>
     {{ end }}
   </ul>

@@ -247,6 +247,32 @@ body > main {
 }
 
 /**
+ * The full index on /archive/.
+ *
+ * Two lines per entry with a bullet made the page hard to scan. The date leads
+ * instead, in a fixed column wide enough for the longest rendered date, so the
+ * titles align down the page. Below the palm breakpoint the row wraps and the
+ * title drops under its date rather than being squeezed.
+ */
+.post-index {
+    padding-left: 0;
+    list-style: none;
+}
+
+.post-index li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--pico-spacing);
+    margin-bottom: calc(var(--pico-spacing) * 0.5);
+}
+
+.post-index time {
+    flex: 0 0 auto;
+    /* "Sep 18, 2016" is the widest; the stack is monospace, so ch is exact. */
+    min-width: 12ch;
+}
+
+/**
  * The listing is a list, not a deck of cards.
  *
  * Pico renders a bare `article` as a filled, rounded, shadowed card. Stacked
