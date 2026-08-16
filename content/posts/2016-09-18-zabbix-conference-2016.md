@@ -7,7 +7,7 @@ date: 2016-09-18
 ---
 
 <iframe id="ytplayer" type="text/html" width="740" height="420"
-  src="https://www.youtube.com/embed/nlk3nMHy188?autoplay=1&origin=http://cavaliercoder.com"
+  src="https://www.youtube.com/embed/nlk3nMHy188?autoplay=1&origin=https://cavaliercoder.com"
   frameborder="0"></iframe>
 
 <a href="{{< cdn "/2016-09-18-zabbix-conference-2016/slides.pdf" >}}" target="_blank">
