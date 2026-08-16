@@ -86,22 +86,32 @@
 }
 
 /**
- * Headings in Source Serif 4.
+ * The type: JetBrains Mono for display, IBM Plex Sans for prose.
  *
- * Self-hosted, so no third-party origin sits on the render path — same
- * reasoning as vendoring Pico. One weight, Latin only, and deliberately the
- * static instance rather than the variable one: the optical-size axis is most
- * of the file, taking it from 52KB to 21KB, and it earns nothing at the three
- * heading sizes this site uses.
+ * The furniture was already monospace and the headings were already a face of
+ * their own; this promotes the mono to the display role and gives the prose a
+ * chosen face instead of whatever the OS supplies. Both self-hosted, so no
+ * third-party origin sits on the render path — same reasoning as vendoring
+ * Pico.
  *
- * `swap` means headings paint immediately in the fallback and reflow once the
- * face arrives; the fallback is a system serif so the substitution is a change
- * of face rather than of genre. See assets/fonts/LICENSE.txt (SIL OFL 1.1).
+ * Variable instances, which reverses the call made for the single heading
+ * weight this file used to carry. Plex is wanted at 400 for prose and bold for
+ * `strong`, and one variable file covers the whole axis for less than two
+ * statics; JetBrains Mono is wanted only at 500, but Google publishes no
+ * static latin build of it, and the axis costs 22KB in total.
+ *
+ * `swap` means text paints immediately in the fallback and reflows once the
+ * face arrives. Each fallback is the matching system genre, so the
+ * substitution is a change of face rather than of genre.
+ *
+ * The unicode-range is Google's latin subset, identical across all three
+ * files: outside it the browser falls back rather than fetching a font that
+ * has no glyph to offer. Licences sit beside the fonts (SIL OFL 1.1).
  */
 @font-face {
-    font-family: "Source Serif 4";
-    src: url("/fonts/source-serif-4-600-latin.woff2") format("woff2");
-    font-weight: 600;
+    font-family: "JetBrains Mono";
+    src: url("/fonts/jetbrains-mono-var-latin.woff2") format("woff2");
+    font-weight: 100 800;
     font-style: normal;
     font-display: swap;
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
@@ -109,30 +119,108 @@
         U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-main :is(h1, h2, h3, h4, h5, h6) {
-    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+@font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/fonts/ibm-plex-sans-var-latin.woff2") format("woff2");
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/fonts/ibm-plex-sans-var-italic-latin.woff2") format("woff2");
+    font-weight: 100 700;
+    font-style: italic;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC,
+        U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Pico derives its own `--pico-font-family` from the sans stack, so replacing
+   the stack is enough to move every element that isn't named below. */
+:root {
+    --pico-font-family-sans-serif: "IBM Plex Sans", system-ui, "Segoe UI",
+        Roboto, sans-serif;
 }
 
 /**
- * Furniture in monospace.
+ * Headings and furniture in JetBrains Mono.
  *
- * The site title, navigation, dates and footer are set in the system mono
- * stack while prose stays in the sans one. It costs nothing — the stack is
- * already defined by Pico — and it reads as a working engineer's site rather
- * than as a default stylesheet.
+ * Mono sets wider than a proportional face at the same size, so the heading
+ * ramp below is pulled down to compensate; the negative tracking is doing the
+ * same job. The longest title on the site — the Terraform security groups one
+ * — is the case that sets the ceiling.
  */
+main :is(h1, h2, h3, h4, h5, h6),
 body > header nav,
 body > footer,
 .post-meta {
-    font-family: var(--pico-font-family-monospace);
-    letter-spacing: -0.01em;
+    font-family: "JetBrains Mono", var(--pico-font-family-monospace);
+    letter-spacing: -0.03em;
+}
+
+main :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 500;
+    text-wrap: balance;
+}
+
+main h1 {
+    --pico-font-size: 1.7rem;
+    --pico-line-height: 1.22;
+}
+
+main h2 {
+    --pico-font-size: 1.28rem;
+    --pico-line-height: 1.3;
+}
+
+main h3 {
+    --pico-font-size: 1.08rem;
+    --pico-line-height: 1.35;
 }
 
 /* ------------------------------------------------------------------ *
  * Adjustments to Pico's defaults
  * ------------------------------------------------------------------ */
+
+/**
+ * Pico's root font size climbs with the viewport, reaching 131.25% — 21px body
+ * text — on a wide window. That was tuned for a page of components, not a page
+ * of prose. Stop the ramp at 106.25%, which is where Plex stops gaining
+ * legibility and starts merely getting bigger.
+ *
+ * Pico sets the ramp at each of its own breakpoints, so each one has to be
+ * answered; a single rule at the widest breakpoint would leave the middle ones
+ * scaling past it.
+ */
+@media (min-width: 1024px) {
+    :root {
+        --pico-font-size: 106.25%;
+    }
+}
+
+@media (min-width: 1280px) {
+    :root {
+        --pico-font-size: 106.25%;
+    }
+}
+
+@media (min-width: 1536px) {
+    :root {
+        --pico-font-size: 106.25%;
+    }
+}
+
+/* Plex has a tall x-height, which wants a little more air between lines than
+   Pico's 1.5 gives it. */
+:root {
+    --pico-line-height: 1.6;
+}
 
 /**
  * Pico's container steps up to 1450px on large displays, which is far too wide
@@ -166,7 +254,13 @@ main > h3,
 main > h4,
 main > h5,
 main > h6 {
-    max-width: 68ch;
+    max-width: 66ch;
+}
+
+/* `pretty` only affects the last few lines, so it costs nothing on short
+   paragraphs and stops the long ones ending on an orphan. */
+main > p {
+    text-wrap: pretty;
 }
 
 /**
@@ -253,7 +347,16 @@ body > main {
  * instead, in a fixed column wide enough for the longest rendered date, so the
  * titles align down the page. Below the palm breakpoint the row wraps and the
  * title drops under its date rather than being squeezed.
+ *
+ * The index is a two-column list rather than running prose, so it is exempt
+ * from the reading measure above: at 66ch the longest title wraps under its
+ * own date on a full-width window, which is the one thing the layout exists to
+ * prevent.
  */
+main > ul.post-index {
+    max-width: none;
+}
+
 .post-index {
     padding-left: 0;
     list-style: none;

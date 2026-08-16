@@ -38,10 +38,14 @@
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ "feed.xml" | absURL }}" />
 
-  {{/* The heading face is referenced from inside the stylesheet, so the browser
-       would not discover it until the CSS had parsed. Preloading starts it in
-       parallel and avoids a late swap once headings have already painted. */}}
-  <link rel="preload" href="{{ "/fonts/source-serif-4-600-latin.woff2" | relURL }}"
+  {{/* Both faces are referenced from inside the stylesheet, so the browser
+       would not discover them until the CSS had parsed. Preloading starts them
+       in parallel and avoids a late swap once the page has already painted.
+       The italic is left out deliberately: it is rare in the first screen, and
+       a third preload would compete with the two faces that are not. */}}
+  <link rel="preload" href="{{ "/fonts/jetbrains-mono-var-latin.woff2" | relURL }}"
+        as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ "/fonts/ibm-plex-sans-var-latin.woff2" | relURL }}"
         as="font" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
