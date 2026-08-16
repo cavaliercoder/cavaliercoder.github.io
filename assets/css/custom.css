@@ -209,17 +209,95 @@ main iframe {
 /* ------------------------------------------------------------------ *
  * Code
  *
- * Monokai, identical in both themes. Syntax colour carries meaning, so it
- * should not shift when a reader flips their OS theme; only the surrounding
- * page does. Hugo is configured with `noClasses = false`, so Chroma emits
- * these class names rather than inline styles.
+ * Syntax highlighting follows the page theme: GitHub Light on a light page,
+ * Monokai on a dark one. The two palettes are expressed through one set of
+ * custom properties, so the token rules below are written once.
+ *
+ * The dark selectors deliberately mirror Pico's own — dark applies when the OS
+ * asks for it and no theme is pinned, or when `data-theme="dark"` is set
+ * explicitly. Matching Pico exactly means the code block can never disagree
+ * with the page around it.
+ *
+ * Hugo sets `noClasses = false`, so Chroma emits these class names rather than
+ * inline styles.
  * ------------------------------------------------------------------ */
+
+:root {
+    /* GitHub Light */
+    --syn-bg: #f6f8fa;
+    --syn-border: #d0d7de;
+    --syn-fg: #24292f;
+    --syn-comment: #6e7781;
+    --syn-keyword: #cf222e;
+    --syn-type: #953800;
+    --syn-constant: #0550ae;
+    --syn-string: #0a3069;
+    --syn-number: #0550ae;
+    --syn-function: #8250df;
+    --syn-attr: #0550ae;
+    --syn-tag: #116329;
+    --syn-escape: #0550ae;
+    --syn-hl-bg: #fff8c5;
+    --syn-add: #116329;
+    --syn-del: #82071e;
+    --syn-err-fg: #82071e;
+    --syn-err-bg: #ffebe9;
+    --syn-output: #57606a;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        /* Monokai */
+        --syn-bg: #272822;
+        --syn-border: #3a3b34;
+        --syn-fg: #f8f8f2;
+        --syn-comment: #75715e;
+        --syn-keyword: #f92672;
+        --syn-type: #66d9ef;
+        --syn-constant: #66d9ef;
+        --syn-string: #e6db74;
+        --syn-number: #ae81ff;
+        --syn-function: #a6e22e;
+        --syn-attr: #a6e22e;
+        --syn-tag: #f92672;
+        --syn-escape: #ae81ff;
+        --syn-hl-bg: #3e3d32;
+        --syn-add: #a6e22e;
+        --syn-del: #f92672;
+        --syn-err-fg: #f8f8f0;
+        --syn-err-bg: #960050;
+        --syn-output: #a8a8a2;
+    }
+}
+
+[data-theme="dark"] {
+    /* Monokai */
+    --syn-bg: #272822;
+    --syn-border: #3a3b34;
+    --syn-fg: #f8f8f2;
+    --syn-comment: #75715e;
+    --syn-keyword: #f92672;
+    --syn-type: #66d9ef;
+    --syn-constant: #66d9ef;
+    --syn-string: #e6db74;
+    --syn-number: #ae81ff;
+    --syn-function: #a6e22e;
+    --syn-attr: #a6e22e;
+    --syn-tag: #f92672;
+    --syn-escape: #ae81ff;
+    --syn-hl-bg: #3e3d32;
+    --syn-add: #a6e22e;
+    --syn-del: #f92672;
+    --syn-err-fg: #f8f8f0;
+    --syn-err-bg: #960050;
+    --syn-output: #a8a8a2;
+}
 
 pre {
     padding: var(--pico-spacing);
-    border: 1px solid #3a3b34;
-    background-color: #272822;
-    color: #f8f8f2;
+    border: 1px solid var(--syn-border);
+    background-color: var(--syn-bg);
+    color: var(--syn-fg);
     /* Never `pre-wrap`: posts contain pprof output and Go assembly whose
        column alignment is the point, at up to 210 characters wide. */
     overflow-x: auto;
@@ -243,60 +321,61 @@ pre > code {
     display: block;
     margin-inline: calc(var(--pico-spacing) * -1);
     padding-inline: var(--pico-spacing);
-    background-color: #3e3d32;
+    background-color: var(--syn-hl-bg);
 }
 
 .chroma .lnt,
 .chroma .ln {
     margin-right: 0.5rem;
-    color: #75715e;
+    color: var(--syn-comment);
     user-select: none;
 }
 
 /**
- * Monokai tokens — the full set rather than only those the current posts
- * happen to emit, so a future post using an unseen lexer does not render
- * half-plain.
+ * Tokens — the full set rather than only those the current posts happen to
+ * emit, so a future post using an unseen lexer does not render half-plain.
  */
-.chroma .err { color: #960050; background-color: #1e0010; }
-.chroma .w { color: #f8f8f2; }
+.chroma .err { color: var(--syn-err-fg); background-color: var(--syn-err-bg); }
+.chroma .w { color: var(--syn-fg); }
 
-.chroma .k, .chroma .kn, .chroma .kp, .chroma .kr { color: #f92672; }
-.chroma .kc, .chroma .kd { color: #66d9ef; font-style: italic; }
-.chroma .kt { color: #66d9ef; }
+.chroma .k, .chroma .kn, .chroma .kp, .chroma .kr { color: var(--syn-keyword); }
+.chroma .kc, .chroma .kd { color: var(--syn-constant); font-style: italic; }
+.chroma .kt { color: var(--syn-type); }
 
-.chroma .n, .chroma .nv, .chroma .py, .chroma .nl, .chroma .nx { color: #f8f8f2; }
-.chroma .na, .chroma .nc, .chroma .nd, .chroma .ne, .chroma .nf, .chroma .fm { color: #a6e22e; }
-.chroma .nb, .chroma .bp { color: #f8f8f2; }
-.chroma .no { color: #66d9ef; }
-.chroma .ni { color: #ae81ff; }
-.chroma .nn { color: #f8f8f2; }
-.chroma .nt { color: #f92672; }
-.chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: #f8f8f2; }
+.chroma .n, .chroma .nv, .chroma .py, .chroma .nl, .chroma .nx { color: var(--syn-fg); }
+.chroma .na { color: var(--syn-attr); }
+.chroma .nc, .chroma .nd, .chroma .ne, .chroma .nf, .chroma .fm { color: var(--syn-function); }
+.chroma .nb, .chroma .bp { color: var(--syn-constant); }
+.chroma .no { color: var(--syn-constant); }
+.chroma .ni { color: var(--syn-number); }
+.chroma .nn { color: var(--syn-fg); }
+.chroma .nt { color: var(--syn-tag); }
+.chroma .vc, .chroma .vg, .chroma .vi, .chroma .vm { color: var(--syn-fg); }
 
-.chroma .l, .chroma .ld { color: #ae81ff; }
-.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .mo, .chroma .il { color: #ae81ff; }
+.chroma .l, .chroma .ld { color: var(--syn-number); }
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .mo,
+.chroma .il { color: var(--syn-number); }
 
 .chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl, .chroma .sd,
 .chroma .s2, .chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1,
-.chroma .ss { color: #e6db74; }
-.chroma .se { color: #ae81ff; }
+.chroma .ss { color: var(--syn-string); }
+.chroma .se { color: var(--syn-escape); }
 
-.chroma .o, .chroma .ow { color: #f92672; }
-.chroma .p { color: #f8f8f2; }
+.chroma .o, .chroma .ow { color: var(--syn-keyword); }
+.chroma .p { color: var(--syn-fg); }
 
 /* `.cpf` is the preprocessor file name, emitted by the cgo and C lexers. */
 .chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs,
-.chroma .cp, .chroma .cpf { color: #75715e; }
+.chroma .cp, .chroma .cpf { color: var(--syn-comment); }
 
-.chroma .gd { color: #f92672; }
-.chroma .gi { color: #a6e22e; }
+.chroma .gd { color: var(--syn-del); }
+.chroma .gi { color: var(--syn-add); }
 .chroma .ge { font-style: italic; }
 .chroma .gs { font-weight: bold; }
-.chroma .gh, .chroma .gu { color: #75715e; }
-.chroma .gr, .chroma .gt { color: #f92672; }
-.chroma .go { color: #a8a8a2; }
-.chroma .gp { color: #75715e; }
+.chroma .gh, .chroma .gu { color: var(--syn-comment); }
+.chroma .gr, .chroma .gt { color: var(--syn-del); }
+.chroma .go { color: var(--syn-output); }
+.chroma .gp { color: var(--syn-comment); }
 
 /* ------------------------------------------------------------------ *
  * Linked screenshots
