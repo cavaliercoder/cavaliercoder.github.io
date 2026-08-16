@@ -17,10 +17,6 @@
  * ------------------------------------------------------------------ */
 
 /**
- * Pico's container grows to 1450px on large displays, which is far too wide
- * for running prose. Hold it to a reading measure instead.
- */
-/**
  * Pico's container steps up to 1450px on large displays, which is far too wide
  * for running prose. Hold it to a reading measure.
  *
