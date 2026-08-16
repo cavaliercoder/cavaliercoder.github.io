@@ -2,3 +2,4 @@ public/
 resources/
 .hugo_build.lock
 s3/
+.DS_Store
