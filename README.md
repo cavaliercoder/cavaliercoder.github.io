@@ -7,7 +7,8 @@ Made with the indelible [Hugo](https://gohugo.io/) static site generator.
 
 Any Hugo build will do. The stylesheet is plain CSS — Pico ships compiled and
 the overrides need no preprocessing — so the *extended* edition is not required,
-though it does no harm and is what CI installs.
+and CI installs the standard one. Extended does no harm locally, which is just
+as well: it is what Homebrew gives you.
 
     make get-deps   # brew install hugo
     make run        # serve locally, including drafts
