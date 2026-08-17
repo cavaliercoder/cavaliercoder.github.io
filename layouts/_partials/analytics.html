@@ -1,0 +1,21 @@
+{{/*
+  Cloudflare Web Analytics. Chosen over GA4 because it sets no cookies — so the
+  site needs no consent banner — and the beacon is a fraction of gtag's weight.
+  It does not require the site to be proxied through Cloudflare; the beacon
+  reports directly, which is what makes it usable from GitHub Pages.
+
+  The token is not a secret. It identifies the site in Cloudflare's dashboard
+  and is visible in the page source by design, so it lives in hugo.toml rather
+  than in a build secret.
+
+  Guarded twice over: no token configured means no script, and development
+  builds never emit it, so `hugo server` cannot pollute the numbers. The old
+  Jekyll setup did the same by testing window.location.hostname at runtime;
+  deciding at build time is cheaper and cannot be wrong.
+*/}}
+{{- if hugo.IsProduction -}}
+  {{- with site.Params.cloudflareAnalyticsToken -}}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "{{ . }}"}'></script>
+  {{- end -}}
+{{- end -}}

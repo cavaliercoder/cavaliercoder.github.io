@@ -9,6 +9,10 @@ disableKinds = ["taxonomy", "term"]
 [params]
   description = "Systems software, storage and reliability at scale."
   cdnurl = "https://cdn.cavaliercoder.com/blog"
+  # Cloudflare Web Analytics site tag, from the dashboard's JS snippet. A public
+  # identifier, not a credential. Empty disables the beacon entirely; see
+  # layouts/_partials/analytics.html.
+  cloudflareAnalyticsToken = "7624490e850149ccb633e50613f9cc09"
   # Go projects live in the cavaliergopher org; everything else, and the
   # archive, remains under the personal account.
   github_username = "cavaliercoder"
