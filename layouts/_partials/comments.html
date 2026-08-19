@@ -1,0 +1,58 @@
+{{/*
+  Comments, by way of giscus (https://giscus.app).
+
+  giscus is a GitHub App that maps a page to a discussion in this repository and
+  renders the thread in an iframe. Readers sign in with GitHub and comment there;
+  nothing is stored by this site, and there is no database, no moderation queue
+  and no third-party account to hold. Deleting a discussion deletes the thread.
+  It sets no cookies for readers who only read, so the site still needs no
+  consent banner — the same reason Cloudflare Web Analytics was chosen.
+
+  Two things have to be true on the GitHub side, and neither is expressed here:
+  Discussions must be enabled on the repository, and the giscus App must be
+  installed on it. Without the App, the frame renders but posting fails.
+
+  Threads live in the Announcements category because only maintainers may open a
+  discussion there by hand; every other category lets anyone start one, which
+  would put unmapped threads alongside the mapped ones.
+
+  Mapping is by pathname, so a thread is bound to the URL rather than to the
+  title — posts get retitled, and the handful with a custom `url` in front
+  matter still map cleanly. The cost is that changing a post's URL orphans its
+  thread, which is why the Jekyll-era permalinks are preserved in hugo.toml.
+
+  Not gated on `hugo.IsProduction`, unlike the analytics beacon: comments are
+  worth seeing while writing, and a stray comment from `hugo server` lands in
+  the same thread as one from the live page rather than anywhere unexpected.
+*/}}
+{{- if ne .Params.comments false -}}
+  {{- with site.Params.giscus -}}
+    {{- if and .repo .repo_id .category .category_id -}}
+<section class="comments">
+  <h2>Comments</h2>
+  {{/* `loading=lazy` holds the frame back until it is scrolled near, so a
+       reader who never reaches the end of the post never pays for it. */}}
+  <script src="https://giscus.app/client.js"
+          data-repo="{{ .repo }}"
+          data-repo-id="{{ .repo_id }}"
+          data-category="{{ .category }}"
+          data-category-id="{{ .category_id }}"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async></script>
+  <noscript>
+    Comments need JavaScript. They are
+    <a href="https://github.com/{{ .repo }}/discussions">GitHub Discussions</a>
+    either way.
+  </noscript>
+</section>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

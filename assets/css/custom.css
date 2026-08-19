@@ -678,3 +678,19 @@ a.lightbox {
     /* Signals that the click leads somewhere larger, not to another page. */
     cursor: zoom-in;
 }
+
+/* ------------------------------------------------------------------ *
+ * Comments
+ *
+ * giscus styles its own iframe — width, height and border are set by
+ * client.js as the thread loads — so all that is left is separating the
+ * section from the end of the post. A rule does that more honestly than
+ * whitespace alone, because a long post ends mid-scroll and the reader needs
+ * to see that the article is over.
+ * ------------------------------------------------------------------ */
+
+.comments {
+    margin-top: var(--pico-block-spacing-vertical);
+    padding-top: var(--pico-block-spacing-vertical);
+    border-top: 1px solid var(--pico-muted-border-color);
+}

@@ -18,6 +18,19 @@ disableKinds = ["taxonomy", "term"]
   github_username = "cavaliercoder"
   github_org = "cavaliergopher"
 
+  # giscus, the comment widget on posts. Every value here is a public
+  # identifier, not a credential: they are read straight off the page source of
+  # any site using giscus, and the App's permissions are what actually gate
+  # writes. Regenerate them at https://giscus.app if the repository is renamed
+  # or transferred, because the IDs are node IDs rather than names. Blanking
+  # `repo` (or any of the four) removes the widget entirely; see
+  # layouts/_partials/comments.html.
+  [params.giscus]
+    repo = "cavaliercoder/cavaliercoder.github.io"
+    repo_id = "R_kgDOAnsjaw"
+    category = "Announcements"
+    category_id = "DIC_kwDOAnsja84DDsQ0"
+
 # The home page is the curated post list, so Posts points at it. Defined here
 # rather than in front matter because the home page has no content file of its
 # own. `pageRef` rather than `url`, or the entry has no page behind it and
