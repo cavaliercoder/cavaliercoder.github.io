@@ -3,18 +3,43 @@
   `.footer-col-wrapper` was dropped during the Jekyll to Hugo conversion but its
   closing tag was left behind, which had silently disabled the footer's styling.
   Rebuilt here as a plain nav that Pico styles directly.
+
+  The marks are inline SVG rather than an icon font or sprite: two of them,
+  drawn once each, cost nothing to inline and need no second request. Both are
+  `currentColor` at `1em`, so they follow the text through hover and both
+  themes without a rule of their own.
 */}}
 <footer class="container">
-  <nav aria-label="Elsewhere">
+  <nav class="footer-links" aria-label="Elsewhere">
     <ul>
-      {{/* Personal account first, then the org that holds the Go packages. */}}
-      {{- $accounts := slice -}}
-      {{- with site.Params.github_username }}{{ $accounts = $accounts | append . }}{{ end -}}
-      {{- with site.Params.github_org }}{{ $accounts = $accounts | append . }}{{ end -}}
-      {{ range $accounts }}
-      <li><a href="https://github.com/{{ . }}" class="secondary">{{ . }}</a></li>
-      {{ end }}
-      <li><a href="{{ "feed.xml" | relURL }}" class="secondary">RSS</a></li>
+      <li>
+        {{/* GitHub's own mark, from the Octicons set (MIT). One mark heads both
+             accounts rather than repeating beside each, so it is the thing
+             saying "GitHub" and carries a title instead of being hidden. */}}
+        <svg class="icon" viewBox="0 0 16 16" role="img" aria-label="GitHub" focusable="false">
+          <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/>
+        </svg>
+        {{/* Personal account first, then the org that holds the Go packages. */}}
+        {{- $accounts := slice -}}
+        {{- with site.Params.github_username }}{{ $accounts = $accounts | append . }}{{ end -}}
+        {{- with site.Params.github_org }}{{ $accounts = $accounts | append . }}{{ end -}}
+        {{- range $i, $account := $accounts }}
+        {{- if $i }}<span class="sep" aria-hidden="true">|</span>{{ end }}
+        <a href="https://github.com/{{ $account }}" class="secondary">{{ $account }}</a>
+        {{- end }}
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="{{ "feed.xml" | relURL }}" class="secondary">
+          {{/* The feed mark: a dot and two arcs struck from the same corner. */}}
+          <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"
+               fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="3.1" cy="12.9" r="1.7" fill="currentColor" stroke="none"/>
+            <path d="M2 8.5A5.5 5.5 0 0 1 7.5 14"/>
+            <path d="M2 3.5A10.5 10.5 0 0 1 12.5 14"/>
+          </svg>RSS</a>
+      </li>
     </ul>
   </nav>
   <small>{{ site.Params.description }}</small>
